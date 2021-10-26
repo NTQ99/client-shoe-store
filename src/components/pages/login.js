@@ -2,11 +2,23 @@ import React, { Component } from "react";
 
 import AuthService from "../../service/auth.service";
 
+import authHeader from "../../service/auth-header";
+
 class LoginPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
       typePage: "login"
+    }
+  }
+
+  componentDidMount() {
+    if (authHeader()) {
+      if (AuthService.getRoles().includes("ROLE_SELLER") || AuthService.getRoles().includes("ROLE_ADMIN")) {
+        this.props.history.push("/order");
+      } else {
+        this.props.history.push("/home");
+      }
     }
   }
   
@@ -16,7 +28,13 @@ class LoginPage extends Component {
     let password = e.target.password.value
     AuthService.login(username, password).then(res=>{
       alert(res.error.message)
-      if (res.error.statusCode === 200) this.props.history.push('/home')
+      if (res.error.statusCode === 200) {
+        if (AuthService.getRoles().includes("ROLE_SELLER") || AuthService.getRoles().includes("ROLE_ADMIN")) {
+          this.props.history.push("/order");
+        } else {
+          this.props.history.push("/home");
+        }
+      }
     })
   }
   register = (e) => {
