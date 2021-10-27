@@ -45,7 +45,7 @@ class Header extends Component {
                 <ul className="nav navbar-nav menu_nav ml-auto">
                   <li className="nav-item active">
                     <a className="nav-link" href="/home">
-                      Home
+                      Trang chủ
                     </a>
                   </li>
                   <li className="nav-item submenu dropdown">
@@ -57,7 +57,7 @@ class Header extends Component {
                       aria-haspopup="true"
                       aria-expanded="false"
                     >
-                      Shop
+                      Sản phẩm
                     </a>
                     <ul className="dropdown-menu">
                       <li className="nav-item">
@@ -96,7 +96,7 @@ class Header extends Component {
                       aria-haspopup="true"
                       aria-expanded="false"
                     >
-                      Blog
+                      Bộ sưu tập
                     </a>
                     <ul className="dropdown-menu">
                       <li className="nav-item">
@@ -120,7 +120,7 @@ class Header extends Component {
                       aria-haspopup="true"
                       aria-expanded="false"
                     >
-                      Pages
+                      Sale
                     </a>
                     <ul className="dropdown-menu">
                       <li className="nav-item">
@@ -142,7 +142,7 @@ class Header extends Component {
                   </li>
                   <li className="nav-item">
                     <a className="nav-link" href="contact.html">
-                      Contact
+                    Về chúng tôi
                     </a>
                   </li>
                 </ul>
