@@ -24,8 +24,8 @@ function App() {
             <Route exact path="/login" component={LoginPage} />
             <Route exact path="/home" component={HomePage} />
             <Route exact path="/category" component={CategoryPage} />
-            <Route exact path="/" render={() => <Redirect to='/login' />} />
-            <Route render={() => <Redirect to='/login' />} />
+            <Route exact path="/" render={() => <Redirect to='/home' />} />
+            <Route render={() => <Redirect to='/home' />} />
           </Switch>
         </Suspense>
       </Router>

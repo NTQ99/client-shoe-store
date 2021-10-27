@@ -1,6 +1,15 @@
 import React, { Component } from "react";
 
+import authHeader from "../../../service/auth-header";
+
+import AuthService from "../../../service/auth.service";
+
 class Header extends Component {
+
+    logout = (e) => {
+        e.preventDefault();
+        AuthService.logout(()=>window.location.replace("/"))
+    }
   render() {
     return (
       <header className="header_area sticky-header">
@@ -147,6 +156,14 @@ class Header extends Component {
                     <button className="search">
                       <span className="lnr lnr-magnifier" id="search" />
                     </button>
+                  </li>
+                  <li className="nav-item">
+                    {!authHeader() && <a href="/login">
+                        <span className="lnr lnr-enter"></span>
+                    </a>}
+                    {authHeader() && <a href="/logout" onClick={this.logout}>
+                        <span className="lnr lnr-exit"></span>
+                    </a>}
                   </li>
                 </ul>
               </div>

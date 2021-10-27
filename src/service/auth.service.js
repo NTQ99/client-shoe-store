@@ -35,7 +35,7 @@ class AuthService {
   logout(cb) {
     cookies.remove('jwt');
     localStorage.clear();
-    setTimeout(cb, 500);
+    setTimeout(cb, 100);
   }
 
   register(username, password, firstName, lastName, phone, email) {

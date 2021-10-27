@@ -15,9 +15,9 @@ class LoginPage extends Component {
   componentDidMount() {
     if (authHeader()) {
       if (AuthService.getRoles().includes("ROLE_SELLER") || AuthService.getRoles().includes("ROLE_ADMIN")) {
-        this.props.history.push("/order");
+        window.location.replace("/order");
       } else {
-        this.props.history.push("/home");
+        window.location.replace("/home");
       }
     }
   }
@@ -30,9 +30,9 @@ class LoginPage extends Component {
       alert(res.error.message)
       if (res.error.statusCode === 200) {
         if (AuthService.getRoles().includes("ROLE_SELLER") || AuthService.getRoles().includes("ROLE_ADMIN")) {
-          this.props.history.push("/order");
+          window.location.replace("/order");
         } else {
-          this.props.history.push("/home");
+          window.location.replace("/home");
         }
       }
     })
@@ -49,7 +49,7 @@ class LoginPage extends Component {
       
       alert(res.error.message)
       console.log(res)
-      if (res.error.statusCode === 206) this.props.history.push('/')
+      if (res.error.statusCode === 206) window.location.replace('/')
     })
   }
   render() {
