@@ -7,13 +7,13 @@ function Aside() {
   <div className="brand flex-column-auto" id="kt_brand">
     {/*begin::Logo*/}
     <a href="/home" className="brand-logo">
-      <img alt="Logo" src="assets/media/logos/logo-light.png" height="50" />
+      <img alt="Logo" src="/assets/media/logos/logo-light.png" height="50" />
     </a>
     {/*end::Logo*/}
     {/*begin::Toggle*/}
     <button className="brand-toggle btn btn-sm px-0" id="kt_aside_toggle">
       <span className="svg-icon svg-icon svg-icon-xl">
-        <SVG src="assets/media/svg/icons/Navigation/Angle-double-left.svg" />
+        <SVG src="/assets/media/svg/icons/Navigation/Angle-double-left.svg" />
       </span>
     </button>
     {/*end::Toolbar*/}
@@ -28,7 +28,7 @@ function Aside() {
         <li className="menu-item" id="aside_dashboard">
           <a className="menu-link" href="/dashboard">
             <span className="svg-icon menu-icon">
-              <SVG src="assets/media/svg/icons/Design/Layers.svg" />
+              <SVG src="/assets/media/svg/icons/Design/Layers.svg" />
             </span>
             <span className="menu-text">Tổng quan</span>
           </a>
@@ -41,7 +41,7 @@ function Aside() {
         <li className="menu-item">
           <a className="menu-link" href="/admin-user">
             <span className="svg-icon menu-icon">
-              <SVG src="assets/media/svg/icons/General/User.svg" />
+              <SVG src="/assets/media/svg/icons/General/User.svg" />
             </span>
             <span className="menu-text">Tài khoản</span>
           </a>

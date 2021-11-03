@@ -57,7 +57,7 @@ const UserToolbar = (props) => (
     {...props.csvProps}
   >
     <span class="svg-icon svg-icon-md">
-      <SVG src="assets/media/svg/icons/Files/ExportFile.svg" />
+      <SVG src="/assets/media/svg/icons/Files/ExportFile.svg" />
     </span>
     Xuất file
   </ExportCSVButton>

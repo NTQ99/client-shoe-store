@@ -10,6 +10,8 @@ import CustomerPage from "./components/pages/customer";
 import ProductPage from "./components/pages/product";
 import DeliveryPage from "./components/pages/delivery";
 import CategoryPage from "./components/pages/category";
+import CartPage from "./components/pages/cart";
+import ProductDetailPage from "./components/pages/productDetail";
 
 function App() {
   return (
@@ -24,8 +26,9 @@ function App() {
             <Route exact path="/login" component={LoginPage} />
             <Route exact path="/home" component={HomePage} />
             <Route exact path="/category" component={CategoryPage} />
+            <Route exact path="/cart" component={CartPage} />
+            <Route strict path="/product-detail/:productCode" component={ProductDetailPage} />
             <Route exact path="/" render={() => <Redirect to='/home' />} />
-            <Route render={() => <Redirect to='/home' />} />
           </Switch>
         </Suspense>
       </Router>

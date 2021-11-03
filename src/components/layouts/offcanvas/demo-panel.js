@@ -24,7 +24,7 @@ class DemoPanel extends Component {
             <div className="overlay rounded-lg mb-8 offcanvas-demo offcanvas-demo-active">
               <div className="overlay-wrapper rounded-lg">
                 <img
-                  src="assets/media/demos/demo1.png"
+                  src="/assets/media/demos/demo1.png"
                   alt=""
                   className="w-100"
                 />
@@ -50,7 +50,7 @@ class DemoPanel extends Component {
             <div className="overlay rounded-lg mb-8 offcanvas-demo">
               <div className="overlay-wrapper rounded-lg">
                 <img
-                  src="assets/media/demos/demo2.png"
+                  src="/assets/media/demos/demo2.png"
                   alt=""
                   className="w-100"
                 />
@@ -76,7 +76,7 @@ class DemoPanel extends Component {
             <div className="overlay rounded-lg mb-8 offcanvas-demo">
               <div className="overlay-wrapper rounded-lg">
                 <img
-                  src="assets/media/demos/demo3.png"
+                  src="/assets/media/demos/demo3.png"
                   alt=""
                   className="w-100"
                 />
@@ -102,7 +102,7 @@ class DemoPanel extends Component {
             <div className="overlay rounded-lg mb-8 offcanvas-demo">
               <div className="overlay-wrapper rounded-lg">
                 <img
-                  src="assets/media/demos/demo4.png"
+                  src="/assets/media/demos/demo4.png"
                   alt=""
                   className="w-100"
                 />
@@ -128,7 +128,7 @@ class DemoPanel extends Component {
             <div className="overlay rounded-lg mb-8 offcanvas-demo">
               <div className="overlay-wrapper rounded-lg">
                 <img
-                  src="assets/media/demos/demo5.png"
+                  src="/assets/media/demos/demo5.png"
                   alt=""
                   className="w-100"
                 />
@@ -154,7 +154,7 @@ class DemoPanel extends Component {
             <div className="overlay rounded-lg mb-8 offcanvas-demo">
               <div className="overlay-wrapper rounded-lg">
                 <img
-                  src="assets/media/demos/demo6.png"
+                  src="/assets/media/demos/demo6.png"
                   alt=""
                   className="w-100"
                 />
@@ -180,7 +180,7 @@ class DemoPanel extends Component {
             <div className="overlay rounded-lg mb-8 offcanvas-demo">
               <div className="overlay-wrapper rounded-lg">
                 <img
-                  src="assets/media/demos/demo7.png"
+                  src="/assets/media/demos/demo7.png"
                   alt=""
                   className="w-100"
                 />
@@ -206,7 +206,7 @@ class DemoPanel extends Component {
             <div className="overlay rounded-lg mb-8 offcanvas-demo">
               <div className="overlay-wrapper rounded-lg">
                 <img
-                  src="assets/media/demos/demo8.png"
+                  src="/assets/media/demos/demo8.png"
                   alt=""
                   className="w-100"
                 />
@@ -232,7 +232,7 @@ class DemoPanel extends Component {
             <div className="overlay rounded-lg mb-8 offcanvas-demo">
               <div className="overlay-wrapper rounded-lg">
                 <img
-                  src="assets/media/demos/demo9.png"
+                  src="/assets/media/demos/demo9.png"
                   alt=""
                   className="w-100"
                 />
@@ -258,7 +258,7 @@ class DemoPanel extends Component {
             <div className="overlay rounded-lg mb-8 offcanvas-demo">
               <div className="overlay-wrapper rounded-lg">
                 <img
-                  src="assets/media/demos/demo10.png"
+                  src="/assets/media/demos/demo10.png"
                   alt=""
                   className="w-100"
                 />
@@ -284,7 +284,7 @@ class DemoPanel extends Component {
             <div className="overlay rounded-lg mb-8 offcanvas-demo">
               <div className="overlay-wrapper rounded-lg">
                 <img
-                  src="assets/media/demos/demo11.png"
+                  src="/assets/media/demos/demo11.png"
                   alt=""
                   className="w-100"
                 />
@@ -310,7 +310,7 @@ class DemoPanel extends Component {
             <div className="overlay rounded-lg mb-8 offcanvas-demo">
               <div className="overlay-wrapper rounded-lg">
                 <img
-                  src="assets/media/demos/demo12.png"
+                  src="/assets/media/demos/demo12.png"
                   alt=""
                   className="w-100"
                 />
@@ -336,7 +336,7 @@ class DemoPanel extends Component {
             <div className="overlay rounded-lg mb-8 offcanvas-demo">
               <div className="overlay-wrapper rounded-lg">
                 <img
-                  src="assets/media/demos/demo13.png"
+                  src="/assets/media/demos/demo13.png"
                   alt=""
                   className="w-100"
                 />
@@ -362,7 +362,7 @@ class DemoPanel extends Component {
             <div className="overlay rounded-lg mb-8 offcanvas-demo">
               <div className="overlay-wrapper rounded-lg">
                 <img
-                  src="assets/media/demos/demo14.png"
+                  src="/assets/media/demos/demo14.png"
                   alt=""
                   className="w-100"
                 />
@@ -380,7 +380,7 @@ class DemoPanel extends Component {
             <div className="overlay rounded-lg mb-8 offcanvas-demo">
               <div className="overlay-wrapper rounded-lg">
                 <img
-                  src="assets/media/demos/demo15.png"
+                  src="/assets/media/demos/demo15.png"
                   alt=""
                   className="w-100"
                 />
@@ -398,7 +398,7 @@ class DemoPanel extends Component {
             <div className="overlay rounded-lg mb-8 offcanvas-demo">
               <div className="overlay-wrapper rounded-lg">
                 <img
-                  src="assets/media/demos/demo16.png"
+                  src="/assets/media/demos/demo16.png"
                   alt=""
                   className="w-100"
                 />
@@ -416,7 +416,7 @@ class DemoPanel extends Component {
             <div className="overlay rounded-lg mb-8 offcanvas-demo">
               <div className="overlay-wrapper rounded-lg">
                 <img
-                  src="assets/media/demos/demo17.png"
+                  src="/assets/media/demos/demo17.png"
                   alt=""
                   className="w-100"
                 />
@@ -434,7 +434,7 @@ class DemoPanel extends Component {
             <div className="overlay rounded-lg mb-8 offcanvas-demo">
               <div className="overlay-wrapper rounded-lg">
                 <img
-                  src="assets/media/demos/demo18.png"
+                  src="/assets/media/demos/demo18.png"
                   alt=""
                   className="w-100"
                 />
@@ -452,7 +452,7 @@ class DemoPanel extends Component {
             <div className="overlay rounded-lg mb-8 offcanvas-demo">
               <div className="overlay-wrapper rounded-lg">
                 <img
-                  src="assets/media/demos/demo19.png"
+                  src="/assets/media/demos/demo19.png"
                   alt=""
                   className="w-100"
                 />
@@ -470,7 +470,7 @@ class DemoPanel extends Component {
             <div className="overlay rounded-lg mb-8 offcanvas-demo">
               <div className="overlay-wrapper rounded-lg">
                 <img
-                  src="assets/media/demos/demo20.png"
+                  src="/assets/media/demos/demo20.png"
                   alt=""
                   className="w-100"
                 />
@@ -488,7 +488,7 @@ class DemoPanel extends Component {
             <div className="overlay rounded-lg mb-8 offcanvas-demo">
               <div className="overlay-wrapper rounded-lg">
                 <img
-                  src="assets/media/demos/demo21.png"
+                  src="/assets/media/demos/demo21.png"
                   alt=""
                   className="w-100"
                 />
@@ -506,7 +506,7 @@ class DemoPanel extends Component {
             <div className="overlay rounded-lg mb-8 offcanvas-demo">
               <div className="overlay-wrapper rounded-lg">
                 <img
-                  src="assets/media/demos/demo22.png"
+                  src="/assets/media/demos/demo22.png"
                   alt=""
                   className="w-100"
                 />
@@ -524,7 +524,7 @@ class DemoPanel extends Component {
             <div className="overlay rounded-lg mb-8 offcanvas-demo">
               <div className="overlay-wrapper rounded-lg">
                 <img
-                  src="assets/media/demos/demo23.png"
+                  src="/assets/media/demos/demo23.png"
                   alt=""
                   className="w-100"
                 />
@@ -542,7 +542,7 @@ class DemoPanel extends Component {
             <div className="overlay rounded-lg mb-8 offcanvas-demo">
               <div className="overlay-wrapper rounded-lg">
                 <img
-                  src="assets/media/demos/demo24.png"
+                  src="/assets/media/demos/demo24.png"
                   alt=""
                   className="w-100"
                 />
@@ -560,7 +560,7 @@ class DemoPanel extends Component {
             <div className="overlay rounded-lg mb-8 offcanvas-demo">
               <div className="overlay-wrapper rounded-lg">
                 <img
-                  src="assets/media/demos/demo25.png"
+                  src="/assets/media/demos/demo25.png"
                   alt=""
                   className="w-100"
                 />
@@ -578,7 +578,7 @@ class DemoPanel extends Component {
             <div className="overlay rounded-lg mb-8 offcanvas-demo">
               <div className="overlay-wrapper rounded-lg">
                 <img
-                  src="assets/media/demos/demo26.png"
+                  src="/assets/media/demos/demo26.png"
                   alt=""
                   className="w-100"
                 />
@@ -596,7 +596,7 @@ class DemoPanel extends Component {
             <div className="overlay rounded-lg mb-8 offcanvas-demo">
               <div className="overlay-wrapper rounded-lg">
                 <img
-                  src="assets/media/demos/demo27.png"
+                  src="/assets/media/demos/demo27.png"
                   alt=""
                   className="w-100"
                 />
@@ -614,7 +614,7 @@ class DemoPanel extends Component {
             <div className="overlay rounded-lg mb-8 offcanvas-demo">
               <div className="overlay-wrapper rounded-lg">
                 <img
-                  src="assets/media/demos/demo28.png"
+                  src="/assets/media/demos/demo28.png"
                   alt=""
                   className="w-100"
                 />
@@ -632,7 +632,7 @@ class DemoPanel extends Component {
             <div className="overlay rounded-lg mb-8 offcanvas-demo">
               <div className="overlay-wrapper rounded-lg">
                 <img
-                  src="assets/media/demos/demo29.png"
+                  src="/assets/media/demos/demo29.png"
                   alt=""
                   className="w-100"
                 />
@@ -650,7 +650,7 @@ class DemoPanel extends Component {
             <div className="overlay rounded-lg mb-8 offcanvas-demo">
               <div className="overlay-wrapper rounded-lg">
                 <img
-                  src="assets/media/demos/demo30.png"
+                  src="/assets/media/demos/demo30.png"
                   alt=""
                   className="w-100"
                 />

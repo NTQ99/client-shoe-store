@@ -7,7 +7,7 @@ class Loading extends Component {
         <img
           alt="Logo"
           className="max-h-75px"
-          src="assets/media/logos/logo-letter-4.png"
+          src="/assets/media/logos/logo-letter-4.png"
         />
         <div className="spinner spinner-primary" />
       </div>

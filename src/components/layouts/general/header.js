@@ -51,7 +51,7 @@ class Header extends Component {
               >
                 <div className="btn btn-icon btn-clean btn-lg btn-dropdown mr-1">
                   <span className="svg-icon svg-icon-xl svg-icon-primary">
-                    <SVG src="assets/media/svg/icons/General/Search.svg" />
+                    <SVG src="/assets/media/svg/icons/General/Search.svg" />
                   </span>
                 </div>
               </div>
@@ -74,7 +74,7 @@ class Header extends Component {
               >
                 <div className="btn btn-icon btn-clean btn-dropdown btn-lg mr-1 pulse pulse-primary">
                   <span className="svg-icon svg-icon-xl svg-icon-primary">
-                    <SVG src="assets/media/svg/icons/Code/Compiling.svg" />
+                    <SVG src="/assets/media/svg/icons/Code/Compiling.svg" />
                   </span>
                   <span className="pulse-ring" />
                 </div>
@@ -97,7 +97,7 @@ class Header extends Component {
                 // id="kt_quick_panel_toggle"
               >
                 <span className="svg-icon svg-icon-xl svg-icon-primary">
-                  <SVG src="assets/media/svg/icons/Layout/Layout-4-blocks.svg" />
+                  <SVG src="/assets/media/svg/icons/Layout/Layout-4-blocks.svg" />
                 </span>
               </div>
             </div>
@@ -113,7 +113,7 @@ class Header extends Component {
                 <div className="btn btn-icon btn-clean btn-dropdown btn-lg mr-1">
                   <img
                     className="h-20px w-20px rounded-sm"
-                    src="assets/media/svg/flags/220-vietnam.svg"
+                    src="/assets/media/svg/flags/220-vietnam.svg"
                     alt=""
                   />
                 </div>

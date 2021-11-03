@@ -11,9 +11,9 @@ const UserDialog = (props) => {
         </Modal.Header>
         <Modal.Body>
             <span className={`svg-icon svg-icon-xxl svg-icon-${variant} mr-3`}>
-                {variant=== "primary" && <SVG src="assets/media/svg/icons/General/Unlock.svg" />}
-                {variant=== "warning" && <SVG src="assets/media/svg/icons/General/Lock.svg" />}
-                {variant=== "danger" && <SVG src="assets/media/svg/icons/Code/Minus.svg" />}
+                {variant=== "primary" && <SVG src="/assets/media/svg/icons/General/Unlock.svg" />}
+                {variant=== "warning" && <SVG src="/assets/media/svg/icons/General/Lock.svg" />}
+                {variant=== "danger" && <SVG src="/assets/media/svg/icons/Code/Minus.svg" />}
             </span>
             {message}
         </Modal.Body>

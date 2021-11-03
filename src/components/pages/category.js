@@ -687,7 +687,6 @@ class CategoryPage extends Component {
               <section className="lattest-product-area pb-40 category-list">
                 <div className="row">
                   {products.map(function (item, i) {
-                    console.log(item);
                     return (
                       <div className="col-lg-3 col-md-6">
                         <div className="single-product">
@@ -782,7 +781,7 @@ class CategoryPage extends Component {
                   <div className="col-lg-4 col-md-4 col-sm-6 mb-20">
                     <div className="single-related-product d-flex">
                       <a href="#">
-                        <img src="assets/img/r1.jpg" alt="" />
+                        <img src="/assets/img/r1.jpg" alt="" />
                       </a>
                       <div className="desc">
                         <a href="#" className="title">
@@ -798,7 +797,7 @@ class CategoryPage extends Component {
                   <div className="col-lg-4 col-md-4 col-sm-6 mb-20">
                     <div className="single-related-product d-flex">
                       <a href="#">
-                        <img src="assets/img/r2.jpg" alt="" />
+                        <img src="/assets/img/r2.jpg" alt="" />
                       </a>
                       <div className="desc">
                         <a href="#" className="title">
@@ -814,7 +813,7 @@ class CategoryPage extends Component {
                   <div className="col-lg-4 col-md-4 col-sm-6 mb-20">
                     <div className="single-related-product d-flex">
                       <a href="#">
-                        <img src="assets/img/r3.jpg" alt="" />
+                        <img src="/assets/img/r3.jpg" alt="" />
                       </a>
                       <div className="desc">
                         <a href="#" className="title">
@@ -830,7 +829,7 @@ class CategoryPage extends Component {
                   <div className="col-lg-4 col-md-4 col-sm-6 mb-20">
                     <div className="single-related-product d-flex">
                       <a href="#">
-                        <img src="assets/img/r5.jpg" alt="" />
+                        <img src="/assets/img/r5.jpg" alt="" />
                       </a>
                       <div className="desc">
                         <a href="#" className="title">
@@ -846,7 +845,7 @@ class CategoryPage extends Component {
                   <div className="col-lg-4 col-md-4 col-sm-6 mb-20">
                     <div className="single-related-product d-flex">
                       <a href="#">
-                        <img src="assets/img/r6.jpg" alt="" />
+                        <img src="/assets/img/r6.jpg" alt="" />
                       </a>
                       <div className="desc">
                         <a href="#" className="title">
@@ -862,7 +861,7 @@ class CategoryPage extends Component {
                   <div className="col-lg-4 col-md-4 col-sm-6 mb-20">
                     <div className="single-related-product d-flex">
                       <a href="#">
-                        <img src="assets/img/r7.jpg" alt="" />
+                        <img src="/assets/img/r7.jpg" alt="" />
                       </a>
                       <div className="desc">
                         <a href="#" className="title">
@@ -878,7 +877,7 @@ class CategoryPage extends Component {
                   <div className="col-lg-4 col-md-4 col-sm-6">
                     <div className="single-related-product d-flex">
                       <a href="#">
-                        <img src="assets/img/r9.jpg" alt="" />
+                        <img src="/assets/img/r9.jpg" alt="" />
                       </a>
                       <div className="desc">
                         <a href="#" className="title">
@@ -894,7 +893,7 @@ class CategoryPage extends Component {
                   <div className="col-lg-4 col-md-4 col-sm-6">
                     <div className="single-related-product d-flex">
                       <a href="#">
-                        <img src="assets/img/r10.jpg" alt="" />
+                        <img src="/assets/img/r10.jpg" alt="" />
                       </a>
                       <div className="desc">
                         <a href="#" className="title">
@@ -910,7 +909,7 @@ class CategoryPage extends Component {
                   <div className="col-lg-4 col-md-4 col-sm-6">
                     <div className="single-related-product d-flex">
                       <a href="#">
-                        <img src="assets/img/r11.jpg" alt="" />
+                        <img src="/assets/img/r11.jpg" alt="" />
                       </a>
                       <div className="desc">
                         <a href="#" className="title">
@@ -930,7 +929,7 @@ class CategoryPage extends Component {
                   <a href="#" target="_blank">
                     <img
                       className="img-fluid d-block mx-auto"
-                      src="assets/img/category/c5.jpg"
+                      src="/assets/img/category/c5.jpg"
                       alt=""
                     />
                   </a>

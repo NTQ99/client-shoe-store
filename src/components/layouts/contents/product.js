@@ -46,7 +46,7 @@ const OrderToolbar = (onCreateHandle) => {
   return (
     <button className="btn btn-primary font-weight-bolder" onClick={onCreateHandle}>
       <span className="svg-icon svg-icon-md">
-        <SVG src="assets/media/svg/icons/Design/Flatten.svg" />
+        <SVG src="/assets/media/svg/icons/Design/Flatten.svg" />
       </span>
       Tạo mới
     </button>

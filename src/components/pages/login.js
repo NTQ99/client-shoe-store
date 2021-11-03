@@ -247,7 +247,7 @@ class LoginPage extends Component {
             {typePage === "login" && <div className="row">
               <div className="col-lg-6">
                 <div className="login_box_img">
-                  <img className="img-fluid" src="assets/img/category/c3.jpg" alt="" />
+                  <img className="img-fluid" src="/assets/img/category/c3.jpg" alt="" />
                   <div className="hover">
                     <h4>Bạn chưa có tài khoản?</h4>
                     <p>
@@ -479,28 +479,28 @@ class LoginPage extends Component {
                   <h6 className="mb-20">Instragram Feed</h6>
                   <ul className="instafeed d-flex flex-wrap">
                     <li>
-                      <img src="assets/img/i1.jpg" alt="" />
+                      <img src="/assets/img/i1.jpg" alt="" />
                     </li>
                     <li>
-                      <img src="assets/img/i2.jpg" alt="" />
+                      <img src="/assets/img/i2.jpg" alt="" />
                     </li>
                     <li>
-                      <img src="assets/img/i3.jpg" alt="" />
+                      <img src="/assets/img/i3.jpg" alt="" />
                     </li>
                     <li>
-                      <img src="assets/img/i4.jpg" alt="" />
+                      <img src="/assets/img/i4.jpg" alt="" />
                     </li>
                     <li>
-                      <img src="assets/img/i5.jpg" alt="" />
+                      <img src="/assets/img/i5.jpg" alt="" />
                     </li>
                     <li>
-                      <img src="assets/img/i6.jpg" alt="" />
+                      <img src="/assets/img/i6.jpg" alt="" />
                     </li>
                     <li>
-                      <img src="assets/img/i7.jpg" alt="" />
+                      <img src="/assets/img/i7.jpg" alt="" />
                     </li>
                     <li>
-                      <img src="assets/img/i8.jpg" alt="" />
+                      <img src="/assets/img/i8.jpg" alt="" />
                     </li>
                   </ul>
                 </div>

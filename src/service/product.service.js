@@ -15,6 +15,16 @@ class ProductService {
     });
   }
 
+  getProductById(id) {
+    return axios({
+      method: "post",
+      url: BASE_URL + "/product/get/"+id,
+      headers: {
+        Authorization: authHeader(),
+      },
+    });
+  }
+
   createProduct(data) {
     return axios({
       method: "post",

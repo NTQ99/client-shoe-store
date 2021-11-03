@@ -7,13 +7,13 @@ function AdminAside() {
   <div className="brand flex-column-auto" id="kt_brand">
     {/*begin::Logo*/}
     <a href="/home" className="brand-logo">
-      <img alt="Logo" src="assets/media/logos/logo-light.png" height="50"/>
+      <img alt="Logo" src="/assets/media/logos/logo-light.png" height="50"/>
     </a>
     {/*end::Logo*/}
     {/*begin::Toggle*/}
     <button className="brand-toggle btn btn-sm px-0" id="kt_aside_toggle">
       <span className="svg-icon svg-icon svg-icon-xl">
-        <SVG src="assets/media/svg/icons/Navigation/Angle-double-left.svg" />
+        <SVG src="/assets/media/svg/icons/Navigation/Angle-double-left.svg" />
       </span>
     </button>
     {/*end::Toolbar*/}
@@ -28,7 +28,7 @@ function AdminAside() {
         <li className="menu-item" id="aside_dashboard">
           <a className="menu-link" href="/dashboard">
             <span className="svg-icon menu-icon">
-              <SVG src="assets/media/svg/icons/Design/Layers.svg" />
+              <SVG src="/assets/media/svg/icons/Design/Layers.svg" />
             </span>
             <span className="menu-text">Tổng quan</span>
           </a>
@@ -41,7 +41,7 @@ function AdminAside() {
         <li className="menu-item menu-item-submenu" data-menu-toggle="hover" id="aside_order">
           <a className="menu-link menu-toggle" href="/order">
             <span className="svg-icon menu-icon">
-              <SVG src="assets/media/svg/icons/Shopping/Cart1.svg" />
+              <SVG src="/assets/media/svg/icons/Shopping/Cart1.svg" />
             </span>
             <span className="menu-text">Đơn hàng</span>
             <i className="menu-arrow" />
@@ -71,7 +71,7 @@ function AdminAside() {
         <li className="menu-item">
           <a className="menu-link" href="/product">
             <span className="svg-icon menu-icon">
-              <SVG src="assets/media/svg/icons/Shopping/Box2.svg" />
+              <SVG src="/assets/media/svg/icons/Shopping/Box2.svg" />
             </span>
             <span className="menu-text">Sản phẩm</span>
           </a>
@@ -79,7 +79,7 @@ function AdminAside() {
         <li className="menu-item" id="aside_customer">
           <a href="/customer" className="menu-link">
             <span className="svg-icon menu-icon">
-            <SVG src="assets/media/svg/icons/Shopping/Customer.svg" />
+            <SVG src="/assets/media/svg/icons/Shopping/Customer.svg" />
             </span>
             <span className="menu-text">Khách hàng</span>
           </a>

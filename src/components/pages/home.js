@@ -4,12 +4,14 @@ import Header from "../layouts/shoe-store/header";
 import Footer from "../layouts/shoe-store/footer";
 
 import ProductService from "../../service/product.service";
+import cartService from "../../service/cart.service";
 
 class HomePage extends Component {
   constructor(props) {
     super(props);
     this.state={
-      products: []
+      products: [],
+      numOfcart: 0
     }
   }
 
@@ -18,12 +20,17 @@ class HomePage extends Component {
       this.setState({products: res.data.data})
     })
   }
+
+  addProductToCart(id) {
+    this.setState({numOfcart: this.state.numOfcart + 1});
+    cartService.addToCart(id);
+  }
   
   render() {
-    const {products} = this.state
+    const {products, numOfcart} = this.state
     return (
       <div>
-        <Header />
+        <Header numOfcart={numOfcart}/>
         {/* start banner Area */}
         <section className="banner-area">
           <div className="container">
@@ -58,7 +65,7 @@ class HomePage extends Component {
                       <div className="banner-img">
                         <img
                           className="img-fluid"
-                          src="assets/img/banner/banner-img.png"
+                          src="/assets/img/banner/banner-img.png"
                           alt=""
                         />
                       </div>
@@ -92,7 +99,7 @@ class HomePage extends Component {
                       <div className="banner-img">
                         <img
                           className="img-fluid"
-                          src="assets/img/banner/banner-img.png"
+                          src="/assets/img/banner/banner-img.png"
                           alt=""
                         />
                       </div>
@@ -112,7 +119,7 @@ class HomePage extends Component {
               <div className="col-lg-3 col-md-6 col-sm-6">
                 <div className="single-features">
                   <div className="f-icon">
-                    <img src="assets/img/features/f-icon1.png" alt="" />
+                    <img src="/assets/img/features/f-icon1.png" alt="" />
                   </div>
                   <h6>Free Delivery</h6>
                   <p>Free Shipping on all order</p>
@@ -122,7 +129,7 @@ class HomePage extends Component {
               <div className="col-lg-3 col-md-6 col-sm-6">
                 <div className="single-features">
                   <div className="f-icon">
-                    <img src="assets/img/features/f-icon2.png" alt="" />
+                    <img src="/assets/img/features/f-icon2.png" alt="" />
                   </div>
                   <h6>Return Policy</h6>
                   <p>Free Shipping on all order</p>
@@ -132,7 +139,7 @@ class HomePage extends Component {
               <div className="col-lg-3 col-md-6 col-sm-6">
                 <div className="single-features">
                   <div className="f-icon">
-                    <img src="assets/img/features/f-icon3.png" alt="" />
+                    <img src="/assets/img/features/f-icon3.png" alt="" />
                   </div>
                   <h6>24/7 Support</h6>
                   <p>Free Shipping on all order</p>
@@ -142,7 +149,7 @@ class HomePage extends Component {
               <div className="col-lg-3 col-md-6 col-sm-6">
                 <div className="single-features">
                   <div className="f-icon">
-                    <img src="assets/img/features/f-icon4.png" alt="" />
+                    <img src="/assets/img/features/f-icon4.png" alt="" />
                   </div>
                   <h6>Secure Payment</h6>
                   <p>Free Shipping on all order</p>
@@ -163,7 +170,7 @@ class HomePage extends Component {
                       <div className="overlay" />
                       <img
                         className="img-fluid w-100"
-                        src="assets/img/category/c1.jpg"
+                        src="/assets/img/category/c1.jpg"
                         alt=""
                       />
                       <a
@@ -182,7 +189,7 @@ class HomePage extends Component {
                       <div className="overlay" />
                       <img
                         className="img-fluid w-100"
-                        src="assets/img/category/c2.jpg"
+                        src="/assets/img/category/c2.jpg"
                         alt=""
                       />
                       <a
@@ -201,7 +208,7 @@ class HomePage extends Component {
                       <div className="overlay" />
                       <img
                         className="img-fluid w-100"
-                        src="assets/img/category/c3.jpg"
+                        src="/assets/img/category/c3.jpg"
                         alt=""
                       />
                       <a
@@ -220,7 +227,7 @@ class HomePage extends Component {
                       <div className="overlay" />
                       <img
                         className="img-fluid w-100"
-                        src="assets/img/category/c4.jpg"
+                        src="/assets/img/category/c4.jpg"
                         alt=""
                       />
                       <a
@@ -241,7 +248,7 @@ class HomePage extends Component {
                   <div className="overlay" />
                   <img
                     className="img-fluid w-100"
-                    src="assets/img/category/c5.jpg"
+                    src="/assets/img/category/c5.jpg"
                     alt=""
                   />
                   <a
@@ -277,8 +284,7 @@ class HomePage extends Component {
                 </div>
               </div>
               <div className="row">
-              {products.map(function(item, i){
-                  console.log(item);
+              {products.map((item, i) => {
                   return (
                     <div className="col-lg-3 col-md-6">
                       <div className="single-product">
@@ -294,7 +300,7 @@ class HomePage extends Component {
                             <h6 className="l-through">{item.price[1] + " đ"}</h6>
                           </div>
                           <div className="prd-bottom">
-                            <a href className="social-info">
+                            <a href className="social-info" onClick={() => this.addProductToCart(item.id)}>
                               <span className="ti-bag" />
                               <p className="hover-text">add to bag</p>
                             </a>
@@ -306,7 +312,7 @@ class HomePage extends Component {
                               <span className="lnr lnr-sync" />
                               <p className="hover-text">compare</p>
                             </a>
-                            <a href className="social-info">
+                            <a href={"/product-detail/" + item.productCode} className="social-info">
                               <span className="lnr lnr-move" />
                               <p className="hover-text">view more</p>
                             </a>
@@ -336,13 +342,12 @@ class HomePage extends Component {
               </div>
               <div className="row">
                 {products.map(function(item, i){
-                  console.log(item);
                   return (
                     <div className="col-lg-3 col-md-6">
                       <div className="single-product">
                         <img
                           className="img-fluid"
-                          src="assets/img/product/p6.jpg"
+                          src="/assets/img/product/p6.jpg"
                           alt=""
                         />
                         <div className="product-details">
@@ -420,7 +425,7 @@ class HomePage extends Component {
                   <div className="single-exclusive-slider">
                     <img
                       className="img-fluid"
-                      src="assets/img/product/e-p1.png"
+                      src="/assets/img/product/e-p1.png"
                       alt=""
                     />
                     <div className="product-details">
@@ -443,7 +448,7 @@ class HomePage extends Component {
                   <div className="single-exclusive-slider">
                     <img
                       className="img-fluid"
-                      src="assets/img/product/e-p1.png"
+                      src="/assets/img/product/e-p1.png"
                       alt=""
                     />
                     <div className="product-details">
@@ -475,35 +480,35 @@ class HomePage extends Component {
               <a className="col single-img" href="/">
                 <img
                   className="img-fluid d-block mx-auto"
-                  src="assets/img/brand/1.png"
+                  src="/assets/img/brand/1.png"
                   alt=""
                 />
               </a>
               <a className="col single-img" href="/">
                 <img
                   className="img-fluid d-block mx-auto"
-                  src="assets/img/brand/2.png"
+                  src="/assets/img/brand/2.png"
                   alt=""
                 />
               </a>
               <a className="col single-img" href="/">
                 <img
                   className="img-fluid d-block mx-auto"
-                  src="assets/img/brand/3.png"
+                  src="/assets/img/brand/3.png"
                   alt=""
                 />
               </a>
               <a className="col single-img" href="/">
                 <img
                   className="img-fluid d-block mx-auto"
-                  src="assets/img/brand/4.png"
+                  src="/assets/img/brand/4.png"
                   alt=""
                 />
               </a>
               <a className="col single-img" href="/">
                 <img
                   className="img-fluid d-block mx-auto"
-                  src="assets/img/brand/5.png"
+                  src="/assets/img/brand/5.png"
                   alt=""
                 />
               </a>
@@ -532,7 +537,7 @@ class HomePage extends Component {
                   <div className="col-lg-4 col-md-4 col-sm-6 mb-20">
                     <div className="single-related-product d-flex">
                       <a href="/">
-                        <img src="assets/img/r1.jpg" alt="" />
+                        <img src="/assets/img/r1.jpg" alt="" />
                       </a>
                       <div className="desc">
                         <a href="/" className="title">
@@ -548,7 +553,7 @@ class HomePage extends Component {
                   <div className="col-lg-4 col-md-4 col-sm-6 mb-20">
                     <div className="single-related-product d-flex">
                       <a href="/">
-                        <img src="assets/img/r2.jpg" alt="" />
+                        <img src="/assets/img/r2.jpg" alt="" />
                       </a>
                       <div className="desc">
                         <a href="/" className="title">
@@ -564,7 +569,7 @@ class HomePage extends Component {
                   <div className="col-lg-4 col-md-4 col-sm-6 mb-20">
                     <div className="single-related-product d-flex">
                       <a href="/">
-                        <img src="assets/img/r3.jpg" alt="" />
+                        <img src="/assets/img/r3.jpg" alt="" />
                       </a>
                       <div className="desc">
                         <a href="/" className="title">
@@ -580,7 +585,7 @@ class HomePage extends Component {
                   <div className="col-lg-4 col-md-4 col-sm-6 mb-20">
                     <div className="single-related-product d-flex">
                       <a href="/">
-                        <img src="assets/img/r5.jpg" alt="" />
+                        <img src="/assets/img/r5.jpg" alt="" />
                       </a>
                       <div className="desc">
                         <a href="/" className="title">
@@ -596,7 +601,7 @@ class HomePage extends Component {
                   <div className="col-lg-4 col-md-4 col-sm-6 mb-20">
                     <div className="single-related-product d-flex">
                       <a href="/">
-                        <img src="assets/img/r6.jpg" alt="" />
+                        <img src="/assets/img/r6.jpg" alt="" />
                       </a>
                       <div className="desc">
                         <a href="/" className="title">
@@ -612,7 +617,7 @@ class HomePage extends Component {
                   <div className="col-lg-4 col-md-4 col-sm-6 mb-20">
                     <div className="single-related-product d-flex">
                       <a href="/">
-                        <img src="assets/img/r7.jpg" alt="" />
+                        <img src="/assets/img/r7.jpg" alt="" />
                       </a>
                       <div className="desc">
                         <a href="/" className="title">
@@ -628,7 +633,7 @@ class HomePage extends Component {
                   <div className="col-lg-4 col-md-4 col-sm-6">
                     <div className="single-related-product d-flex">
                       <a href="/">
-                        <img src="assets/img/r9.jpg" alt="" />
+                        <img src="/assets/img/r9.jpg" alt="" />
                       </a>
                       <div className="desc">
                         <a href="/" className="title">
@@ -644,7 +649,7 @@ class HomePage extends Component {
                   <div className="col-lg-4 col-md-4 col-sm-6">
                     <div className="single-related-product d-flex">
                       <a href="/">
-                        <img src="assets/img/r10.jpg" alt="" />
+                        <img src="/assets/img/r10.jpg" alt="" />
                       </a>
                       <div className="desc">
                         <a href="/" className="title">
@@ -660,7 +665,7 @@ class HomePage extends Component {
                   <div className="col-lg-4 col-md-4 col-sm-6">
                     <div className="single-related-product d-flex">
                       <a href="/">
-                        <img src="assets/img/r11.jpg" alt="" />
+                        <img src="/assets/img/r11.jpg" alt="" />
                       </a>
                       <div className="desc">
                         <a href="/" className="title">
@@ -680,7 +685,7 @@ class HomePage extends Component {
                   <a href="/" target="_blank">
                     <img
                       className="img-fluid d-block mx-auto"
-                      src="assets/img/category/c5.jpg"
+                      src="/assets/img/category/c5.jpg"
                       alt=""
                     />
                   </a>

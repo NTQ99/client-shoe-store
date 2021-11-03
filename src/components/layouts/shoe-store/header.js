@@ -3,14 +3,30 @@ import React, { Component } from "react";
 import authHeader from "../../../service/auth-header";
 
 import AuthService from "../../../service/auth.service";
+import cartService from "../../../service/cart.service";
 
 class Header extends Component {
-
-    logout = (e) => {
-        e.preventDefault();
-        AuthService.logout(()=>window.location.replace("/"))
+  constructor(props) {
+    super(props);
+    this.state = {
+      numOfCart: 0
     }
+  }
+
+  componentDidMount() {
+    this.setState({numOfCart: cartService.getTotalNum()})
+  }
+  
+  componentWillReceiveProps(nextProps) {
+    this.setState({numOfCart: cartService.getTotalNum()})
+  }
+
+  logout = (e) => {
+    e.preventDefault();
+    AuthService.logout(() => window.location.replace("/"));
+  };
   render() {
+    const {numOfCart} = this.state
     return (
       <header className="header_area sticky-header">
         <div className="main_menu">
@@ -19,7 +35,7 @@ class Header extends Component {
               {/* Brand and toggle get grouped for better mobile display */}
               <a className="navbar-brand logo_h" href="/home">
                 <img
-                  src="assets/media/logos/logo-light.png"
+                  src="/assets/media/logos/logo-light.png"
                   height="50px"
                   alt=""
                 />
@@ -142,14 +158,25 @@ class Header extends Component {
                   </li>
                   <li className="nav-item">
                     <a className="nav-link" href="contact.html">
-                    Về chúng tôi
+                      Về chúng tôi
                     </a>
                   </li>
                 </ul>
                 <ul className="nav navbar-nav navbar-right">
                   <li className="nav-item">
-                    <a href="/" className="cart">
+                    <a href="/cart" className="cart">
                       <span className="ti-bag" />
+                      <div
+                        className="badge badge-danger"
+                        style={{
+                          position: "absolute",
+                          borderRadius: "50%",
+                          fontSize: "60%",
+                          top: "30%"
+                        }}
+                      >
+                        {numOfCart}
+                      </div>
                     </a>
                   </li>
                   <li className="nav-item">
@@ -158,12 +185,16 @@ class Header extends Component {
                     </button>
                   </li>
                   <li className="nav-item">
-                    {!authHeader() && <a href="/login">
+                    {!authHeader() && (
+                      <a href="/login">
                         <span className="lnr lnr-enter"></span>
-                    </a>}
-                    {authHeader() && <a href="/logout" onClick={this.logout}>
+                      </a>
+                    )}
+                    {authHeader() && (
+                      <a href="/logout" onClick={this.logout}>
                         <span className="lnr lnr-exit"></span>
-                    </a>}
+                      </a>
+                    )}
                   </li>
                 </ul>
               </div>

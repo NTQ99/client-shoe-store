@@ -66,7 +66,7 @@ class QuickPanel extends Component {
                   <div className="symbol symbol-50 symbol-light mr-5">
                     <span className="symbol-label">
                       <img
-                        src="assets/media/svg/misc/006-plurk.svg"
+                        src="/assets/media/svg/misc/006-plurk.svg"
                         className="h-50 align-self-center"
                         alt=""
                       />
@@ -93,7 +93,7 @@ class QuickPanel extends Component {
                   <div className="symbol symbol-50 symbol-light mr-5">
                     <span className="symbol-label">
                       <img
-                        src="assets/media/svg/misc/015-telegram.svg"
+                        src="/assets/media/svg/misc/015-telegram.svg"
                         className="h-50 align-self-center"
                         alt=""
                       />
@@ -120,7 +120,7 @@ class QuickPanel extends Component {
                   <div className="symbol symbol-50 symbol-light mr-5">
                     <span className="symbol-label">
                       <img
-                        src="assets/media/svg/misc/003-puzzle.svg"
+                        src="/assets/media/svg/misc/003-puzzle.svg"
                         className="h-50 align-self-center"
                         alt=""
                       />
@@ -147,7 +147,7 @@ class QuickPanel extends Component {
                   <div className="symbol symbol-50 symbol-light mr-5">
                     <span className="symbol-label">
                       <img
-                        src="assets/media/svg/misc/005-bebo.svg"
+                        src="/assets/media/svg/misc/005-bebo.svg"
                         className="h-50 align-self-center"
                         alt=""
                       />
@@ -174,7 +174,7 @@ class QuickPanel extends Component {
                   <div className="symbol symbol-50 symbol-light mr-5">
                     <span className="symbol-label">
                       <img
-                        src="assets/media/svg/misc/014-kickstarter.svg"
+                        src="/assets/media/svg/misc/014-kickstarter.svg"
                         className="h-50 align-self-center"
                         alt=""
                       />

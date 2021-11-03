@@ -111,7 +111,7 @@ const OrderToolbar = (onCreateHandle) => {
           onClick={handleExportClick}
         >
           <span className="svg-icon svg-icon-md">
-            <SVG src="assets/media/svg/icons/Files/ExportFile.svg" />
+            <SVG src="/assets/media/svg/icons/Files/ExportFile.svg" />
           </span>
           Xuất file
         </div>
@@ -121,7 +121,7 @@ const OrderToolbar = (onCreateHandle) => {
           onClick={onCreateHandle}
         >
           <span className="svg-icon svg-icon-md">
-            <SVG src="assets/media/svg/icons/Design/Flatten.svg" />
+            <SVG src="/assets/media/svg/icons/Design/Flatten.svg" />
           </span>
           Tạo mới
         </button>

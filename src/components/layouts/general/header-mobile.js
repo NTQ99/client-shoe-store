@@ -6,7 +6,7 @@ function HeaderMobile() {
     >
       {/*begin::Logo*/}
       <a href="index.html" className="brand-logo" style={{backgroundColor: "#fff"}}>
-        <img alt="Logo" src="assets/media/logos/logo-light.png" height="50px"/>
+        <img alt="Logo" src="/assets/media/logos/logo-light.png" height="50px"/>
       </a>
       {/*end::Logo*/}
       {/*begin::Toolbar*/}

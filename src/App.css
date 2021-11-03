@@ -104,3 +104,12 @@ input::placeholder {
 .expand-cell-header {
   width: 10px;
 }
+section {
+  background-color: white;
+}
+i.lnr {
+  color: white;
+}
+.cart_inner th,td {
+  min-width: 100px;
+}

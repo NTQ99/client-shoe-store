@@ -716,7 +716,7 @@ function Content() {
                         <td className="pl-0 py-4">
                           <div className="symbol symbol-50 symbol-light">
                             <span className="symbol-label">
-                              <img src="assets/media/svg/misc/003-puzzle.svg" className="h-50 align-self-center" alt="" />
+                              <img src="/assets/media/svg/misc/003-puzzle.svg" className="h-50 align-self-center" alt="" />
                             </span>
                           </div>
                         </td>
@@ -783,7 +783,7 @@ function Content() {
                         <td className="pl-0 py-4">
                           <div className="symbol symbol-50 symbol-light">
                             <span className="symbol-label">
-                              <img src="assets/media/svg/misc/005-bebo.svg" className="h-50 align-self-center" alt="" />
+                              <img src="/assets/media/svg/misc/005-bebo.svg" className="h-50 align-self-center" alt="" />
                             </span>
                           </div>
                         </td>
@@ -850,7 +850,7 @@ function Content() {
                         <td className="pl-0 py-4">
                           <div className="symbol symbol-50 symbol-light">
                             <span className="symbol-label">
-                              <img src="assets/media/svg/misc/014-kickstarter.svg" className="h-50 align-self-center" alt="" />
+                              <img src="/assets/media/svg/misc/014-kickstarter.svg" className="h-50 align-self-center" alt="" />
                             </span>
                           </div>
                         </td>
@@ -917,7 +917,7 @@ function Content() {
                         <td className="pl-0 py-4">
                           <div className="symbol symbol-50 symbol-light mr-1">
                             <span className="symbol-label">
-                              <img src="assets/media/svg/misc/006-plurk.svg" className="h-50 align-self-center" alt="" />
+                              <img src="/assets/media/svg/misc/006-plurk.svg" className="h-50 align-self-center" alt="" />
                             </span>
                           </div>
                         </td>
@@ -984,7 +984,7 @@ function Content() {
                         <td className="pl-0 py-4">
                           <div className="symbol symbol-50 symbol-light">
                             <span className="symbol-label">
-                              <img src="assets/media/svg/misc/015-telegram.svg" className="h-50 align-self-center" alt="" />
+                              <img src="/assets/media/svg/misc/015-telegram.svg" className="h-50 align-self-center" alt="" />
                             </span>
                           </div>
                         </td>
@@ -1073,7 +1073,7 @@ function Content() {
                         <td className="pl-0 py-4">
                           <div className="symbol symbol-50 symbol-light">
                             <span className="symbol-label">
-                              <img src="assets/media/svg/misc/015-telegram.svg" className="h-50 align-self-center" alt="" />
+                              <img src="/assets/media/svg/misc/015-telegram.svg" className="h-50 align-self-center" alt="" />
                             </span>
                           </div>
                         </td>
@@ -1140,7 +1140,7 @@ function Content() {
                         <td className="pl-0 py-4">
                           <div className="symbol symbol-50 symbol-light">
                             <span className="symbol-label">
-                              <img src="assets/media/svg/misc/003-puzzle.svg" className="h-50 align-self-center" alt="" />
+                              <img src="/assets/media/svg/misc/003-puzzle.svg" className="h-50 align-self-center" alt="" />
                             </span>
                           </div>
                         </td>
@@ -1207,7 +1207,7 @@ function Content() {
                         <td className="pl-0 py-4">
                           <div className="symbol symbol-50 symbol-light">
                             <span className="symbol-label">
-                              <img src="assets/media/svg/misc/005-bebo.svg" className="h-50 align-self-center" alt="" />
+                              <img src="/assets/media/svg/misc/005-bebo.svg" className="h-50 align-self-center" alt="" />
                             </span>
                           </div>
                         </td>
@@ -1274,7 +1274,7 @@ function Content() {
                         <td className="pl-0 py-4">
                           <div className="symbol symbol-50 symbol-light mr-1">
                             <span className="symbol-label">
-                              <img src="assets/media/svg/misc/006-plurk.svg" className="h-50 align-self-center" alt="" />
+                              <img src="/assets/media/svg/misc/006-plurk.svg" className="h-50 align-self-center" alt="" />
                             </span>
                           </div>
                         </td>
@@ -1341,7 +1341,7 @@ function Content() {
                         <td className="pl-0 py-4">
                           <div className="symbol symbol-50 symbol-light">
                             <span className="symbol-label">
-                              <img src="assets/media/svg/misc/014-kickstarter.svg" className="h-50 align-self-center" alt="" />
+                              <img src="/assets/media/svg/misc/014-kickstarter.svg" className="h-50 align-self-center" alt="" />
                             </span>
                           </div>
                         </td>
@@ -1430,7 +1430,7 @@ function Content() {
                         <td className="pl-0 py-4">
                           <div className="symbol symbol-50 symbol-light mr-1">
                             <span className="symbol-label">
-                              <img src="assets/media/svg/misc/006-plurk.svg" className="h-50 align-self-center" alt="" />
+                              <img src="/assets/media/svg/misc/006-plurk.svg" className="h-50 align-self-center" alt="" />
                             </span>
                           </div>
                         </td>
@@ -1497,7 +1497,7 @@ function Content() {
                         <td className="pl-0 py-4">
                           <div className="symbol symbol-50 symbol-light">
                             <span className="symbol-label">
-                              <img src="assets/media/svg/misc/015-telegram.svg" className="h-50 align-self-center" alt="" />
+                              <img src="/assets/media/svg/misc/015-telegram.svg" className="h-50 align-self-center" alt="" />
                             </span>
                           </div>
                         </td>
@@ -1564,7 +1564,7 @@ function Content() {
                         <td className="pl-0 py-4">
                           <div className="symbol symbol-50 symbol-light">
                             <span className="symbol-label">
-                              <img src="assets/media/svg/misc/003-puzzle.svg" className="h-50 align-self-center" alt="" />
+                              <img src="/assets/media/svg/misc/003-puzzle.svg" className="h-50 align-self-center" alt="" />
                             </span>
                           </div>
                         </td>
@@ -1631,7 +1631,7 @@ function Content() {
                         <td className="pl-0 py-4">
                           <div className="symbol symbol-50 symbol-light">
                             <span className="symbol-label">
-                              <img src="assets/media/svg/misc/005-bebo.svg" className="h-50 align-self-center" alt="" />
+                              <img src="/assets/media/svg/misc/005-bebo.svg" className="h-50 align-self-center" alt="" />
                             </span>
                           </div>
                         </td>
@@ -1698,7 +1698,7 @@ function Content() {
                         <td className="pl-0 py-4">
                           <div className="symbol symbol-50 symbol-light">
                             <span className="symbol-label">
-                              <img src="assets/media/svg/misc/014-kickstarter.svg" className="h-50 align-self-center" alt="" />
+                              <img src="/assets/media/svg/misc/014-kickstarter.svg" className="h-50 align-self-center" alt="" />
                             </span>
                           </div>
                         </td>
@@ -1846,7 +1846,7 @@ function Content() {
               {/*begin::Symbol*/}
               <div className="symbol symbol-40 symbol-light-success mr-5">
                 <span className="symbol-label">
-                  <img src="assets/media/svg/avatars/009-boy-4.svg" className="h-75 align-self-end" alt="" />
+                  <img src="/assets/media/svg/avatars/009-boy-4.svg" className="h-75 align-self-end" alt="" />
                 </span>
               </div>
               {/*end::Symbol*/}
@@ -1923,7 +1923,7 @@ function Content() {
               {/*begin::Symbol*/}
               <div className="symbol symbol-40 symbol-light-success mr-5">
                 <span className="symbol-label">
-                  <img src="assets/media/svg/avatars/006-girl-3.svg" className="h-75 align-self-end" alt="" />
+                  <img src="/assets/media/svg/avatars/006-girl-3.svg" className="h-75 align-self-end" alt="" />
                 </span>
               </div>
               {/*end::Symbol*/}
@@ -2000,7 +2000,7 @@ function Content() {
               {/*begin::Symbol*/}
               <div className="symbol symbol-40 symbol-light-success mr-5">
                 <span className="symbol-label">
-                  <img src="assets/media/svg/avatars/011-boy-5.svg" className="h-75 align-self-end" alt="" />
+                  <img src="/assets/media/svg/avatars/011-boy-5.svg" className="h-75 align-self-end" alt="" />
                 </span>
               </div>
               {/*end::Symbol*/}
@@ -2077,7 +2077,7 @@ function Content() {
               {/*begin::Symbol*/}
               <div className="symbol symbol-40 symbol-light-success mr-5">
                 <span className="symbol-label">
-                  <img src="assets/media/svg/avatars/015-boy-6.svg" className="h-75 align-self-end" alt="" />
+                  <img src="/assets/media/svg/avatars/015-boy-6.svg" className="h-75 align-self-end" alt="" />
                 </span>
               </div>
               {/*end::Symbol*/}
@@ -2154,7 +2154,7 @@ function Content() {
               {/*begin::Symbol*/}
               <div className="symbol symbol-40 symbol-light-success mr-5">
                 <span className="symbol-label">
-                  <img src="assets/media/svg/avatars/016-boy-7.svg" className="h-75 align-self-end" alt="" />
+                  <img src="/assets/media/svg/avatars/016-boy-7.svg" className="h-75 align-self-end" alt="" />
                 </span>
               </div>
               {/*end::Symbol*/}
@@ -2794,7 +2794,7 @@ function Content() {
                 {/*begin::Symbol*/}
                 <div className="symbol symbol-45 symbol-light mr-5">
                   <span className="symbol-label">
-                    <img src="assets/media/svg/misc/006-plurk.svg" className="h-50 align-self-center" alt="" />
+                    <img src="/assets/media/svg/misc/006-plurk.svg" className="h-50 align-self-center" alt="" />
                   </span>
                 </div>
                 {/*end::Symbol*/}
@@ -2818,7 +2818,7 @@ function Content() {
                 {/*begin::Symbol*/}
                 <div className="symbol symbol-45 symbol-light mr-5">
                   <span className="symbol-label">
-                    <img src="assets/media/svg/misc/015-telegram.svg" className="h-50 align-self-center" alt="" />
+                    <img src="/assets/media/svg/misc/015-telegram.svg" className="h-50 align-self-center" alt="" />
                   </span>
                 </div>
                 {/*end::Symbol*/}
@@ -2842,7 +2842,7 @@ function Content() {
                 {/*begin::Symbol*/}
                 <div className="symbol symbol-45 symbol-light mr-5">
                   <span className="symbol-label">
-                    <img src="assets/media/svg/misc/014-kickstarter.svg" className="h-50 align-self-center" alt="" />
+                    <img src="/assets/media/svg/misc/014-kickstarter.svg" className="h-50 align-self-center" alt="" />
                   </span>
                 </div>
                 {/*end::Symbol*/}
@@ -3014,7 +3014,7 @@ function Content() {
                         <div className="d-flex align-items-center">
                           <div className="symbol symbol-50 symbol-light mr-4">
                             <span className="symbol-label">
-                              <img src="assets/media/svg/avatars/001-boy.svg" className="h-75 align-self-end" alt="" />
+                              <img src="/assets/media/svg/avatars/001-boy.svg" className="h-75 align-self-end" alt="" />
                             </span>
                           </div>
                           <div>
@@ -3036,7 +3036,7 @@ function Content() {
                         <span className="text-muted font-weight-bold">Web, UI/UX Design</span>
                       </td>
                       <td>
-                        <img src="assets/media/logos/stars.png" alt="image" style={{width: '5.5rem'}} />
+                        <img src="/assets/media/logos/stars.png" alt="image" style={{width: '5.5rem'}} />
                         <span className="text-muted font-weight-bold d-block font-size-sm">Best Rated</span>
                       </td>
                       <td className="pr-0 text-right">
@@ -3048,7 +3048,7 @@ function Content() {
                         <div className="d-flex align-items-center">
                           <div className="symbol symbol-50 symbol-light mr-4">
                             <span className="symbol-label">
-                              <img src="assets/media/svg/avatars/018-girl-9.svg" className="h-75 align-self-end" alt="" />
+                              <img src="/assets/media/svg/avatars/018-girl-9.svg" className="h-75 align-self-end" alt="" />
                             </span>
                           </div>
                           <div>
@@ -3070,7 +3070,7 @@ function Content() {
                         <span className="text-muted font-weight-bold">Houses &amp; Hotels</span>
                       </td>
                       <td>
-                        <img src="assets/media/logos/stars.png" alt="image" style={{width: '5.5rem'}} />
+                        <img src="/assets/media/logos/stars.png" alt="image" style={{width: '5.5rem'}} />
                         <span className="text-muted font-weight-bold d-block font-size-sm">Above Avarage</span>
                       </td>
                       <td className="pr-0 text-right">
@@ -3082,7 +3082,7 @@ function Content() {
                         <div className="d-flex align-items-center">
                           <div className="symbol symbol-50 symbol-light mr-4">
                             <span className="symbol-label">
-                              <img src="assets/media/svg/avatars/047-girl-25.svg" className="h-75 align-self-end" alt="" />
+                              <img src="/assets/media/svg/avatars/047-girl-25.svg" className="h-75 align-self-end" alt="" />
                             </span>
                           </div>
                           <div>
@@ -3104,7 +3104,7 @@ function Content() {
                         <span className="text-muted font-weight-bold">Paid</span>
                       </td>
                       <td>
-                        <img src="assets/media/logos/stars.png" alt="image" style={{width: '5.5rem'}} />
+                        <img src="/assets/media/logos/stars.png" alt="image" style={{width: '5.5rem'}} />
                         <span className="text-muted font-weight-bold d-block font-size-sm">Best Rated</span>
                       </td>
                       <td className="pr-0 text-right">
@@ -3116,7 +3116,7 @@ function Content() {
                         <div className="d-flex align-items-center">
                           <div className="symbol symbol-50 symbol-light mr-4">
                             <span className="symbol-label">
-                              <img src="assets/media/svg/avatars/014-girl-7.svg" className="h-75 align-self-end" alt="" />
+                              <img src="/assets/media/svg/avatars/014-girl-7.svg" className="h-75 align-self-end" alt="" />
                             </span>
                           </div>
                           <div>
@@ -3138,7 +3138,7 @@ function Content() {
                         <span className="text-muted font-weight-bold">Insurance</span>
                       </td>
                       <td>
-                        <img src="assets/media/logos/stars.png" style={{width: '5.5rem'}} alt="" />
+                        <img src="/assets/media/logos/stars.png" style={{width: '5.5rem'}} alt="" />
                         <span className="text-muted font-weight-bold d-block font-size-sm">Avarage</span>
                       </td>
                       <td className="pr-0 text-right">

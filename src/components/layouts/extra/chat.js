@@ -172,7 +172,7 @@ class Chat extends Component {
                     <div className="d-flex flex-column mb-5 align-items-start">
                       <div className="d-flex align-items-center">
                         <div className="symbol symbol-circle symbol-40 mr-3">
-                          <img alt="Pic" src="assets/media/users/300_12.jpg" />
+                          <img alt="Pic" src="/assets/media/users/300_12.jpg" />
                         </div>
                         <div>
                           <a
@@ -207,7 +207,7 @@ class Chat extends Component {
                           </a>
                         </div>
                         <div className="symbol symbol-circle symbol-40 ml-3">
-                          <img alt="Pic" src="assets/media/users/300_21.jpg" />
+                          <img alt="Pic" src="/assets/media/users/300_21.jpg" />
                         </div>
                       </div>
                       <div className="mt-2 rounded p-5 bg-light-primary text-dark-50 font-weight-bold font-size-lg text-right max-w-400px">
@@ -220,7 +220,7 @@ class Chat extends Component {
                     <div className="d-flex flex-column mb-5 align-items-start">
                       <div className="d-flex align-items-center">
                         <div className="symbol symbol-circle symbol-40 mr-3">
-                          <img alt="Pic" src="assets/media/users/300_21.jpg" />
+                          <img alt="Pic" src="/assets/media/users/300_21.jpg" />
                         </div>
                         <div>
                           <a
@@ -254,7 +254,7 @@ class Chat extends Component {
                           </a>
                         </div>
                         <div className="symbol symbol-circle symbol-40 ml-3">
-                          <img alt="Pic" src="assets/media/users/300_21.jpg" />
+                          <img alt="Pic" src="/assets/media/users/300_21.jpg" />
                         </div>
                       </div>
                       <div className="mt-2 rounded p-5 bg-light-primary text-dark-50 font-weight-bold font-size-lg text-right max-w-400px">
@@ -267,7 +267,7 @@ class Chat extends Component {
                     <div className="d-flex flex-column mb-5 align-items-start">
                       <div className="d-flex align-items-center">
                         <div className="symbol symbol-circle symbol-40 mr-3">
-                          <img alt="Pic" src="assets/media/users/300_12.jpg" />
+                          <img alt="Pic" src="/assets/media/users/300_12.jpg" />
                         </div>
                         <div>
                           <a
@@ -303,7 +303,7 @@ class Chat extends Component {
                           </a>
                         </div>
                         <div className="symbol symbol-circle symbol-40 ml-3">
-                          <img alt="Pic" src="assets/media/users/300_21.jpg" />
+                          <img alt="Pic" src="/assets/media/users/300_21.jpg" />
                         </div>
                       </div>
                       <div className="mt-2 rounded p-5 bg-light-primary text-dark-50 font-weight-bold font-size-lg text-right max-w-400px">
@@ -316,7 +316,7 @@ class Chat extends Component {
                     <div className="d-flex flex-column mb-5 align-items-start">
                       <div className="d-flex align-items-center">
                         <div className="symbol symbol-circle symbol-40 mr-3">
-                          <img alt="Pic" src="assets/media/users/300_12.jpg" />
+                          <img alt="Pic" src="/assets/media/users/300_12.jpg" />
                         </div>
                         <div>
                           <a
@@ -350,7 +350,7 @@ class Chat extends Component {
                           </a>
                         </div>
                         <div className="symbol symbol-circle symbol-40 ml-3">
-                          <img alt="Pic" src="assets/media/users/300_21.jpg" />
+                          <img alt="Pic" src="/assets/media/users/300_21.jpg" />
                         </div>
                       </div>
                       <div className="mt-2 rounded p-5 bg-light-primary text-dark-50 font-weight-bold font-size-lg text-right max-w-400px">

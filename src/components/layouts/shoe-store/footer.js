@@ -65,28 +65,28 @@ class Footer extends Component {
                 <h6 className="mb-20">Instragram Feed</h6>
                 <ul className="instafeed d-flex flex-wrap">
                   <li>
-                    <img src="assets/img/i1.jpg" alt="" />
+                    <img src="/assets/img/i1.jpg" alt="" />
                   </li>
                   <li>
-                    <img src="assets/img/i2.jpg" alt="" />
+                    <img src="/assets/img/i2.jpg" alt="" />
                   </li>
                   <li>
-                    <img src="assets/img/i3.jpg" alt="" />
+                    <img src="/assets/img/i3.jpg" alt="" />
                   </li>
                   <li>
-                    <img src="assets/img/i4.jpg" alt="" />
+                    <img src="/assets/img/i4.jpg" alt="" />
                   </li>
                   <li>
-                    <img src="assets/img/i5.jpg" alt="" />
+                    <img src="/assets/img/i5.jpg" alt="" />
                   </li>
                   <li>
-                    <img src="assets/img/i6.jpg" alt="" />
+                    <img src="/assets/img/i6.jpg" alt="" />
                   </li>
                   <li>
-                    <img src="assets/img/i7.jpg" alt="" />
+                    <img src="/assets/img/i7.jpg" alt="" />
                   </li>
                   <li>
-                    <img src="assets/img/i8.jpg" alt="" />
+                    <img src="/assets/img/i8.jpg" alt="" />
                   </li>
                 </ul>
               </div>

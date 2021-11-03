@@ -30,7 +30,7 @@ class QuickUser extends Component {
               <div
                 className="symbol-label"
                 style={{
-                  backgroundImage: 'url("assets/media/users/300_21.jpg")',
+                  backgroundImage: 'url("/assets/media/users/300_21.jpg")',
                 }}
               />
               <i className="symbol-badge bg-success" />

@@ -238,7 +238,7 @@ export function adminUserColumns(obj) {
               }
             >
               <span className="svg-icon svg-icon-md svg-icon-primary">
-                <SVG src="assets/media/svg/icons/General/Unlock.svg" />
+                <SVG src="/assets/media/svg/icons/General/Unlock.svg" />
               </span>
             </div>
           )}
@@ -260,7 +260,7 @@ export function adminUserColumns(obj) {
                   row.status === "banned" ? "" : " svg-icon-warning"
                 }`}
               >
-                <SVG src="assets/media/svg/icons/General/Lock.svg" />
+                <SVG src="/assets/media/svg/icons/General/Lock.svg" />
               </span>
             </div>
           )}
@@ -283,7 +283,7 @@ export function adminUserColumns(obj) {
                 row.status === "banned" ? "" : " svg-icon-danger"
               }`}
             >
-              <SVG src="assets/media/svg/icons/Code/Minus.svg" />
+              <SVG src="/assets/media/svg/icons/Code/Minus.svg" />
             </span>
           </div>
         </div>

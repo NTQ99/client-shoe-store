@@ -205,7 +205,7 @@ const OrderToolbar = (props) => {
     <Dropdown as={ButtonGroup} className="mr-2">
       <Dropdown.Toggle variant="light" className="font-weight-bolder">
         <span className="svg-icon svg-icon-md">
-          <SVG src="assets/media/svg/icons/Devices/Printer.svg" />
+          <SVG src="/assets/media/svg/icons/Devices/Printer.svg" />
         </span>
         In
       </Dropdown.Toggle>
@@ -234,7 +234,7 @@ const OrderToolbar = (props) => {
       onClick={handleExportClick}
     >
       <span className="svg-icon svg-icon-md">
-        <SVG src="assets/media/svg/icons/Files/ExportFile.svg" />
+        <SVG src="/assets/media/svg/icons/Files/ExportFile.svg" />
       </span>
       Xuất file
     </div>
@@ -244,7 +244,7 @@ const OrderToolbar = (props) => {
     className="btn btn-primary font-weight-bolder"
   >
     <span className="svg-icon svg-icon-md">
-      <SVG src="assets/media/svg/icons/Design/Flatten.svg" />
+      <SVG src="/assets/media/svg/icons/Design/Flatten.svg" />
     </span>
     Tạo mới
   </a>

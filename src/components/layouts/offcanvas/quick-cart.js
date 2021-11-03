@@ -52,7 +52,7 @@ class QuickCart extends Component {
                 </div>
               </div>
               <a href="/" className="symbol symbol-70 flex-shrink-0">
-                <img src="assets/media/stock-600x400/img-1.jpg" title="" alt="" />
+                <img src="/assets/media/stock-600x400/img-1.jpg" title="" alt="" />
               </a>
             </div>
             {/*end::Item*/}
@@ -89,7 +89,7 @@ class QuickCart extends Component {
                 </div>
               </div>
               <a href="/" className="symbol symbol-70 flex-shrink-0">
-                <img src="assets/media/stock-600x400/img-2.jpg" title="" alt="" />
+                <img src="/assets/media/stock-600x400/img-2.jpg" title="" alt="" />
               </a>
             </div>
             {/*end::Item*/}
@@ -128,7 +128,7 @@ class QuickCart extends Component {
                 </div>
               </div>
               <a href="/" className="symbol symbol-70 flex-shrink-0">
-                <img src="assets/media/stock-600x400/img-3.jpg" title="" alt="" />
+                <img src="/assets/media/stock-600x400/img-3.jpg" title="" alt="" />
               </a>
             </div>
             {/*end::Item*/}
@@ -165,7 +165,7 @@ class QuickCart extends Component {
                 </div>
               </div>
               <a href="/" className="symbol symbol-70 flex-shrink-0">
-                <img src="assets/media/stock-600x400/img-4.jpg" title="" alt="" />
+                <img src="/assets/media/stock-600x400/img-4.jpg" title="" alt="" />
               </a>
             </div>
             {/*end::Item*/}
@@ -202,7 +202,7 @@ class QuickCart extends Component {
                 </div>
               </div>
               <a href="/" className="symbol symbol-70 flex-shrink-0">
-                <img src="assets/media/stock-600x400/img-8.jpg" title="" alt="" />
+                <img src="/assets/media/stock-600x400/img-8.jpg" title="" alt="" />
               </a>
             </div>
             {/*end::Item*/}
