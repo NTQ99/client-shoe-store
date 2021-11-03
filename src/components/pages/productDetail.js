@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import cartService from "../../service/cart.service";
 import ProductService from "../../service/product.service";
 import Footer from "../layouts/shoe-store/footer";
 import Header from "../layouts/shoe-store/header";
@@ -25,13 +26,19 @@ class ProductDetailPage extends Component {
       } else console.log(res.data.error.message)
     })
   }
+
+  addProductToCart = (e) => {
+    e.preventDefault();
+    this.setState({numOfcart: this.state.numOfcart + 1});
+    cartService.addToCart(this.state.productDetail.id);
+  }
   
   render() {
-    const {productDetail} = this.state;
+    const {productDetail, numOfcart} = this.state;
     
     return (
       <div style={{backgroundColor:"#fff"}}>
-        <Header />
+        <Header numOfcart={numOfcart} />
 
         {/* Start Banner Area */}
         <section className="banner-area organic-breadcrumb">
@@ -123,7 +130,7 @@ class ProductDetailPage extends Component {
                     </button>
                   </div>
                   <div className="card_area d-flex align-items-center">
-                    <a className="primary-btn" href="#">
+                    <a className="primary-btn" href="/" onClick={this.addProductToCart}>
                       Add to Cart
                     </a>
                     <a className="icon_btn" href="#">

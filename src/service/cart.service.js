@@ -6,9 +6,9 @@ class CartService {
     addToCart(id) {
 
         let currentCart = []
-        currentCart = cookies.get('cart');
+        currentCart = cookies.get('cart', {path:'/'});
         if (currentCart == null) {
-            cookies.set('cart', [{id: id, number: 1}]);
+            cookies.set('cart', [{id: id, number: 1}], {path:'/'});
         } else {
             let check = 0;
             currentCart.forEach(product => {
@@ -18,26 +18,26 @@ class CartService {
                 }
             });
             if (!check) currentCart.push({id: id, number: 1});
-            cookies.set('cart', currentCart);
+            cookies.set('cart', currentCart, {path:'/'});
         }
     }
     
     updateCart(id, number) {
         let currentCart = []
-        currentCart = cookies.get('cart');
+        currentCart = cookies.get('cart', {path:'/'});
         if (currentCart != null) {
             currentCart.forEach(product => {
                 if (product.id === id) {
                     product.number = Number(number);
                 }
             });
-            cookies.set('cart', currentCart);
+            cookies.set('cart', currentCart, {path:'/'});
         }
     }
 
     getTotalNum() {
         let currentCart = []
-        currentCart = cookies.get('cart');
+        currentCart = cookies.get('cart', {path:'/'});
         if (currentCart == null) return 0;
         else {
             let total = 0;
