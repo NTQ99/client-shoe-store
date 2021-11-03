@@ -4,6 +4,7 @@ import Header from "../layouts/shoe-store/header";
 import Footer from "../layouts/shoe-store/footer";
 
 import ProductService from "../../service/product.service";
+import cartService from "../../service/cart.service";
 
 class CategoryPage extends Component {
   constructor(props) {
@@ -19,11 +20,16 @@ class CategoryPage extends Component {
     });
   }
 
+  addProductToCart(id) {
+    this.setState({numOfcart: this.state.numOfcart + 1});
+    cartService.addToCart(id);
+  }
+
   render() {
-    const { products } = this.state;
+    const { products, numOfcart } = this.state;
     return (
       <div>
-        <Header />
+        <Header numOfcart={numOfcart} />
         {/* Start Banner Area */}
         <section className="banner-area organic-breadcrumb">
           <div className="container">
@@ -686,7 +692,7 @@ class CategoryPage extends Component {
               {/* Start Best Seller */}
               <section className="lattest-product-area pb-40 category-list">
                 <div className="row">
-                  {products.map(function (item, i) {
+                  {products.map((item, i) => {
                     return (
                       <div className="col-lg-3 col-md-6">
                         <div className="single-product">
@@ -704,7 +710,7 @@ class CategoryPage extends Component {
                               </h6>
                             </div>
                             <div className="prd-bottom">
-                              <a href className="social-info">
+                              <a href className="social-info" onClick={() => this.addProductToCart(item.id)}>
                                 <span className="ti-bag" />
                                 <p className="hover-text">add to bag</p>
                               </a>
@@ -716,7 +722,7 @@ class CategoryPage extends Component {
                                 <span className="lnr lnr-sync" />
                                 <p className="hover-text">compare</p>
                               </a>
-                              <a href className="social-info">
+                              <a href={"/product-detail/" + item.productCode} className="social-info">
                                 <span className="lnr lnr-move" />
                                 <p className="hover-text">view more</p>
                               </a>
