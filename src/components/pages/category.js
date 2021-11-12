@@ -35,17 +35,13 @@ class CategoryPage extends Component {
           <div className="container">
             <div className="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
               <div className="col-first">
-                <h1>Shop Category page</h1>
+                <h1>Danh mục sản phẩm</h1>
                 <nav className="d-flex align-items-center">
-                  <a href="index.html">
-                    Home
+                  <a href="/">
+                    Trang chủ
                     <span className="lnr lnr-arrow-right" />
                   </a>
-                  <a href="#">
-                    Shop
-                    <span className="lnr lnr-arrow-right" />
-                  </a>
-                  <a href="category.html">Fashon Category</a>
+                  <a href="/category">Danh mục</a>
                 </nav>
               </div>
             </div>
@@ -56,7 +52,7 @@ class CategoryPage extends Component {
           <div className="row">
             <div className="col-xl-3 col-lg-4 col-md-5">
               <div className="sidebar-categories">
-                <div className="head">Browse Categories</div>
+                <div className="head">Danh mục</div>
                 <ul className="main-categories">
                   <li className="main-nav-list">
                     <a
@@ -66,41 +62,8 @@ class CategoryPage extends Component {
                       aria-controls="fruitsVegetable"
                     >
                       <span className="lnr lnr-arrow-right" />
-                      Fruits and Vegetables<span className="number">(53)</span>
+                      Giày nam<span className="number">(53)</span>
                     </a>
-                    <ul
-                      className="collapse"
-                      id="fruitsVegetable"
-                      data-toggle="collapse"
-                      aria-expanded="false"
-                      aria-controls="fruitsVegetable"
-                    >
-                      <li className="main-nav-list child">
-                        <a href="#">
-                          Frozen Fish<span className="number">(13)</span>
-                        </a>
-                      </li>
-                      <li className="main-nav-list child">
-                        <a href="#">
-                          Dried Fish<span className="number">(09)</span>
-                        </a>
-                      </li>
-                      <li className="main-nav-list child">
-                        <a href="#">
-                          Fresh Fish<span className="number">(17)</span>
-                        </a>
-                      </li>
-                      <li className="main-nav-list child">
-                        <a href="#">
-                          Meat Alternatives<span className="number">(01)</span>
-                        </a>
-                      </li>
-                      <li className="main-nav-list child">
-                        <a href="#">
-                          Meat<span className="number">(11)</span>
-                        </a>
-                      </li>
-                    </ul>
                   </li>
                   <li className="main-nav-list">
                     <a
@@ -110,41 +73,8 @@ class CategoryPage extends Component {
                       aria-controls="meatFish"
                     >
                       <span className="lnr lnr-arrow-right" />
-                      Meat and Fish<span className="number">(53)</span>
+                      Giày nữ<span className="number">(53)</span>
                     </a>
-                    <ul
-                      className="collapse"
-                      id="meatFish"
-                      data-toggle="collapse"
-                      aria-expanded="false"
-                      aria-controls="meatFish"
-                    >
-                      <li className="main-nav-list child">
-                        <a href="#">
-                          Frozen Fish<span className="number">(13)</span>
-                        </a>
-                      </li>
-                      <li className="main-nav-list child">
-                        <a href="#">
-                          Dried Fish<span className="number">(09)</span>
-                        </a>
-                      </li>
-                      <li className="main-nav-list child">
-                        <a href="#">
-                          Fresh Fish<span className="number">(17)</span>
-                        </a>
-                      </li>
-                      <li className="main-nav-list child">
-                        <a href="#">
-                          Meat Alternatives<span className="number">(01)</span>
-                        </a>
-                      </li>
-                      <li className="main-nav-list child">
-                        <a href="#">
-                          Meat<span className="number">(11)</span>
-                        </a>
-                      </li>
-                    </ul>
                   </li>
                   <li className="main-nav-list">
                     <a
@@ -154,7 +84,7 @@ class CategoryPage extends Component {
                       aria-controls="cooking"
                     >
                       <span className="lnr lnr-arrow-right" />
-                      Cooking<span className="number">(53)</span>
+                      Giày trẻ em<span className="number">(53)</span>
                     </a>
                     <ul
                       className="collapse"
@@ -190,331 +120,12 @@ class CategoryPage extends Component {
                       </li>
                     </ul>
                   </li>
-                  <li className="main-nav-list">
-                    <a
-                      data-toggle="collapse"
-                      href="#beverages"
-                      aria-expanded="false"
-                      aria-controls="beverages"
-                    >
-                      <span className="lnr lnr-arrow-right" />
-                      Beverages<span className="number">(24)</span>
-                    </a>
-                    <ul
-                      className="collapse"
-                      id="beverages"
-                      data-toggle="collapse"
-                      aria-expanded="false"
-                      aria-controls="beverages"
-                    >
-                      <li className="main-nav-list child">
-                        <a href="#">
-                          Frozen Fish<span className="number">(13)</span>
-                        </a>
-                      </li>
-                      <li className="main-nav-list child">
-                        <a href="#">
-                          Dried Fish<span className="number">(09)</span>
-                        </a>
-                      </li>
-                      <li className="main-nav-list child">
-                        <a href="#">
-                          Fresh Fish<span className="number">(17)</span>
-                        </a>
-                      </li>
-                      <li className="main-nav-list child">
-                        <a href="#">
-                          Meat Alternatives<span className="number">(01)</span>
-                        </a>
-                      </li>
-                      <li className="main-nav-list child">
-                        <a href="#">
-                          Meat<span className="number">(11)</span>
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
-                  <li className="main-nav-list">
-                    <a
-                      data-toggle="collapse"
-                      href="#homeClean"
-                      aria-expanded="false"
-                      aria-controls="homeClean"
-                    >
-                      <span className="lnr lnr-arrow-right" />
-                      Home and Cleaning<span className="number">(53)</span>
-                    </a>
-                    <ul
-                      className="collapse"
-                      id="homeClean"
-                      data-toggle="collapse"
-                      aria-expanded="false"
-                      aria-controls="homeClean"
-                    >
-                      <li className="main-nav-list child">
-                        <a href="#">
-                          Frozen Fish<span className="number">(13)</span>
-                        </a>
-                      </li>
-                      <li className="main-nav-list child">
-                        <a href="#">
-                          Dried Fish<span className="number">(09)</span>
-                        </a>
-                      </li>
-                      <li className="main-nav-list child">
-                        <a href="#">
-                          Fresh Fish<span className="number">(17)</span>
-                        </a>
-                      </li>
-                      <li className="main-nav-list child">
-                        <a href="#">
-                          Meat Alternatives<span className="number">(01)</span>
-                        </a>
-                      </li>
-                      <li className="main-nav-list child">
-                        <a href="#">
-                          Meat<span className="number">(11)</span>
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
-                  <li className="main-nav-list">
-                    <a href="#">
-                      Pest Control<span className="number">(24)</span>
-                    </a>
-                  </li>
-                  <li className="main-nav-list">
-                    <a
-                      data-toggle="collapse"
-                      href="#officeProduct"
-                      aria-expanded="false"
-                      aria-controls="officeProduct"
-                    >
-                      <span className="lnr lnr-arrow-right" />
-                      Office Products<span className="number">(77)</span>
-                    </a>
-                    <ul
-                      className="collapse"
-                      id="officeProduct"
-                      data-toggle="collapse"
-                      aria-expanded="false"
-                      aria-controls="officeProduct"
-                    >
-                      <li className="main-nav-list child">
-                        <a href="#">
-                          Frozen Fish<span className="number">(13)</span>
-                        </a>
-                      </li>
-                      <li className="main-nav-list child">
-                        <a href="#">
-                          Dried Fish<span className="number">(09)</span>
-                        </a>
-                      </li>
-                      <li className="main-nav-list child">
-                        <a href="#">
-                          Fresh Fish<span className="number">(17)</span>
-                        </a>
-                      </li>
-                      <li className="main-nav-list child">
-                        <a href="#">
-                          Meat Alternatives<span className="number">(01)</span>
-                        </a>
-                      </li>
-                      <li className="main-nav-list child">
-                        <a href="#">
-                          Meat<span className="number">(11)</span>
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
-                  <li className="main-nav-list">
-                    <a
-                      data-toggle="collapse"
-                      href="#beauttyProduct"
-                      aria-expanded="false"
-                      aria-controls="beauttyProduct"
-                    >
-                      <span className="lnr lnr-arrow-right" />
-                      Beauty Products<span className="number">(65)</span>
-                    </a>
-                    <ul
-                      className="collapse"
-                      id="beauttyProduct"
-                      data-toggle="collapse"
-                      aria-expanded="false"
-                      aria-controls="beauttyProduct"
-                    >
-                      <li className="main-nav-list child">
-                        <a href="#">
-                          Frozen Fish<span className="number">(13)</span>
-                        </a>
-                      </li>
-                      <li className="main-nav-list child">
-                        <a href="#">
-                          Dried Fish<span className="number">(09)</span>
-                        </a>
-                      </li>
-                      <li className="main-nav-list child">
-                        <a href="#">
-                          Fresh Fish<span className="number">(17)</span>
-                        </a>
-                      </li>
-                      <li className="main-nav-list child">
-                        <a href="#">
-                          Meat Alternatives<span className="number">(01)</span>
-                        </a>
-                      </li>
-                      <li className="main-nav-list child">
-                        <a href="#">
-                          Meat<span className="number">(11)</span>
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
-                  <li className="main-nav-list">
-                    <a
-                      data-toggle="collapse"
-                      href="#healthProduct"
-                      aria-expanded="false"
-                      aria-controls="healthProduct"
-                    >
-                      <span className="lnr lnr-arrow-right" />
-                      Health Products<span className="number">(29)</span>
-                    </a>
-                    <ul
-                      className="collapse"
-                      id="healthProduct"
-                      data-toggle="collapse"
-                      aria-expanded="false"
-                      aria-controls="healthProduct"
-                    >
-                      <li className="main-nav-list child">
-                        <a href="#">
-                          Frozen Fish<span className="number">(13)</span>
-                        </a>
-                      </li>
-                      <li className="main-nav-list child">
-                        <a href="#">
-                          Dried Fish<span className="number">(09)</span>
-                        </a>
-                      </li>
-                      <li className="main-nav-list child">
-                        <a href="#">
-                          Fresh Fish<span className="number">(17)</span>
-                        </a>
-                      </li>
-                      <li className="main-nav-list child">
-                        <a href="#">
-                          Meat Alternatives<span className="number">(01)</span>
-                        </a>
-                      </li>
-                      <li className="main-nav-list child">
-                        <a href="#">
-                          Meat<span className="number">(11)</span>
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
-                  <li className="main-nav-list">
-                    <a href="#">
-                      Pet Care<span className="number">(29)</span>
-                    </a>
-                  </li>
-                  <li className="main-nav-list">
-                    <a
-                      data-toggle="collapse"
-                      href="#homeAppliance"
-                      aria-expanded="false"
-                      aria-controls="homeAppliance"
-                    >
-                      <span className="lnr lnr-arrow-right" />
-                      Home Appliances<span className="number">(15)</span>
-                    </a>
-                    <ul
-                      className="collapse"
-                      id="homeAppliance"
-                      data-toggle="collapse"
-                      aria-expanded="false"
-                      aria-controls="homeAppliance"
-                    >
-                      <li className="main-nav-list child">
-                        <a href="#">
-                          Frozen Fish<span className="number">(13)</span>
-                        </a>
-                      </li>
-                      <li className="main-nav-list child">
-                        <a href="#">
-                          Dried Fish<span className="number">(09)</span>
-                        </a>
-                      </li>
-                      <li className="main-nav-list child">
-                        <a href="#">
-                          Fresh Fish<span className="number">(17)</span>
-                        </a>
-                      </li>
-                      <li className="main-nav-list child">
-                        <a href="#">
-                          Meat Alternatives<span className="number">(01)</span>
-                        </a>
-                      </li>
-                      <li className="main-nav-list child">
-                        <a href="#">
-                          Meat<span className="number">(11)</span>
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
-                  <li className="main-nav-list">
-                    <a
-                      className="border-bottom-0"
-                      data-toggle="collapse"
-                      href="#babyCare"
-                      aria-expanded="false"
-                      aria-controls="babyCare"
-                    >
-                      <span className="lnr lnr-arrow-right" />
-                      Baby Care<span className="number">(48)</span>
-                    </a>
-                    <ul
-                      className="collapse"
-                      id="babyCare"
-                      data-toggle="collapse"
-                      aria-expanded="false"
-                      aria-controls="babyCare"
-                    >
-                      <li className="main-nav-list child">
-                        <a href="#">
-                          Frozen Fish<span className="number">(13)</span>
-                        </a>
-                      </li>
-                      <li className="main-nav-list child">
-                        <a href="#">
-                          Dried Fish<span className="number">(09)</span>
-                        </a>
-                      </li>
-                      <li className="main-nav-list child">
-                        <a href="#">
-                          Fresh Fish<span className="number">(17)</span>
-                        </a>
-                      </li>
-                      <li className="main-nav-list child">
-                        <a href="#">
-                          Meat Alternatives<span className="number">(01)</span>
-                        </a>
-                      </li>
-                      <li className="main-nav-list child">
-                        <a href="#" className="border-bottom-0">
-                          Meat<span className="number">(11)</span>
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
                 </ul>
               </div>
               <div className="sidebar-filter mt-50">
-                <div className="top-filter-head">Product Filters</div>
+                <div className="top-filter-head">Lọc sản phẩm</div>
                 <div className="common-filter">
-                  <div className="head">Brands</div>
+                  <div className="head">Nhãn hiệu</div>
                   <form action="#">
                     <ul>
                       <li className="filter-list">
@@ -525,7 +136,7 @@ class CategoryPage extends Component {
                           name="brand"
                         />
                         <label htmlFor="apple">
-                          Apple<span>(29)</span>
+                          Nike<span>(29)</span>
                         </label>
                       </li>
                       <li className="filter-list">
@@ -536,7 +147,7 @@ class CategoryPage extends Component {
                           name="brand"
                         />
                         <label htmlFor="asus">
-                          Asus<span>(29)</span>
+                          Adidas<span>(29)</span>
                         </label>
                       </li>
                       <li className="filter-list">
@@ -547,7 +158,7 @@ class CategoryPage extends Component {
                           name="brand"
                         />
                         <label htmlFor="gionee">
-                          Gionee<span>(19)</span>
+                          Puma<span>(19)</span>
                         </label>
                       </li>
                       <li className="filter-list">
@@ -558,18 +169,7 @@ class CategoryPage extends Component {
                           name="brand"
                         />
                         <label htmlFor="micromax">
-                          Micromax<span>(19)</span>
-                        </label>
-                      </li>
-                      <li className="filter-list">
-                        <input
-                          className="pixel-radio"
-                          type="radio"
-                          id="samsung"
-                          name="brand"
-                        />
-                        <label htmlFor="samsung">
-                          Samsung<span>(19)</span>
+                          Biti's<span>(19)</span>
                         </label>
                       </li>
                     </ul>
@@ -587,7 +187,7 @@ class CategoryPage extends Component {
                           name="color"
                         />
                         <label htmlFor="black">
-                          Black<span>(29)</span>
+                          Đen<span>(29)</span>
                         </label>
                       </li>
                       <li className="filter-list">
@@ -598,7 +198,7 @@ class CategoryPage extends Component {
                           name="color"
                         />
                         <label htmlFor="balckleather">
-                          Black Leather<span>(29)</span>
+                          Đỏ<span>(29)</span>
                         </label>
                       </li>
                       <li className="filter-list">
@@ -609,7 +209,7 @@ class CategoryPage extends Component {
                           name="color"
                         />
                         <label htmlFor="blackred">
-                          Black with red<span>(19)</span>
+                          Xanh biển<span>(19)</span>
                         </label>
                       </li>
                       <li className="filter-list">
@@ -620,7 +220,7 @@ class CategoryPage extends Component {
                           name="color"
                         />
                         <label htmlFor="gold">
-                          Gold<span>(19)</span>
+                          Vàng<span>(19)</span>
                         </label>
                       </li>
                       <li className="filter-list">
@@ -631,21 +231,21 @@ class CategoryPage extends Component {
                           name="color"
                         />
                         <label htmlFor="spacegrey">
-                          Spacegrey<span>(19)</span>
+                          Hồng<span>(19)</span>
                         </label>
                       </li>
                     </ul>
                   </form>
                 </div>
                 <div className="common-filter">
-                  <div className="head">Price</div>
+                  <div className="head">Khoảng giá</div>
                   <div className="price-range-area">
                     <div id="price-range" />
                     <div className="value-wrapper d-flex">
-                      <div className="price">Price:</div>
+                      <div className="price">Từ:</div>
                       <span>$</span>
                       <div id="lower-value" />
-                      <div className="to">to</div>
+                      <div className="to">đến</div>
                       <span>$</span>
                       <div id="upper-value" />
                     </div>
@@ -658,16 +258,16 @@ class CategoryPage extends Component {
               <div className="filter-bar d-flex flex-wrap align-items-center">
                 <div className="sorting">
                   <select>
-                    <option value={1}>Default sorting</option>
-                    <option value={1}>Default sorting</option>
-                    <option value={1}>Default sorting</option>
+                    <option value={1}>Sắp xếp mặc định</option>
+                    <option value={1}>Sắp xếp theo giá thấp nhất</option>
+                    <option value={1}>Sắp xếp theo giá cao nhất</option>
                   </select>
                 </div>
                 <div className="sorting mr-auto">
                   <select>
-                    <option value={1}>Show 12</option>
-                    <option value={1}>Show 12</option>
-                    <option value={1}>Show 12</option>
+                    <option value={1}>Hiển thị 10</option>
+                    <option value={1}>Hiển thị 20</option>
+                    <option value={1}>Hiển thị 30</option>
                   </select>
                 </div>
                 <div className="pagination">
@@ -704,9 +304,9 @@ class CategoryPage extends Component {
                           <div className="product-details">
                             <h6>{item.productName}</h6>
                             <div className="price">
-                              <h6>{item.price[2] + " đ"}</h6>
+                              <h6>{item.price + " đ"}</h6>
                               <h6 className="l-through">
-                                {item.price[1] + " đ"}
+                                {item.price + " đ"}
                               </h6>
                             </div>
                             <div className="prd-bottom">
@@ -739,9 +339,9 @@ class CategoryPage extends Component {
               <div className="filter-bar d-flex flex-wrap align-items-center">
                 <div className="sorting mr-auto">
                   <select>
-                    <option value={1}>Show 12</option>
-                    <option value={1}>Show 12</option>
-                    <option value={1}>Show 12</option>
+                    <option value={1}>Hiển thị 10</option>
+                    <option value={1}>Hiển thị 20</option>
+                    <option value={1}>Hiển thị 30</option>
                   </select>
                 </div>
                 <div className="pagination">
@@ -772,7 +372,7 @@ class CategoryPage extends Component {
             <div className="row justify-content-center">
               <div className="col-lg-6 text-center">
                 <div className="section-title">
-                  <h1>Deals of the Week</h1>
+                  <h1>Ưu đãi trong tuần</h1>
                   <p>
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit,
                     sed do eiusmod tempor incididunt ut labore et dolore magna

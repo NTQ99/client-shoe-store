@@ -6,8 +6,14 @@ class ProductForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      form: {},
+      form: {
+        size: [],
+        color: [],
+        stock: [],
+        category: "Nam"
+      },
       btnLoading: false,
+      productRows: []
     };
     SimpleReactValidator.addLocale("vi", {
       required: "Không được bỏ trống!"
@@ -29,15 +35,16 @@ class ProductForm extends Component {
       form: {
         ...this.state.form,
         id: formData.id,
+        productCode: formData.productCode,
         productName: formData.productName,
-        capitalPrice: formData.price[0],
-        retailPrice: formData.price[1],
-        wholesalePrice: formData.price[2],
-        stock: formData.stock,
-        weight: formData.weight,
-        length: formData.length,
-        width: formData.width,
-        height: formData.height,
+        shortTitle: formData.shortTitle,
+        brand: formData.brand,
+        category: formData.category,
+        price: formData.price,
+        promotion: formData.promotion,
+        color: [formData.color],
+        size: [formData.size],
+        stock: [formData.stock],
         productPhotos: formData.productPhotos.toString(),
         productDetail: formData.productDetail
       }
@@ -48,18 +55,24 @@ class ProductForm extends Component {
     const form = this.state.form;
     if (this.validator.allValid()) {
       this.setState({btnLoading: true});
-      await this.props.handleOk({
-        id: form.id,
-        productName: form.productName,
-        price: [form.capitalPrice, form.retailPrice, form.wholesalePrice],
-        stock: form.stock,
-        weight: form.weight,
-        length: form.length,
-        width: form.width,
-        height: form.height,
-        productPhotos: (form.productPhotos || "").replace(' ', '').split(','),
-        productDetail: form.productDetail || ""
-      })
+      let productCode = (Date.now() % 1046527).toString().padStart(7, "0");
+      for (let i = 0; i < form.stock.length; i ++) {
+        await this.props.handleOk({
+          id: form.id,
+          productCode: productCode,
+          productName: form.productName,
+          shortTitle: form.shortTitle,
+          brand: form.brand,
+          category: form.category,
+          price: form.price,
+          promotion: form.promotion,
+          color: form.color[i],
+          size: form.size[i],
+          stock: form.stock[i],
+          productPhotos: (form.productPhotos || "").replace(' ', '').split(','),
+          productDetail: form.productDetail || ""
+        })
+      }
       this.handleClose();
     } else {
       this.validator.showMessages();
@@ -72,7 +85,12 @@ class ProductForm extends Component {
     this.props.handleClose();
     this.setState({
       btnLoading: false,
-      form: {}
+      form: {
+        size: [],
+        color: [],
+        stock: []
+      },
+      productRows: []
     })
   }
 
@@ -80,23 +98,102 @@ class ProductForm extends Component {
     const target = e.target;
     const value = target.value;
     const name = target.id;
+    const index = target.classList[1];
 
-    this.setState({
-      form: {
-        ...this.state.form,
-        [name]: value
-      }
-    });
+    switch (name) {
+      case "size":
+      case "color":
+      case "stock":
+        let newValue = this.state.form[name];
+        newValue[index] = value;
+        this.setState({
+          form: {
+            ...this.state.form,
+            [name]: newValue
+          }
+        });
+        break;
+    
+      default:
+        this.setState({
+          form: {
+            ...this.state.form,
+            [name]: value
+          }
+        });
+        break;
+    }
     this.validator.showMessageFor(name);
+    console.log(this.state.form)
+  }
+
+  addProductRow = (e) => {
+    e.preventDefault();
+    let newRow = (index) => (<Row>
+      <Form.Group as={Col} xs={3} className="mb-3" controlId="size">
+        <Form.Control autoComplete="none" type="number" bsPrefix={`form-control ${index+1}`} min={16} defaultValue={this.state.form.size[index+1]} onChange={this.handleInputChange} placeholder="0" />
+        {this.validator.message(
+          "size",
+          this.state.form.size[index+1],
+          "required"
+        )}
+      </Form.Group>
+      <Form.Group as={Col} xs={3} className="mb-3" controlId="color">
+        <Form.Control autoComplete="none" type="text" bsPrefix={`form-control ${index+1}`} defaultValue={this.state.form.color[index+1]} onChange={this.handleInputChange} />
+        {this.validator.message(
+          "color",
+          this.state.form.color[index+1],
+          "required"
+        )}
+      </Form.Group>
+      <Form.Group as={Col} xs={3} className="mb-3" controlId="stock">
+        <Form.Control autoComplete="none" type="number" bsPrefix={`form-control ${index+1}`} min={1} defaultValue={this.state.form.stock[index+1]} onChange={this.handleInputChange} placeholder="0" />
+        {this.validator.message(
+          "stock",
+          this.state.form.stock[index+1],
+          "required"
+        )}
+      </Form.Group>
+      {index === this.state.productRows.length - 1 &&<button
+        className="btn btn-primary mt-1 d-flex justify-content-center align-items-center"
+        style={{width: "30px", height: "30px"}}
+        onClick={this.addProductRow}
+      >
+        <i className="fas fa-plus pr-0"></i>
+      </button>}
+      {index === this.state.productRows.length - 1 &&<button
+        className="btn btn-primary mt-1 ml-3 d-flex justify-content-center align-items-center"
+        style={{width: "30px", height: "30px"}}
+        onClick={this.removeProductRow}
+      >
+        <i className="fas fa-minus pr-0"></i>
+      </button>}
+    </Row>);
+
+    this.setState({productRows: [...this.state.productRows, newRow]})
+  }
+
+  removeProductRow = () => {
+    let productRows = this.state.productRows;
+    let form = this.state.form;
+    productRows.pop();
+    form.color.pop();
+    form.size.pop();
+    form.stock.pop();
+    this.setState({
+      productRows: productRows,
+      form: form
+    })
   }
 
   render() {
-    const { btnLoading, form } = this.state;
+    const { btnLoading, form, productRows } = this.state;
     const { show, formData } = this.props;
+
     return (
       <>
         <Modal size="lg" show={show} onHide={this.handleClose}>
-          <Modal.Header closeButton>
+          <Modal.Header>
             <Modal.Title>
               {formData && "Thay đổi thông tin sản phẩm"}
               {!formData && "Tạo sản phẩm mới"}
@@ -105,7 +202,7 @@ class ProductForm extends Component {
           <Modal.Body>
             <Form>
               <Row>
-                <Form.Group as={Col} xs={5} className="mb-3" controlId="productName">
+                <Form.Group as={Col} className="mb-3" controlId="productName">
                   <Form.Label className="required">Tên sản phẩm</Form.Label>
                   <Form.Control autoComplete="none" type="text" defaultValue={form.productName} onChange={this.handleInputChange} placeholder="Nhập tên sản phẩm" />
                   {this.validator.message(
@@ -114,109 +211,113 @@ class ProductForm extends Component {
                     "required"
                   )}
                 </Form.Group>
-                <Form.Group as={Col} className="mb-3" controlId="capitalPrice">
-                  <Form.Label className="required">Giá nhập</Form.Label>
-                  <InputGroup>
-                    <Form.Control autoComplete="none" type="number" min={0} defaultValue={form.capitalPrice} onChange={this.handleInputChange} placeholder="0" />
-                    <div className="input-group-append">
-                      <span className="input-group-text bg-transparent p-1">đ</span>
-                    </div>
-                  </InputGroup>
+                <Form.Group as={Col} className="mb-3" controlId="shortTitle">
+                  <Form.Label className="required">Têu đề sản phẩm</Form.Label>
+                  <Form.Control autoComplete="none" type="text" defaultValue={form.shortTitle} onChange={this.handleInputChange} placeholder="Tiêu đề sản phẩm" />
                   {this.validator.message(
-                    "capitalPrice",
-                    this.state.form.capitalPrice,
-                    "required"
-                  )}
-                </Form.Group>
-                <Form.Group as={Col} className="mb-3" controlId="retailPrice">
-                  <Form.Label className="required">Giá lẻ</Form.Label>
-                  <InputGroup>
-                    <Form.Control autoComplete="none" type="number" min={0} defaultValue={form.retailPrice} onChange={this.handleInputChange} placeholder="0" />
-                    <div className="input-group-append">
-                      <span className="input-group-text bg-transparent p-1">đ</span>
-                    </div>
-                  </InputGroup>
-                  {this.validator.message(
-                    "retailPrice",
-                    this.state.form.retailPrice,
-                    "required"
-                  )}
-                </Form.Group>
-                <Form.Group as={Col} className="mb-3" controlId="wholesalePrice">
-                  <Form.Label className="required">Giá sỉ</Form.Label>
-                  <InputGroup>
-                    <Form.Control autoComplete="none" type="number" min={0} defaultValue={form.wholesalePrice} onChange={this.handleInputChange} placeholder="0" />
-                    <div className="input-group-append bg-white">
-                      <span className="input-group-text bg-transparent p-1">đ</span>
-                    </div>
-                  </InputGroup>
-                  {this.validator.message(
-                    "wholesalePrice",
-                    this.state.form.wholesalePrice,
+                    "shortTitle",
+                    this.state.form.shortTitle,
                     "required"
                   )}
                 </Form.Group>
               </Row>
               <Row>
-                <Col xs={5}>
-                  <Row>
-                    <Form.Group as={Col} className="mb-3" controlId="stock">
-                      <Form.Label className="required">Số lượng sẵn có</Form.Label>
-                      <Form.Control autoComplete="none" type="number" min={0} defaultValue={form.stock} onChange={this.handleInputChange} placeholder="0" />
-                      {this.validator.message(
-                        "stock",
-                        this.state.form.stock,
-                        "required"
-                      )}
-                    </Form.Group>
-                    <Form.Group as={Col} className="mb-3" controlId="weight">
-                      <Form.Label className="required">Trọng lượng</Form.Label>
-                      <InputGroup>
-                        <Form.Control autoComplete="none" type="number" min={0} defaultValue={form.weight} onChange={this.handleInputChange} placeholder="0" />
-                        <div className="input-group-append">
-                          <span className="input-group-text bg-transparent p-1">gram</span>
-                        </div>
-                      </InputGroup>
-                      {this.validator.message(
-                        "weight",
-                        this.state.form.weight,
-                        "required"
-                      )}
-                    </Form.Group>
-                  </Row>
-                </Col>
-                <Col>
-                  <Form.Label>Kích thước</Form.Label>
-                  <Row>
-                    <Form.Group as={Col} className="mb-3" controlId="length">
-                      <InputGroup>
-                        <Form.Control autoComplete="none" type="number" min={0} defaultValue={form.length} onChange={this.handleInputChange} placeholder="Chiều dài" />
-                        <div className="input-group-append">
-                          <span className="input-group-text bg-transparent p-1">cm</span>
-                        </div>
-                        <div className="position-absolute top-50 start-110 translate-middle">X</div>
-                      </InputGroup>
-                    </Form.Group>
-                    <Form.Group as={Col} className="mb-3" controlId="width">
-                      <InputGroup>
-                        <Form.Control autoComplete="none" type="number" min={0} defaultValue={form.width} onChange={this.handleInputChange} placeholder="Chiều rộng" />
-                        <div className="input-group-append">
-                          <span className="input-group-text bg-transparent p-1">cm</span>
-                        </div>
-                        <div className="position-absolute top-50 start-110 translate-middle">X</div>
-                      </InputGroup>
-                    </Form.Group>
-                    <Form.Group as={Col} className="mb-3" controlId="height">
-                      <InputGroup>
-                        <Form.Control autoComplete="none" type="number" min={0} defaultValue={form.height} onChange={this.handleInputChange} placeholder="Chiều cao" />
-                        <div className="input-group-append bg-white">
-                          <span className="input-group-text bg-transparent p-1">cm</span>
-                        </div>
-                      </InputGroup>
-                    </Form.Group>
-                  </Row>
-                </Col>
+                <Form.Group as={Col} className="mb-3" controlId="brand">
+                  <Form.Label className="required">Nhãn hiệu</Form.Label>
+                  <Form.Control autoComplete="none" type="text" defaultValue={form.brand} onChange={this.handleInputChange} placeholder="Nhãn hiệu" />
+                  {this.validator.message(
+                    "brand",
+                    this.state.form.brand,
+                    "required"
+                  )}
+                </Form.Group>
+                <Form.Group as={Col} className="mb-3" controlId="category">
+                  <Form.Label className="required">Phân loại</Form.Label>
+                  <Form.Control as="select" defaultValue={form.category} onChange={this.handleInputChange} >
+                    <option value="Nam" selected>Nam</option>
+                    <option value="Nữ">Nữ</option>
+                    <option value="Trẻ em">Trẻ em</option>
+                  </Form.Control>
+                  {this.validator.message(
+                    "category",
+                    this.state.form.category,
+                    "required"
+                  )}
+                </Form.Group>
+                <Form.Group as={Col} className="mb-3" controlId="price">
+                  <Form.Label className="required">Giá bán</Form.Label>
+                  <InputGroup>
+                    <Form.Control autoComplete="none" type="number" min={0} defaultValue={form.price} onChange={this.handleInputChange} placeholder="0" />
+                    <div className="input-group-append">
+                      <span className="input-group-text bg-transparent p-1">đ</span>
+                    </div>
+                  </InputGroup>
+                  {this.validator.message(
+                    "price",
+                    this.state.form.price,
+                    "required"
+                  )}
+                </Form.Group>
+                <Form.Group as={Col} className="mb-3" controlId="promotion">
+                  <Form.Label className="required">Khuyến mãi</Form.Label>
+                  <InputGroup>
+                    <Form.Control autoComplete="none" type="number" min={0} defaultValue={form.promotion} onChange={this.handleInputChange} placeholder="0" />
+                    <div className="input-group-append">
+                      <span className="input-group-text bg-transparent p-1">%</span>
+                    </div>
+                  </InputGroup>
+                  {this.validator.message(
+                    "promotion",
+                    this.state.form.promotion,
+                    "required"
+                  )}
+                </Form.Group>
               </Row>
+              <Row>
+                <Form.Group as={Col} xs={3} className="mb-0">
+                  <Form.Label className="required">Size</Form.Label>
+                </Form.Group>
+                <Form.Group as={Col} xs={3} className="mb-0">
+                  <Form.Label className="required">Màu sắc</Form.Label>
+                </Form.Group>
+                <Form.Group as={Col} xs={3} className="mb-0">
+                  <Form.Label className="required">Số lượng</Form.Label>
+                </Form.Group>
+              </Row>
+              <Row>
+                <Form.Group as={Col} xs={3} className="mb-3" controlId="size">
+                  <Form.Control autoComplete="none" type="number" bsPrefix="form-control 0" min={16} defaultValue={form.size[0]} onChange={this.handleInputChange} placeholder="0" />
+                  {this.validator.message(
+                    "size",
+                    this.state.form.size[0],
+                    "required"
+                  )}
+                </Form.Group>
+                <Form.Group as={Col} xs={3} className="mb-3" controlId="color">
+                  <Form.Control autoComplete="none" type="text" bsPrefix="form-control 0" defaultValue={form.color[0]} onChange={this.handleInputChange}/>
+                  {this.validator.message(
+                    "color",
+                    this.state.form.color[0],
+                    "required"
+                  )}
+                </Form.Group>
+                <Form.Group as={Col} xs={3} className="mb-3" controlId="stock">
+                  <Form.Control autoComplete="none" type="number" bsPrefix="form-control 0" min={1} defaultValue={form.stock[0]} onChange={this.handleInputChange} placeholder="0" />
+                  {this.validator.message(
+                    "stock",
+                    this.state.form.stock[0],
+                    "required"
+                  )}
+                </Form.Group>
+                {!form.id && productRows.length === 0 && <button
+                  className="btn btn-primary mt-1 d-flex justify-content-center align-items-center"
+                  style={{width: "30px", height: "30px"}}
+                  onClick={this.addProductRow}
+                >
+                  <i className="fas fa-plus pr-0"></i>
+                </button>}
+              </Row>
+              {!form.id && productRows.map((row,index) => row(index))}
               <Row>
                 <Form.Group as={Col} className="mb-3" controlId="productPhotos">
                   <Form.Label>Link ảnh sản phẩm</Form.Label>

@@ -8,7 +8,7 @@ class Footer extends Component {
           <div className="row">
             <div className="col-lg-3  col-md-6 col-sm-6">
               <div className="single-footer-widget">
-                <h6>About Us</h6>
+                <h6>Giới thiệu</h6>
                 <p>
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
                   do eiusmod tempor incididunt ut labore dolore magna aliqua.
@@ -17,8 +17,8 @@ class Footer extends Component {
             </div>
             <div className="col-lg-4  col-md-6 col-sm-6">
               <div className="single-footer-widget">
-                <h6>Newsletter</h6>
-                <p>Stay update with our latest</p>
+                <h6>Tin tức</h6>
+                <p>Cập nhật tin tức mới nhất của chúng tôi</p>
                 <div className id="mc_embed_signup">
                   <form
                     target="_blank"
@@ -93,8 +93,8 @@ class Footer extends Component {
             </div>
             <div className="col-lg-2 col-md-6 col-sm-6">
               <div className="single-footer-widget">
-                <h6>Follow Us</h6>
-                <p>Let us be social</p>
+                <h6>Theo dõi chúng tôi</h6>
+                <p>Hãy theo dõi chúng tôi trên các mạng xã hội</p>
                 <div className="footer-social d-flex align-items-center">
                   <a href="/">
                     <i className="fa fa-facebook" />

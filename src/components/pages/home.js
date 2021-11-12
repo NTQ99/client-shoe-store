@@ -56,7 +56,7 @@ class HomePage extends Component {
                             <span className="lnr lnr-cross" />
                           </a>
                           <span className="add-text text-uppercase">
-                            Add to Bag
+                            Thêm vào giỏ
                           </span>
                         </div>
                       </div>
@@ -90,7 +90,7 @@ class HomePage extends Component {
                             <span className="lnr lnr-cross" />
                           </a>
                           <span className="add-text text-uppercase">
-                            Add to Bag
+                            Thêm vào giỏ
                           </span>
                         </div>
                       </div>
@@ -121,8 +121,8 @@ class HomePage extends Component {
                   <div className="f-icon">
                     <img src="/assets/img/features/f-icon1.png" alt="" />
                   </div>
-                  <h6>Free Delivery</h6>
-                  <p>Free Shipping on all order</p>
+                  <h6>Miễn phí vận chuyển</h6>
+                  <p>Miễn phí vận chuyển với đơn hàng trên 1 triệu đồng</p>
                 </div>
               </div>
               {/* single features */}
@@ -131,8 +131,8 @@ class HomePage extends Component {
                   <div className="f-icon">
                     <img src="/assets/img/features/f-icon2.png" alt="" />
                   </div>
-                  <h6>Return Policy</h6>
-                  <p>Free Shipping on all order</p>
+                  <h6>Chính sách đổi trả</h6>
+                  <p>7 ngày đổi trả sản phẩm</p>
                 </div>
               </div>
               {/* single features */}
@@ -141,8 +141,8 @@ class HomePage extends Component {
                   <div className="f-icon">
                     <img src="/assets/img/features/f-icon3.png" alt="" />
                   </div>
-                  <h6>24/7 Support</h6>
-                  <p>Free Shipping on all order</p>
+                  <h6>Hỗ trợ 24/7</h6>
+                  <p>Liên hệ chúng tôi để được hỗ trợ</p>
                 </div>
               </div>
               {/* single features */}
@@ -151,8 +151,8 @@ class HomePage extends Component {
                   <div className="f-icon">
                     <img src="/assets/img/features/f-icon4.png" alt="" />
                   </div>
-                  <h6>Secure Payment</h6>
-                  <p>Free Shipping on all order</p>
+                  <h6>Bảo mật thanh toán</h6>
+                  <p>Tiêu chuẩn PCI DSS</p>
                 </div>
               </div>
             </div>
@@ -274,7 +274,7 @@ class HomePage extends Component {
               <div className="row justify-content-center">
                 <div className="col-lg-6 text-center">
                   <div className="section-title">
-                    <h1>Latest Products</h1>
+                    <h1>Sản phẩm mới</h1>
                     <p>
                       Lorem ipsum dolor sit amet, consectetur adipisicing elit,
                       sed do eiusmod tempor incididunt ut labore et dolore magna
@@ -296,25 +296,25 @@ class HomePage extends Component {
                         <div className="product-details">
                           <h6>{item.productName}</h6>
                           <div className="price">
-                            <h6>{item.price[2] + " đ"}</h6>
-                            <h6 className="l-through">{item.price[1] + " đ"}</h6>
+                            <h6>{item.price + " đ"}</h6>
+                            <h6 className="l-through">{item.price + " đ"}</h6>
                           </div>
                           <div className="prd-bottom">
                             <a href className="social-info" onClick={() => this.addProductToCart(item.id)}>
                               <span className="ti-bag" />
-                              <p className="hover-text">add to bag</p>
+                              <p className="hover-text">Thêm vào giỏ</p>
                             </a>
                             <a href className="social-info">
                               <span className="lnr lnr-heart" />
-                              <p className="hover-text">Wishlist</p>
+                              <p className="hover-text">Yêu thích</p>
                             </a>
                             <a href className="social-info">
                               <span className="lnr lnr-sync" />
-                              <p className="hover-text">compare</p>
+                              <p className="hover-text">So sánh</p>
                             </a>
                             <a href={"/product-detail/" + item.productCode} className="social-info">
                               <span className="lnr lnr-move" />
-                              <p className="hover-text">view more</p>
+                              <p className="hover-text">Chi tiết</p>
                             </a>
                           </div>
                         </div>
@@ -331,7 +331,7 @@ class HomePage extends Component {
               <div className="row justify-content-center">
                 <div className="col-lg-6 text-center">
                   <div className="section-title">
-                    <h1>Coming Products</h1>
+                    <h1>Hàng sắp về</h1>
                     <p>
                       Lorem ipsum dolor sit amet, consectetur adipisicing elit,
                       sed do eiusmod tempor incididunt ut labore et dolore magna
@@ -359,19 +359,19 @@ class HomePage extends Component {
                           <div className="prd-bottom">
                             <a href className="social-info">
                               <span className="ti-bag" />
-                              <p className="hover-text">add to bag</p>
+                              <p className="hover-text">Thêm vào giỏ</p>
                             </a>
                             <a href className="social-info">
                               <span className="lnr lnr-heart" />
-                              <p className="hover-text">Wishlist</p>
+                              <p className="hover-text">Yêu thích</p>
                             </a>
                             <a href className="social-info">
                               <span className="lnr lnr-sync" />
-                              <p className="hover-text">compare</p>
+                              <p className="hover-text">So sánh</p>
                             </a>
                             <a href className="social-info">
                               <span className="lnr lnr-move" />
-                              <p className="hover-text">view more</p>
+                              <p className="hover-text">Chi tiết</p>
                             </a>
                           </div>
                         </div>
@@ -391,32 +391,32 @@ class HomePage extends Component {
               <div className="col-lg-6 no-padding exclusive-left">
                 <div className="row clock_sec clockdiv" id="clockdiv">
                   <div className="col-lg-12">
-                    <h1>Exclusive Hot Deal Ends Soon!</h1>
-                    <p>Who are in extremely love with eco friendly system.</p>
+                    <h1>Ưu đãi độc quyền sẽ sớm kết thúc!</h1>
+                    <p>Hay nhanh tay đặt hàng để nhận ưu đãi hấp dẫn.</p>
                   </div>
                   <div className="col-lg-12">
                     <div className="row clock-wrap">
                       <div className="col clockinner1 clockinner">
-                        <h1 className="days">150</h1>
-                        <span className="smalltext">Days</span>
+                        <h1 className="days">1</h1>
+                        <span className="smalltext">Ngày</span>
                       </div>
                       <div className="col clockinner clockinner1">
                         <h1 className="hours">23</h1>
-                        <span className="smalltext">Hours</span>
+                        <span className="smalltext">Giờ</span>
                       </div>
                       <div className="col clockinner clockinner1">
                         <h1 className="minutes">47</h1>
-                        <span className="smalltext">Mins</span>
+                        <span className="smalltext">Phút</span>
                       </div>
                       <div className="col clockinner clockinner1">
                         <h1 className="seconds">59</h1>
-                        <span className="smalltext">Secs</span>
+                        <span className="smalltext">Giây</span>
                       </div>
                     </div>
                   </div>
                 </div>
                 <a href className="primary-btn">
-                  Shop Now
+                  Mua ngay
                 </a>
               </div>
               <div className="col-lg-6 no-padding exclusive-right">
@@ -439,7 +439,7 @@ class HomePage extends Component {
                           <span className="ti-bag" />
                         </a>
                         <span className="add-text text-uppercase">
-                          Add to Bag
+                          Thêm vào giỏ
                         </span>
                       </div>
                     </div>
@@ -462,7 +462,7 @@ class HomePage extends Component {
                           <span className="ti-bag" />
                         </a>
                         <span className="add-text text-uppercase">
-                          Add to Bag
+                          Thêm vào giỏ
                         </span>
                       </div>
                     </div>
@@ -522,7 +522,7 @@ class HomePage extends Component {
             <div className="row justify-content-center">
               <div className="col-lg-6 text-center">
                 <div className="section-title">
-                  <h1>Deals of the Week</h1>
+                  <h1>Ưu đãi trong tuần</h1>
                   <p>
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit,
                     sed do eiusmod tempor incididunt ut labore et dolore magna

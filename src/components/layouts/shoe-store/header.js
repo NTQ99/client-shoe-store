@@ -64,101 +64,33 @@ class Header extends Component {
                       Trang chủ
                     </a>
                   </li>
-                  <li className="nav-item submenu dropdown">
+                  <li className="nav-item">
                     <a
-                      href="/"
-                      className="nav-link dropdown-toggle"
-                      data-toggle="dropdown"
-                      role="button"
-                      aria-haspopup="true"
-                      aria-expanded="false"
+                      href="/category"
+                      className="nav-link"
                     >
                       Sản phẩm
                     </a>
-                    <ul className="dropdown-menu">
-                      <li className="nav-item">
-                        <a className="nav-link" href="/category">
-                          Shop Category
-                        </a>
-                      </li>
-                      <li className="nav-item">
-                        <a className="nav-link" href="single-product.html">
-                          Product Details
-                        </a>
-                      </li>
-                      <li className="nav-item">
-                        <a className="nav-link" href="checkout.html">
-                          Product Checkout
-                        </a>
-                      </li>
-                      <li className="nav-item">
-                        <a className="nav-link" href="cart.html">
-                          Shopping Cart
-                        </a>
-                      </li>
-                      <li className="nav-item">
-                        <a className="nav-link" href="confirmation.html">
-                          Confirmation
-                        </a>
-                      </li>
-                    </ul>
                   </li>
-                  <li className="nav-item submenu dropdown">
+                  <li className="nav-item ">
                     <a
                       href="/"
-                      className="nav-link dropdown-toggle"
-                      data-toggle="dropdown"
-                      role="button"
-                      aria-haspopup="true"
-                      aria-expanded="false"
+                      className="nav-link"
                     >
                       Bộ sưu tập
                     </a>
-                    <ul className="dropdown-menu">
-                      <li className="nav-item">
-                        <a className="nav-link" href="blog.html">
-                          Blog
-                        </a>
-                      </li>
-                      <li className="nav-item">
-                        <a className="nav-link" href="single-blog.html">
-                          Blog Details
-                        </a>
-                      </li>
-                    </ul>
                   </li>
-                  <li className="nav-item submenu dropdown">
+                  <li className="nav-item">
                     <a
                       href="/"
-                      className="nav-link dropdown-toggle"
-                      data-toggle="dropdown"
-                      role="button"
-                      aria-haspopup="true"
-                      aria-expanded="false"
+                      className="nav-link"
                     >
                       Sale
                     </a>
-                    <ul className="dropdown-menu">
-                      <li className="nav-item">
-                        <a className="nav-link" href="login.html">
-                          Login
-                        </a>
-                      </li>
-                      <li className="nav-item">
-                        <a className="nav-link" href="tracking.html">
-                          Tracking
-                        </a>
-                      </li>
-                      <li className="nav-item">
-                        <a className="nav-link" href="elements.html">
-                          Elements
-                        </a>
-                      </li>
-                    </ul>
                   </li>
                   <li className="nav-item">
                     <a className="nav-link" href="contact.html">
-                      Về chúng tôi
+                      Giới thiệu
                     </a>
                   </li>
                 </ul>

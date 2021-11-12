@@ -496,6 +496,7 @@ export function productColumns(obj) {
       dataField: "productName",
       text: "Tên sản phẩm",
       headerStyle: { width: "250px" },
+      formatter: (cell, row) => `${cell}, size ${row.size}, ${row.color}`
     },
     {
       dataField: "stock",
@@ -510,11 +511,11 @@ export function productColumns(obj) {
     },
     {
       dataField: "price",
-      text: "Giá nhập",
+      text: "Giá bán",
       sort: true,
       headerStyle: { width: "100px" },
       formatter: (cell, row) =>
-        row.price[0].toLocaleString("it-IT", { style: "currency", currency: "VND" }),
+        row.price.toLocaleString("it-IT", { style: "currency", currency: "VND" }),
     },
     {
       dataField: "promotion",

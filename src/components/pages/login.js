@@ -85,101 +85,33 @@ class LoginPage extends Component {
                 >
                   <ul className="nav navbar-nav menu_nav ml-auto">
                     <li className="nav-item">
-                      <a className="nav-link" href="index.html">
+                      <a className="nav-link" href="/">
                         Trang chủ
                       </a>
                     </li>
-                    <li className="nav-item submenu dropdown">
+                    <li className="nav-item">
                       <a
-                        href="/"
-                        className="nav-link dropdown-toggle"
-                        data-toggle="dropdown"
-                        role="button"
-                        aria-haspopup="true"
-                        aria-expanded="false"
+                        href="/category"
+                        className="nav-link"
                       >
                         Sản phẩm
                       </a>
-                      <ul className="dropdown-menu">
-                        <li className="nav-item">
-                          <a className="nav-link" href="category.html">
-                            Shop Category
-                          </a>
-                        </li>
-                        <li className="nav-item">
-                          <a className="nav-link" href="single-product.html">
-                            Product Details
-                          </a>
-                        </li>
-                        <li className="nav-item">
-                          <a className="nav-link" href="checkout.html">
-                            Product Checkout
-                          </a>
-                        </li>
-                        <li className="nav-item">
-                          <a className="nav-link" href="cart.html">
-                            Shopping Cart
-                          </a>
-                        </li>
-                        <li className="nav-item">
-                          <a className="nav-link" href="confirmation.html">
-                            Confirmation
-                          </a>
-                        </li>
-                      </ul>
                     </li>
-                    <li className="nav-item submenu dropdown">
+                    <li className="nav-item">
                       <a
                         href="/"
-                        className="nav-link dropdown-toggle"
-                        data-toggle="dropdown"
-                        role="button"
-                        aria-haspopup="true"
-                        aria-expanded="false"
+                        className="nav-link"
                       >
                         Bộ sưu tập
                       </a>
-                      <ul className="dropdown-menu">
-                        <li className="nav-item">
-                          <a className="nav-link" href="blog.html">
-                            Blog
-                          </a>
-                        </li>
-                        <li className="nav-item">
-                          <a className="nav-link" href="single-blog.html">
-                            Blog Details
-                          </a>
-                        </li>
-                      </ul>
                     </li>
-                    <li className="nav-item submenu dropdown active">
+                    <li className="nav-item">
                       <a
                         href="/"
-                        className="nav-link dropdown-toggle"
-                        data-toggle="dropdown"
-                        role="button"
-                        aria-haspopup="true"
-                        aria-expanded="false"
+                        className="nav-link"
                       >
                         Sale
                       </a>
-                      <ul className="dropdown-menu">
-                        <li className="nav-item active">
-                          <a className="nav-link" href="login.html">
-                            Login
-                          </a>
-                        </li>
-                        <li className="nav-item">
-                          <a className="nav-link" href="tracking.html">
-                            Tracking
-                          </a>
-                        </li>
-                        <li className="nav-item">
-                          <a className="nav-link" href="elements.html">
-                            Elements
-                          </a>
-                        </li>
-                      </ul>
                     </li>
                     <li className="nav-item">
                       <a className="nav-link" href="contact.html">
@@ -203,7 +135,7 @@ class LoginPage extends Component {
               </div>
             </nav>
           </div>
-          {/* <div className="search_input" id="search_input_box">
+          <div className="search_input" id="search_input_box">
             <div className="container">
               <form className="d-flex justify-content-between">
                 <input
@@ -220,7 +152,7 @@ class LoginPage extends Component {
                 />
               </form>
             </div>
-          </div> */}
+          </div>
         </header>
         {/* End Header Area */}
         {/* Start Banner Area */}

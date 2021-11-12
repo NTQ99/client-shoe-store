@@ -351,14 +351,6 @@ class CreateOrderContent extends Component {
               <Card.Header>
                 <div className="w-100 d-flex justify-content-between flex-row align-items-center">
                   <Card.Title className="mb-0">Sản phẩm</Card.Title>
-                  <select
-                    className="form-control"
-                    style={{ width: "100px" }}
-                    onChange={this.handlePriceType}
-                  >
-                    <option value={"retailPrice"}>Giá lẻ</option>
-                    <option value={"wholesalePrice"}>Giá sỉ</option>
-                  </select>
                 </div>
               </Card.Header>
               <Card.Body>
@@ -480,50 +472,26 @@ class CreateOrderContent extends Component {
                   className="mb-2"
                   onChange={(e) => this.setState({promotion: e.target.value})}
                 >
-                  <InputGroup.Prepend style={{ width: "30%" }}>
+                  <div className="input-group-prepend" style={{ width: "30%" }}>
                     <InputGroup.Text className="w-100">
                       Chiết khấu:
                     </InputGroup.Text>
-                  </InputGroup.Prepend>
+                  </div>
                   <Form.Control placeholder="0" type="number" />
-                  <InputGroup.Append style={{ width: "10%" }}>
+                  <div className="input-group-append" style={{ width: "10%" }}>
                     <InputGroup.Text className="w-100">%</InputGroup.Text>
-                  </InputGroup.Append>
+                  </div>
                 </Form.Group>
-                {/* <Form.Group className="mb-2">
-                  <select
-                    className="form-control"
-                    id="deliveryUnitName"
-                    onChange={(e) => {this.setState({deliveryUnitName: e.target.value}); console.log(e.target.value)}}
-                  >
-                    <option value={""}>Chọn đơn vị vận chuyển</option>
-                    <option value={"j&T"}>J&T</option>
-                    <option value={"GHN"}>GHN</option>
-                  </select>
-                </Form.Group>
-                {deliveryUnitName && deliveryUnitName!= "" && (<>
-                  <Form.Group as={InputGroup} controlId="shipFee" className="mb-2">
-                    <InputGroup.Prepend style={{ width: "30%" }}>
-                      <InputGroup.Text className="w-100">
-                        Phí ship:
-                      </InputGroup.Text>
-                    </InputGroup.Prepend>
-                    <Form.Control value={shipFee} disabled />
-                    <InputGroup.Append style={{ width: "10%" }}>
-                      <InputGroup.Text className="w-100">đ</InputGroup.Text>
-                    </InputGroup.Append>
-                  </Form.Group>
-                </>)} */}
                 <Form.Group as={InputGroup} className="mb-5" controlId="paid" onChange={(e) => this.setState({paid: e.target.value})}>
-                <InputGroup.Prepend style={{ width: "30%" }}>
+                  <div className="input-group-prepend" style={{ width: "30%" }}>
                     <InputGroup.Text className="w-100">
                       Đã trả:
                     </InputGroup.Text>
-                  </InputGroup.Prepend>
+                  </div>
                   <Form.Control placeholder="0" min={0} type="number" />
-                  <InputGroup.Append style={{ width: "10%" }}>
+                  <div className="input-group-append" style={{ width: "10%" }}>
                     <InputGroup.Text className="w-100">đ</InputGroup.Text>
-                  </InputGroup.Append>
+                  </div>
                 </Form.Group>
 
                 <div className="d-flex justify-content-between mb-5">

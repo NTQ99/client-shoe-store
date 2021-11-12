@@ -60,21 +60,43 @@ const expandRow = {
         <Table className="mb-0" style={{ borderBottom: "1px solid #ebedf3" }}>
           <tbody>
             <tr>
-              <td className="title-style" style={{width: '130px'}}>Giá lẻ</td>
-              <td>{row.price[1] + " VND"}</td>
+              <td className="title-style" style={{width: '130px'}}>Nhãn hiệu</td>
+              <td>{row.brand}</td>
               <td colSpan="2">
                 <span
                   className="title-style"
                   style={{ display: "inline-block", width: "120px" }}
                 >
-                  Giá sỉ
+                  Phân loại
                 </span>
-                <span>{row.price[2] + " VND"}</span>
+                <span>{row.category}</span>
               </td>
             </tr>
             <tr>
-              <td className="title-style">Trọng lượng</td>
-              <td colSpan="3">{`${row.weight} gram`}</td>
+              <td className="title-style" style={{width: '130px'}}>Giá bán</td>
+              <td>{row.price + " VND"}</td>
+              <td colSpan="2">
+                <span
+                  className="title-style"
+                  style={{ display: "inline-block", width: "120px" }}
+                >
+                  Khuyến mãi
+                </span>
+                <span>{row.promotion + " %"}</span>
+              </td>
+            </tr>
+            <tr>
+              <td className="title-style" style={{width: '130px'}}>Size</td>
+              <td>{row.size}</td>
+              <td colSpan="2">
+                <span
+                  className="title-style"
+                  style={{ display: "inline-block", width: "120px" }}
+                >
+                  Màu sắc
+                </span>
+                <span>{row.color}</span>
+              </td>
             </tr>
             <tr>
               <td className="title-style">Chi tiết</td>

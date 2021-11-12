@@ -45,17 +45,17 @@ class ProductDetailPage extends Component {
           <div className="container">
             <div className="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
               <div className="col-first">
-                <h1>Product Details Page</h1>
+                <h1>Chi tiết sản phẩm</h1>
                 <nav className="d-flex align-items-center">
-                  <a href="index.html">
-                    Home
+                  <a href="/">
+                    Trang chủ
                     <span className="lnr lnr-arrow-right" />
                   </a>
                   <a href="#">
-                    Shop
+                    Sản phẩm
                     <span className="lnr lnr-arrow-right" />
                   </a>
-                  <a href="single-product.html">product-details</a>
+                  <a href="single-product.html">Chi tiết</a>
                 </nav>
               </div>
             </div>
@@ -87,16 +87,16 @@ class ProductDetailPage extends Component {
               <div className="col-lg-5 offset-lg-1">
                 <div className="s_product_text">
                   <h3>{productDetail.productName}</h3>
-                  <h2>{productDetail.price[2] + " VND"}</h2>
+                  <h2>{productDetail.price + " VND"}</h2>
                   <ul className="list">
                     <li>
                       <a className="active" href="#">
-                        <span>Category</span> : Household
+                        <span>Danh mục</span> : {productDetail.category}
                       </a>
                     </li>
                     <li>
                       <a href="#">
-                        <span>Availibility</span> : {productDetail.stock}
+                        <span>Số lượng còn</span> : {productDetail.stock}
                       </a>
                     </li>
                   </ul>
@@ -104,7 +104,7 @@ class ProductDetailPage extends Component {
                     {productDetail.productDetail}
                   </p>
                   <div className="product_count">
-                    <label htmlFor="qty">Quantity:</label>
+                    <label htmlFor="qty">Số luọng:</label>
                     <input
                       type="text"
                       name="qty"
@@ -131,7 +131,7 @@ class ProductDetailPage extends Component {
                   </div>
                   <div className="card_area d-flex align-items-center">
                     <a className="primary-btn" href="/" onClick={this.addProductToCart}>
-                      Add to Cart
+                      Thêm vào giỏ hàng
                     </a>
                     <a className="icon_btn" href="#">
                       <i className="lnr lnr lnr-diamond" />
@@ -160,20 +160,7 @@ class ProductDetailPage extends Component {
                   aria-controls="home"
                   aria-selected="true"
                 >
-                  Description
-                </a>
-              </li>
-              <li className="nav-item">
-                <a
-                  className="nav-link"
-                  id="profile-tab"
-                  data-toggle="tab"
-                  href="#profile"
-                  role="tab"
-                  aria-controls="profile"
-                  aria-selected="false"
-                >
-                  Specification
+                  Thông tin chi tiết
                 </a>
               </li>
               <li className="nav-item">
@@ -186,7 +173,7 @@ class ProductDetailPage extends Component {
                   aria-controls="contact"
                   aria-selected="false"
                 >
-                  Comments
+                  Bình luận
                 </a>
               </li>
               <li className="nav-item">
@@ -199,7 +186,7 @@ class ProductDetailPage extends Component {
                   aria-controls="review"
                   aria-selected="false"
                 >
-                  Reviews
+                  Đánh giá
                 </a>
               </li>
             </ul>
@@ -244,83 +231,6 @@ class ProductDetailPage extends Component {
               </div>
               <div
                 className="tab-pane fade"
-                id="profile"
-                role="tabpanel"
-                aria-labelledby="profile-tab"
-              >
-                <div className="table-responsive">
-                  <table className="table">
-                    <tbody>
-                      <tr>
-                        <td>
-                          <h5>Width</h5>
-                        </td>
-                        <td>
-                          <h5>128mm</h5>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <h5>Height</h5>
-                        </td>
-                        <td>
-                          <h5>508mm</h5>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <h5>Depth</h5>
-                        </td>
-                        <td>
-                          <h5>85mm</h5>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <h5>Weight</h5>
-                        </td>
-                        <td>
-                          <h5>52gm</h5>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <h5>Quality checking</h5>
-                        </td>
-                        <td>
-                          <h5>yes</h5>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <h5>Freshness Duration</h5>
-                        </td>
-                        <td>
-                          <h5>03days</h5>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <h5>When packeting</h5>
-                        </td>
-                        <td>
-                          <h5>Without touch of hand</h5>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <h5>Each Box contains</h5>
-                        </td>
-                        <td>
-                          <h5>60pcs</h5>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-              <div
-                className="tab-pane fade"
                 id="contact"
                 role="tabpanel"
                 aria-labelledby="contact-tab"
@@ -336,8 +246,8 @@ class ProductDetailPage extends Component {
                           <div className="media-body">
                             <h4>Blake Ruiz</h4>
                             <h5>12th Feb, 2018 at 05:56 pm</h5>
-                            <a className="reply_btn" href="#">
-                              Reply
+                            <a className="Trả lời_btn" href="#">
+                              Trả lời
                             </a>
                           </div>
                         </div>
@@ -349,7 +259,7 @@ class ProductDetailPage extends Component {
                           ex ea commodo
                         </p>
                       </div>
-                      <div className="review_item reply">
+                      <div className="review_item Trả lời">
                         <div className="media">
                           <div className="d-flex">
                             <img src="/assets/img/product/review-2.png" alt="" />
@@ -357,8 +267,8 @@ class ProductDetailPage extends Component {
                           <div className="media-body">
                             <h4>Blake Ruiz</h4>
                             <h5>12th Feb, 2018 at 05:56 pm</h5>
-                            <a className="reply_btn" href="#">
-                              Reply
+                            <a className="Trả lời_btn" href="#">
+                              Trả lời
                             </a>
                           </div>
                         </div>
@@ -378,8 +288,8 @@ class ProductDetailPage extends Component {
                           <div className="media-body">
                             <h4>Blake Ruiz</h4>
                             <h5>12th Feb, 2018 at 05:56 pm</h5>
-                            <a className="reply_btn" href="#">
-                              Reply
+                            <a className="Trả lời_btn" href="#">
+                              Trả lời
                             </a>
                           </div>
                         </div>
@@ -395,7 +305,7 @@ class ProductDetailPage extends Component {
                   </div>
                   <div className="col-lg-6">
                     <div className="review_box">
-                      <h4>Post a comment</h4>
+                      <h4>Thêm bình luận</h4>
                       <form
                         className="row contact_form"
                         action="contact_process.php"
@@ -410,7 +320,7 @@ class ProductDetailPage extends Component {
                               className="form-control"
                               id="name"
                               name="name"
-                              placeholder="Your Full name"
+                              placeholder="Tên của bạn"
                             />
                           </div>
                         </div>
@@ -421,7 +331,7 @@ class ProductDetailPage extends Component {
                               className="form-control"
                               id="email"
                               name="email"
-                              placeholder="Email Address"
+                              placeholder="Địa chỉ email"
                             />
                           </div>
                         </div>
@@ -432,7 +342,7 @@ class ProductDetailPage extends Component {
                               className="form-control"
                               id="number"
                               name="number"
-                              placeholder="Phone Number"
+                              placeholder="Số điện thoại"
                             />
                           </div>
                         </div>
@@ -443,7 +353,7 @@ class ProductDetailPage extends Component {
                               name="message"
                               id="message"
                               rows={1}
-                              placeholder="Message"
+                              placeholder="Lời nhắn"
                               defaultValue={""}
                             />
                           </div>
@@ -454,7 +364,7 @@ class ProductDetailPage extends Component {
                             value="submit"
                             className="btn primary-btn"
                           >
-                            Submit Now
+                            Gửi
                           </button>
                         </div>
                       </form>
@@ -473,14 +383,14 @@ class ProductDetailPage extends Component {
                     <div className="row total_rate">
                       <div className="col-6">
                         <div className="box_total">
-                          <h5>Overall</h5>
+                          <h5>Điểm đánh giá</h5>
                           <h4>4.0</h4>
-                          <h6>(03 Reviews)</h6>
+                          <h6>(03 đánh giá)</h6>
                         </div>
                       </div>
                       <div className="col-6">
                         <div className="rating_list">
-                          <h3>Based on 3 Reviews</h3>
+                          <h3>Dựa trên 3 đánh giá</h3>
                           <ul className="list">
                             <li>
                               <a href="#">
@@ -602,8 +512,8 @@ class ProductDetailPage extends Component {
                   </div>
                   <div className="col-lg-6">
                     <div className="review_box">
-                      <h4>Add a Review</h4>
-                      <p>Your Rating:</p>
+                      <h4>Thêm đánh giá</h4>
+                      <p>Đánh giá của bạn:</p>
                       <ul className="list">
                         <li>
                           <a href="#">
@@ -631,7 +541,7 @@ class ProductDetailPage extends Component {
                           </a>
                         </li>
                       </ul>
-                      <p>Outstanding</p>
+                      <p>Nổi bật</p>
                       <form
                         className="row contact_form"
                         action="contact_process.php"
@@ -646,9 +556,9 @@ class ProductDetailPage extends Component {
                               className="form-control"
                               id="name"
                               name="name"
-                              placeholder="Your Full name"
+                              placeholder="Tên của bạn"
                               onfocus="this.placeholder = ''"
-                              onblur="this.placeholder = 'Your Full name'"
+                              onblur="this.placeholder = 'Tên của bạn'"
                             />
                           </div>
                         </div>
@@ -659,9 +569,9 @@ class ProductDetailPage extends Component {
                               className="form-control"
                               id="email"
                               name="email"
-                              placeholder="Email Address"
+                              placeholder="Địa chỉ email"
                               onfocus="this.placeholder = ''"
-                              onblur="this.placeholder = 'Email Address'"
+                              onblur="this.placeholder = 'Địa chỉ email'"
                             />
                           </div>
                         </div>
@@ -672,9 +582,9 @@ class ProductDetailPage extends Component {
                               className="form-control"
                               id="number"
                               name="number"
-                              placeholder="Phone Number"
+                              placeholder="Số điện thoại"
                               onfocus="this.placeholder = ''"
-                              onblur="this.placeholder = 'Phone Number'"
+                              onblur="this.placeholder = 'Số điện thoại'"
                             />
                           </div>
                         </div>
@@ -687,7 +597,7 @@ class ProductDetailPage extends Component {
                               rows={1}
                               placeholder="Review"
                               onfocus="this.placeholder = ''"
-                              onblur="this.placeholder = 'Review'"
+                              onblur="this.placeholder = 'Đánh giá'"
                               defaultValue={""}
                             />
                           </div>
@@ -698,7 +608,7 @@ class ProductDetailPage extends Component {
                             value="submit"
                             className="primary-btn"
                           >
-                            Submit Now
+                            Gửi
                           </button>
                         </div>
                       </form>
@@ -716,7 +626,7 @@ class ProductDetailPage extends Component {
             <div className="row justify-content-center">
               <div className="col-lg-6 text-center">
                 <div className="section-title">
-                  <h1>Deals of the Week</h1>
+                  <h1>Ưu đãi trong tuần</h1>
                   <p>
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit,
                     sed do eiusmod tempor incididunt ut labore et dolore magna
