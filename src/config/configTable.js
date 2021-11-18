@@ -106,7 +106,7 @@ export function orderProductColumns(obj) {
       formatter: (cellContent, row, rowIndex) => rowIndex + 1
     },
     {
-      dataField: "id",
+      dataField: "productId",
       text: "productId",
       hidden: true,
     },
@@ -116,7 +116,7 @@ export function orderProductColumns(obj) {
       headerStyle: { width: "300px" },
     },
     {
-      dataField: obj.state.priceType,
+      dataField: "price",
       text: "Đơn giá",
       formatter: (cell) =>
         cell.toLocaleString("it-IT", { style: "currency", currency: "VND" }),
@@ -132,7 +132,7 @@ export function orderProductColumns(obj) {
             max={row.stock}
             onChange={(e) =>
               obj.calcPrice({
-                id: row.id,
+                productId: row.productId,
                 quantity: e.target.value,
               })
             }
@@ -585,7 +585,10 @@ export function customerColumns(obj) {
       dataField: "customerAddresses",
       text: "Địa chỉ",
       headerStyle: { width: "400px" },
-      formatter: (cell, row) => Array.isArray(cell) && cell.length > 0 && cell[row.defaultAddressId].ward + ", " + cell[row.defaultAddressId].district + ", " + cell[row.defaultAddressId].province
+      formatter: (cell, row) => {
+        if (!(Array.isArray(cell) && cell.length > 0)) return "";
+        else return cell[row.defaultAddressId].ward + ", " + cell[row.defaultAddressId].district + ", " + cell[row.defaultAddressId].province
+      }
     },
     {
       dataField: "createdAt",

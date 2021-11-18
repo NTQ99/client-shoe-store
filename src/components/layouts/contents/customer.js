@@ -219,6 +219,7 @@ class CustomerContent extends Component {
     this.setState({ isLoading: true });
     await customerService.getCustomerBoard().then(async (res) => {
       this.setState({ entities: res.data.data });
+      console.log(res.data.data)
     });
     this.setState({ isLoading: false });
   }

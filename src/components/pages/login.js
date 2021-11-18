@@ -14,10 +14,12 @@ class LoginPage extends Component {
 
   componentDidMount() {
     if (authHeader()) {
-      if (AuthService.getRoles().includes("ROLE_SELLER") || AuthService.getRoles().includes("ROLE_ADMIN")) {
-        window.location.replace("/order");
-      } else {
-        window.location.replace("/home");
+      if (AuthService.getRoles()) {
+        if (AuthService.getRoles().includes("ROLE_SELLER") || AuthService.getRoles().includes("ROLE_ADMIN")) {
+          window.location.replace("/order");
+        } else {
+          window.location.replace("/home");
+        }
       }
     }
   }

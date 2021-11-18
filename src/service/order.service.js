@@ -27,6 +27,7 @@ class OrderService {
 
   
   createOrder(data) {
+    console.log(data);
     return axios({
       method: "post",
       url: BASE_URL + "/order/create",

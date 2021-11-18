@@ -13,24 +13,51 @@ class CartPage extends Component {
     }
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    await this.getCart();
+  }
+
+  getCart = async () => {
+    this.setState({products: [], totalMoney: 0});
     let currentCart = [];
     let totalMoney = 0;
-    currentCart = cartService.getCart();
+    currentCart = await cartService.getCart();
     currentCart.forEach(item => {
-      productService.getProductById(item.id).then(res => {
-        totalMoney += res.data.data.price * item.number;
+      productService.getProductById(item.productId).then(res => {
+        totalMoney += res.data.data.price * item.quantity;
         this.setState({
-          products: [...this.state.products, {data: res.data.data, number: item.number}],
+          products: [...this.state.products, {data: res.data.data, quantity: item.quantity}],
           totalMoney: totalMoney
         })
       })
     });
   }
 
-  updateProductToCart(e, id) {
-    cartService.updateCart(id, e.target.value)
-    this.setState({numOfCart: this.state.numOfCart + 1})
+  handleClickNumProduct(e, index, cnt) {  
+    let el = e.currentTarget.parentElement.parentElement.querySelector("input");
+    let products = this.state.products;
+    let newValue = products[index].quantity + cnt;
+    el.value = newValue;
+    this.updateProductToCart(newValue, index);
+  }
+  
+  updateProductToCart(value, index) {
+    let products = this.state.products;
+    this.setState({numOfCart: this.state.numOfCart + Number(value)});
+    if (Number(value) === 0) {
+      products.splice(index, 1);
+    } else {
+      products[index].quantity = Number(value);
+    }
+    this.setState({products: [...products]});
+    cartService.updateItemCart(index, value);
+  }
+  
+  handleChangeNumProduct = (value, index) => {
+    let products = this.state.products;
+    let totalMoney = this.state.totalMoney + (Number(value)-products[index].quantity)*products[index].data.price
+    products[index].quantity = Number(value);
+    this.setState({products: [...products], totalMoney: totalMoney});
   }
   
   render() {
@@ -71,7 +98,7 @@ class CartPage extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                    {products.map((item, i) => {
+                    {products.map((item, index) => {
                       if (!item.data.productPhotos[0].startsWith('http') && !item.data.productPhotos[0].startsWith('/')) {
                         item.data.productPhotos[0] = '/'+item.data.productPhotos[0]
                       }
@@ -80,7 +107,7 @@ class CartPage extends Component {
                           <td>
                             <div className="media">
                               <div className="d-flex">
-                                <img src={item.data.productPhotos[0]} width="250px" alt="" />
+                                <img src={item.data.productPhotos[0]} width="100px" alt="" />
                               </div>
                               <div className="media-body">
                                 <p>{item.data.productName}</p>
@@ -88,45 +115,48 @@ class CartPage extends Component {
                             </div>
                           </td>
                           <td>
-                            <h5>{item.data.price + " VND"}</h5>
+                            <h5>{item.data.price.toLocaleString("it-IT", { style: "currency", currency: "VND" })}</h5>
                           </td>
-                          <td>
-                            <div className="product_count">
+                          <td style={{maxWidth: '100px'}}>
+                            <div className="input-group" style={{width: 'fit-content'}}>
+                              <span class="input-group-btn">
+                                  <button
+                                    className="btn btn-white"
+                                    onClick={(e) => this.handleClickNumProduct(e, index, -1)}
+                                    type="button"
+                                    >
+                                    -
+                                  </button>
+                              </span>
                               <input
-                                type="text"
-                                name="qty"
-                                id="sst"
-                                maxLength={12}
-                                defaultValue={item.number}
-                                onBlur={(e) => {this.updateProductToCart(e, item.data.id); item.number = e.target.value}}
-                                title="Quantity:"
-                                className="input-text qty"
-                              />
-                              <button
-                                onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
-                                className="increase items-count"
-                                type="button"
-                              >
-                                <i className="lnr lnr-chevron-up" />
-                              </button>
-                              <button
-                                onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) && sst > 0 ) result.value--;return false;"
-                                className="reduced items-count"
-                                type="button"
-                              >
-                                <i className="lnr lnr-chevron-down" />
-                              </button>
+                                type="number"
+                                value={products[index].quantity}
+                                onChange={(e) => this.handleChangeNumProduct(e.target.value, index)}
+                                onBlur={(e) => this.updateProductToCart(e.target.value, index)}
+                                title="Số lượng"
+                                style={{width: '50px'}}
+                                className="form-control"
+                                />
+                              <span class="input-group-btn">
+                                  <button
+                                    className="btn btn-white"
+                                    onClick={(e) => this.handleClickNumProduct(e, index, 1)}
+                                    type="button"
+                                    >
+                                    +
+                                  </button>
+                              </span>
                             </div>
                           </td>
-                          <td>
-                            <h5>{item.data.price * item.number + " VND"}</h5>
+                          <td style={{minWidth: "150px"}}>
+                            <h5>{(item.data.price * item.quantity).toLocaleString("it-IT", { style: "currency", currency: "VND" })}</h5>
                           </td>
                         </tr>
                       )
                     })}
                     <tr className="bottom_button">
                       <td>
-                        <a className="gray_btn" href="#">
+                        <a className="gray_btn" href="/" onClick={(e) => {e.preventDefault(); this.getCart()}}>
                           Cập nhật giỏ hàng
                         </a>
                       </td>
@@ -148,7 +178,7 @@ class CartPage extends Component {
                         <h5>Thành tiền</h5>
                       </td>
                       <td>
-                        <h5>{totalMoney || 0 + " VND"}</h5>
+                        <h5>{(totalMoney || 0).toLocaleString("it-IT", { style: "currency", currency: "VND" })}</h5>
                       </td>
                     </tr>
                     <tr className="shipping_area">
@@ -163,11 +193,8 @@ class CartPage extends Component {
                             <li>
                               <a href="#">Ship nhanh: 50.000 VND</a>
                             </li>
-                            <li>
-                              <a href="#">Ship chậm: 30.000 VND</a>
-                            </li>
                             <li className="active">
-                              <a href="#">Miễn phí ship</a>
+                              <a href="#">Ship thường:    Miễn phí</a>
                             </li>
                           </ul>
                         </div>

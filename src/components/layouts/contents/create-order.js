@@ -23,6 +23,7 @@ class CreateOrderContent extends Component {
         show: false,
       },
       customerPhone: "",
+      customerEmail: "",
       customerName: "",
       deliveryTo: {},
       addressList: {district: [], ward: []},
@@ -35,7 +36,6 @@ class CreateOrderContent extends Component {
       paid: 0,
       shipFee: 0,
       promotion: 0,
-      priceType: "retailPrice",
       products: [],
     };
   }
@@ -46,23 +46,15 @@ class CreateOrderContent extends Component {
   }
 
   calcPrice = (row) => {
+    let totalPrice = this.state.totalPrice;
     this.state.products.forEach((product) => {
-      if (product.id === row.id) {
+      if (product.productId === row.productId) {
         product.quantity = row.quantity;
-        product.totalMoney = product[this.state.priceType] * row.quantity;
+        totalPrice += product.price * row.quantity - product.totalMoney
+        product.totalMoney = product.price * row.quantity;
       }
     });
-    this.setState({ products: [...this.state.products] });
-  };
-
-  handlePriceType = (e) => {
-    this.state.products.forEach((entity) => {
-      entity.totalMoney = entity[e.target.value] * entity.quantity;
-    });
-    this.setState({
-      priceType: e.target.value,
-      products: [...this.state.products],
-    });
+    this.setState({ products: [...this.state.products], totalPrice: totalPrice});
   };
 
   loadCustomerOptions = async () => {
@@ -75,7 +67,8 @@ class CreateOrderContent extends Component {
         value: index,
         label: customer.customerName,
         customerName: customer.customerName,
-        customerPhone: customer.customerPhone,
+        customerPhone: customer.customerPhone || "",
+        customerEmail: customer.customerEmail || "",
         defaultAddress: customer.customerAddresses[customer.defaultAddressId]
       }));
       this.setState({customerList: customerList});
@@ -89,13 +82,12 @@ class CreateOrderContent extends Component {
     .then(async data => {
       let productList=[];
       await data.forEach((product, index) => productList.push({
-        id: product.id,
+        productId: product.id,
         value: index,
         label: product.productName,
         productName: product.productName,
         stock: product.stock,
-        retailPrice: product.price[1],
-        wholesalePrice: product.price[2],
+        price: product.price,
       }));
       this.setState({productList: productList});
     });
@@ -189,12 +181,21 @@ class CreateOrderContent extends Component {
   handleCustomerSelect = (value) => {
     console.log(value)
     if (value.customerName) {
-      let provinceObject = addressData.find((province) => province.name === value.defaultAddress.province);
-      let districtObject = provinceObject.level2s.find((district) => district.name === value.defaultAddress.district);
-      let wardObject = districtObject.level3s.find((ward) => ward.name === value.defaultAddress.ward);
+      let provinceObject = {level1_id: "-1"};
+      let districtObject = {level2_id: "-1"};
+      let wardObject = {level3_id: "-1"};
       let addressList = {
-        district: provinceObject.level2s,
-        ward: districtObject.level3s
+        district: [],
+        ward: []
+      }
+      if (value.defaultAddress) {
+        provinceObject = addressData.find((province) => province.name === value.defaultAddress.province);
+        districtObject = provinceObject.level2s.find((district) => district.name === value.defaultAddress.district);
+        wardObject = districtObject.level3s.find((ward) => ward.name === value.defaultAddress.ward);
+        addressList = {
+          district: provinceObject.level2s,
+          ward: districtObject.level3s
+        }
       }
       let deliveryTo = {
         provinceId: provinceObject.level1_id,
@@ -203,16 +204,18 @@ class CreateOrderContent extends Component {
         district: districtObject.name,
         wardId: wardObject.level3_id,
         ward: wardObject.name,
-        detail: value.defaultAddress.detail,
+        detail: value.defaultAddress? (value.defaultAddress.detail || "") : "",
       }
       this.setState({
         customerId: value.id,
         customerName: value.customerName,
-        customerPhone: value.customerPhone,
+        customerPhone: value.customerPhone || "",
+        customerEmail: value.customerEmail || "",
         addressList: addressList,
         deliveryTo: deliveryTo
       });
       document.getElementById("customerPhone").value = value.customerPhone;
+      document.getElementById("customerEmail").value = value.customerEmail;
       document.getElementById("addressProvince").value = deliveryTo.provinceId;
       document.getElementById("addressDistrict").value = deliveryTo.districtId;
       document.getElementById("addressWard").value = deliveryTo.wardId;
@@ -232,17 +235,17 @@ class CreateOrderContent extends Component {
     let totalPrice = 0;
 
     await value.forEach((selectedProduct, index) => {
-      if (!currentProducts.find(product => product.id === selectedProduct.id)) {
+      if (!currentProducts.find(product => product.productId === selectedProduct.productId)) {
         currentProducts.push({});
         currentProducts[currentProducts.length-1] = {
           ...selectedProduct,
           quantity: 1,
-          totalMoney: selectedProduct[this.state.priceType]
+          totalMoney: selectedProduct.price
         }
       }
     });
     await currentProducts.forEach((currentProduct, index) => {
-      if (!value.find(product => product.id === currentProduct.id)) {
+      if (!value.find(product => product.productId === currentProduct.productId)) {
         currentProducts.splice(index, 1);
       } else {
         totalPrice += currentProduct.totalMoney;
@@ -257,27 +260,36 @@ class CreateOrderContent extends Component {
 
   openResponseDialog = async (cb) => {
     await cb.then(res => {
-      this.setState({
-        btnLoading: false,
-        dialogProps: {
-          show: true,
-          handleOk: () => {
-            this.setState({dialogProps:{...this.state.dialogProps, show: false}})
-            this.props.history.push("/order");
-          },
-          variant: "success",
-          message: res.data.error.message
-        }
-      })
-    }).catch(error => this.setState({
+        if (res.data.error.statusCode === 102) this.showSuccess(res.data.error.message);
+        else this.showError(res.data.error.message);
+      }).catch(error => this.showError(error.message)) 
+  }
+
+  showSuccess = (message) => {
+    this.setState({
+      btnLoading: false,
+      dialogProps: {
+        show: true,
+        handleOk: () => {
+          this.setState({dialogProps:{...this.state.dialogProps, show: false}})
+          this.props.history.push("/order");
+        },
+        variant: "success",
+        message: message
+      }
+    })
+  }
+
+  showError = (message) => {
+    this.setState({
       btnLoading: false,
       dialogProps: {
         show: true,
         handleOk: () => this.setState({dialogProps:{...this.state.dialogProps, show: false}}),
         variant: "error",
-        message: error.message
+        message: message
       }
-    })) 
+    })
   }
 
   onOrderSubmit = async () => {
@@ -290,7 +302,6 @@ class CreateOrderContent extends Component {
       deliveryTo: this.state.deliveryTo,
       totalPrice: this.state.totalPrice,
       codAmount: this.state.totalPrice * (100 - this.state.promotion) / 100 - this.state.paid,
-      priceType: (this.state.priceType === "retailPrice")? 1: 2
     }))
   }
 
@@ -299,7 +310,7 @@ class CreateOrderContent extends Component {
     let columns = [
       ...orderProductColumns(this),
     ];
-    const {dialogProps, customerLoading, customerList, customerPhone, productLoading, productList, deliveryTo, addressList, deliveryUnitName, shipFee, totalPrice, promotion, paid, btnLoading} = this.state;
+    const {dialogProps, customerLoading, customerList, customerPhone, customerEmail, productLoading, productList, deliveryTo, addressList, deliveryUnitName, shipFee, totalPrice, promotion, paid, btnLoading} = this.state;
     return (
       <Form>
         <GeneralDialog { ...dialogProps } />
@@ -327,6 +338,8 @@ class CreateOrderContent extends Component {
                       onChange={this.handleCustomerSelect}
                     />
                   </Form.Group>
+                </Row>
+                <Row>
                   <Form.Group
                     as={Col}
                     className="mb-2"
@@ -338,6 +351,20 @@ class CreateOrderContent extends Component {
                       defaultValue={customerPhone}
                       type="phone"
                       placeholder="0123456789"
+                      autoComplete="off"
+                    />
+                  </Form.Group>
+                  <Form.Group
+                    as={Col}
+                    className="mb-2"
+                    controlId="customerEmail"
+                    onChange={(e) => this.setState({customerEmail: e.target.value})}
+                  >
+                    <Form.Label>Email</Form.Label>
+                    <Form.Control
+                      defaultValue={customerEmail}
+                      type="phone"
+                      placeholder="example@domain.com"
                       autoComplete="off"
                     />
                   </Form.Group>
@@ -373,7 +400,7 @@ class CreateOrderContent extends Component {
                   </div>
                 </div>
                 <ToolkitProvider
-                  keyField="id"
+                  keyField="productId"
                   data={products}
                   columns={columns}
                   exportCSV

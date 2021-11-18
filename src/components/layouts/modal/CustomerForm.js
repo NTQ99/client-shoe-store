@@ -48,30 +48,35 @@ class CustomerForm extends Component {
     if (formData && preProps.formData !== formData) {
       let addressList = [];
       let currentAddress = [];
-      await formData.customerAddresses.forEach((address,index) => {
-        let provinceObject = addressData.find((province) => province.name === address.province);
-        let districtObject = provinceObject.level2s.find((district) => district.name === address.district);
-        let wardObject = districtObject.level3s.find((ward) => ward.name === address.ward);
-        addressList.push({
-          district: provinceObject.level2s,
-          ward: districtObject.level3s
+      if (formData.customerAddresses.length === 0) {
+        addressList.push({district: [], ward: []});
+        currentAddress.push({id: 0})
+      } else {
+        await formData.customerAddresses.forEach((address,index) => {
+          let provinceObject = addressData.find((province) => province.name === address.province);
+          let districtObject = provinceObject.level2s.find((district) => district.name === address.district);
+          let wardObject = districtObject.level3s.find((ward) => ward.name === address.ward);
+          addressList.push({
+            district: provinceObject.level2s,
+            ward: districtObject.level3s
+          })
+          currentAddress.push({
+            id: index,
+            provinceId: provinceObject.level1_id,
+            province: provinceObject.name,
+            districtId: districtObject.level2_id,
+            district: districtObject.name,
+            wardId: wardObject.level3_id,
+            ward: wardObject.name,
+            detail: address.detail,
+            disabled: true
+          })
+          if (index === formData.customerAddresses.length - 1) {
+            addressList.push({district: [], ward: []});
+            currentAddress.push({id: formData.customerAddresses.length})
+          }
         })
-        currentAddress.push({
-          id: index,
-          provinceId: provinceObject.level1_id,
-          province: provinceObject.name,
-          districtId: districtObject.level2_id,
-          district: districtObject.name,
-          wardId: wardObject.level3_id,
-          ward: wardObject.name,
-          detail: address.detail,
-          disabled: true
-        })
-        if (index === formData.customerAddresses.length - 1) {
-          addressList.push({district: [], ward: []});
-          currentAddress.push({id: formData.customerAddresses.length})
-        }
-      })
+      }
       this.setState({
         form: {
           ...this.state.form,
