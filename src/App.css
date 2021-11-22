@@ -114,3 +114,51 @@ i.lnr {
 .cart_inner th,td {
   min-width: 100px;
 }
+.lost_pass {
+  width: fit-content;
+}
+.shipping_box .list li a.disabled {
+  cursor: default !important;
+  color: #b0b0b0 !important;
+}
+.shipping_box .list li a.disabled::before {
+  border-color: #7676764d !important;
+  background-color: #efefef4d !important;
+}
+.shipping_box .list li a.checkout {
+  padding-left: 30px;
+  font-size: 14px;
+  color: #777777;
+  border-bottom: none;
+  position: relative; }
+  .shipping_box .list li a.checkout:before {
+    content: "";
+    height: 16px;
+    width: 16px;
+    border: 1px solid #cdcdcd;
+    display: inline-block;
+    border-radius: 50%;
+    position: absolute;
+    left: 0px;
+    top: 50%;
+    transform: translateY(-50%); }
+  .shipping_box .list li a.checkout:after {
+    content: "";
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    background: #ffba00;
+    display: inline-block;
+    position: absolute;
+    left: 3px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0; }
+.shipping_box .list li.active a.checkout:after {
+  opacity: 1; }
+.order_box ul li a {
+  cursor: default;
+}
+.order_d_inner .details_item .list li a span {
+  width: 155px;
+}

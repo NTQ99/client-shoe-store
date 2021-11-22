@@ -15,6 +15,16 @@ class CustomerService {
     });
   }
 
+  async getCustomerInfo(id) {
+    return axios({
+      method: "post",
+      url: BASE_URL + "/customer/get/" + id,
+      headers: {
+        Authorization: authHeader(),
+      },
+    });
+  }
+
   createCustomer(data) {
     return axios({
       method: "post",

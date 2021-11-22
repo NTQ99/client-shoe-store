@@ -1,7 +1,7 @@
 import SVG from "react-inlinesvg";
 import { Form } from "react-bootstrap";
 import { customFilter, FILTER_TYPES } from 'react-bootstrap-table2-filter';
-import { getTimeFormat } from "../service/helper";
+import { getTimeFormat } from "../commons/helper";
 
 export const getPaginationOptions = (totalSize) => {
   return {
@@ -444,7 +444,7 @@ export function orderColumns(obj) {
                 <i className="las la-truck"></i>
               </span>
             </div>
-            <div className={`btn btn-sm btn-clean btn-icon mr-2${getDisabled(row.status)}`} title="Sửa">
+            <div className={`btn btn-sm btn-clean btn-icon mr-2${getDisabled(row.status)}`} title="Sửa" onClick={() => obj.openEditOrderForm(row)}>
               <span className="svg-icon svg-icon-md">
                 <i className="las la-edit"></i>
               </span>
@@ -656,7 +656,7 @@ export const orderHistoryColumns = [
     dataField: "productsQuantity",
     text: "số lượng",
     headerStyle: { width: "100px" },
-    formatter: (cell, row) => row.products.map(product => <p>{product.quantity}</p>)
+    formatter: (cell, row) => row.products.map(product => product.quantity)
   },
   {
     dataField: "createdAt",

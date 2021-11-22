@@ -18,7 +18,7 @@ class SessionExpiredDialog extends Component {
   render() {
     return (
       <Modal show={this.state.showModal} onHide={this.handleClose}>
-        <Modal.Header closeButton>
+        <Modal.Header>
           <Modal.Title>Thông báo</Modal.Title>
         </Modal.Header>
         <Modal.Body>Phiên đăng nhập đã hết. Vui lòng đăng nhập lại!</Modal.Body>

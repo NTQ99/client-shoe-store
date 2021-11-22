@@ -1,7 +1,6 @@
 import { Suspense } from "react";
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 
-import './App.css';
 import LoginPage from "./components/pages/login";
 import HomePage from "./components/pages/home";
 import OrderPage from "./components/pages/order";
@@ -11,7 +10,12 @@ import ProductPage from "./components/pages/product";
 import DeliveryPage from "./components/pages/delivery";
 import CategoryPage from "./components/pages/category";
 import CartPage from "./components/pages/cart";
+import CheckoutPage from "./components/pages/checkout";
 import ProductDetailPage from "./components/pages/productDetail";
+
+import './App.css';
+import 'bootstrap-icons/font/bootstrap-icons.css';
+import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 
 function App() {
   return (
@@ -27,6 +31,7 @@ function App() {
             <Route exact path="/home" component={HomePage} />
             <Route exact path="/category" component={CategoryPage} />
             <Route exact path="/cart" component={CartPage} />
+            <Route exact path="/checkout" component={CheckoutPage} />
             <Route strict path="/product-detail/:productCode" component={ProductDetailPage} />
             <Route exact path="/" render={() => <Redirect to='/home' />} />
           </Switch>

@@ -59,6 +59,13 @@ class CartPage extends Component {
     products[index].quantity = Number(value);
     this.setState({products: [...products], totalMoney: totalMoney});
   }
+
+  handleCheckout = (e) => {
+    if (this.state.products.length === 0) {
+      e.preventDefault();
+      alert("Giỏ hàng đang trống! Hãy thêm sản phẩm vào giỏ hàng của bạn!");
+    }
+  }
   
   render() {
     const {products, totalMoney, numOfCart} = this.state;
@@ -191,10 +198,10 @@ class CartPage extends Component {
                         <div className="shipping_box">
                           <ul className="list">
                             <li>
-                              <a href="#">Ship nhanh: 50.000 VND</a>
+                              <a href="/" className="disabled" onClick={(e) => e.preventDefault()}>Nhanh:   50.000 VND</a>
                             </li>
                             <li className="active">
-                              <a href="#">Ship thường:    Miễn phí</a>
+                              <a href="/" onClick={(e) => e.preventDefault()}>Tiêu chuẩn: Miễn phí</a>
                             </li>
                           </ul>
                         </div>
@@ -206,10 +213,10 @@ class CartPage extends Component {
                       <td></td>
                       <td>
                         <div className="checkout_btn_inner d-flex align-items-center">
-                          <a className="gray_btn" href="#">
+                          <a className="gray_btn" href="/home">
                             Tiếp tục mua hàng
                           </a>
-                          <a className="primary-btn" href="#">
+                          <a className="primary-btn" href="/checkout" onClick={this.handleCheckout}>
                             Thanh toán giỏ hàng
                           </a>
                         </div>

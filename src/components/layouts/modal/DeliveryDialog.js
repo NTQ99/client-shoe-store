@@ -5,7 +5,7 @@ const DeliveryDialog = (props) => {
 
     return (
         <Modal show={show} onHide={handleClose || handleOk}>
-        <Modal.Header closeButton>
+        <Modal.Header>
             <Modal.Title>Thông báo</Modal.Title>
         </Modal.Header>
         <Modal.Body>

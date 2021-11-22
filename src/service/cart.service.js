@@ -62,7 +62,6 @@ class CartService {
     getTotalNum() {
         let currentCart = []
         currentCart = cookies.get('cart', {path:'/'});
-        console.log(currentCart);
         if (currentCart == null) return 0;
         else {
             let total = 0;

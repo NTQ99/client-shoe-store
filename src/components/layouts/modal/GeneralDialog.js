@@ -20,7 +20,7 @@ class GeneralDialog extends Component {
     const handleOk = this.handleOk;
     return (
       <Modal show={props.show} onHide={props.handleClose || props.handleOk}>
-        <Modal.Header closeButton>
+        <Modal.Header>
           <Modal.Title>Thông báo</Modal.Title>
         </Modal.Header>
         <Modal.Body>

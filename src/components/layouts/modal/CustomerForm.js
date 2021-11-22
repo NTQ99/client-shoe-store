@@ -281,7 +281,7 @@ class CustomerForm extends Component {
     return (
       <>
         <Modal size="lg" show={show} onHide={this.handleClose}>
-          <Modal.Header closeButton>
+          <Modal.Header>
             <Modal.Title>
               {formData && "Thay đổi thông tin khách hàng"}
               {!formData && "Khách hàng mới"}
@@ -442,7 +442,7 @@ class CustomerForm extends Component {
                   },
                   {
                     dataField: "detail",
-                    text: "Địa chỉ cụ thể",
+                    text: "Địa chỉ chi tiết",
                     headerStyle: { width: "33%" },
                     formatter: (cell, row, index) => (
                       <Form.Control defaultValue={cell} disabled={this.state.currentAddress[index].disabled} onBlur={(e) => this.onAddressSelect(e, index)}  placeholder="Số nhà, tên tòa nhà, tên đường, tên khu vực" />

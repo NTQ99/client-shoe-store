@@ -223,10 +223,12 @@ class CreateOrderContent extends Component {
       this.setState({
         customerName: value.value,
         customerPhone: null,
+        customerEmail: null,
         deliveryTo: {},
         addressList: {district: [], ward: []},
       });
       document.getElementById("customerPhone").value = null;
+      document.getElementById("customerEmail").value = null;
     }
   }
 
@@ -324,7 +326,7 @@ class CreateOrderContent extends Component {
                 <Row>
                   <Form.Group
                     as={Col}
-                    className="mb-2"
+                    className="mb-3"
                   >
                     <Form.Label>Tên khách hàng</Form.Label>
                     <CreatableSelect components={{DropdownIndicator:() => null, IndicatorSeparator:() => null}}
@@ -342,7 +344,7 @@ class CreateOrderContent extends Component {
                 <Row>
                   <Form.Group
                     as={Col}
-                    className="mb-2"
+                    className="mb-3"
                     controlId="customerPhone"
                     onChange={(e) => this.setState({customerPhone: e.target.value})}
                   >
@@ -356,14 +358,14 @@ class CreateOrderContent extends Component {
                   </Form.Group>
                   <Form.Group
                     as={Col}
-                    className="mb-2"
+                    className="mb-3"
                     controlId="customerEmail"
                     onChange={(e) => this.setState({customerEmail: e.target.value})}
                   >
                     <Form.Label>Email</Form.Label>
                     <Form.Control
                       defaultValue={customerEmail}
-                      type="phone"
+                      type="email"
                       placeholder="example@domain.com"
                       autoComplete="off"
                     />
@@ -431,7 +433,7 @@ class CreateOrderContent extends Component {
                   <Form.Group
                     as={Col}
                     controlId="addressProvince"
-                    className="mb-2"
+                    className="mb-3"
                     onChange={this.onAddressSelect}
                   >
                     <Form.Label>Tỉnh/Thành phố</Form.Label>
@@ -447,7 +449,7 @@ class CreateOrderContent extends Component {
                   <Form.Group
                     as={Col}
                     controlId="addressDistrict"
-                    className="mb-2"
+                    className="mb-3"
                     onChange={this.onAddressSelect}
                   >
                     <Form.Label>Quận/Huyện</Form.Label>
@@ -461,7 +463,7 @@ class CreateOrderContent extends Component {
                   <Form.Group
                     as={Col}
                     controlId="addressWard"
-                    className="mb-2"
+                    className="mb-3"
                     onChange={this.onAddressSelect}
                   >
                     <Form.Label>Xã/Phường</Form.Label>
@@ -477,10 +479,10 @@ class CreateOrderContent extends Component {
                   <Form.Group
                     as={Col}
                     controlId="addressDetail"
-                    className="mb-2"
+                    className="mb-3"
                     onBlur={this.onAddressSelect} 
                   >
-                    <Form.Label>Địa chỉ cụ thể</Form.Label>
+                    <Form.Label>Địa chỉ chi tiết</Form.Label>
                     <Form.Control defaultValue={deliveryTo.detail} placeholder="Số nhà, tên tòa nhà, tên đường, tên khu vực" />
                   </Form.Group>
                 </Row>
@@ -496,7 +498,7 @@ class CreateOrderContent extends Component {
                 <Form.Group
                   as={InputGroup}
                   controlId="promotion"
-                  className="mb-2"
+                  className="mb-3"
                   onChange={(e) => this.setState({promotion: e.target.value})}
                 >
                   <div className="input-group-prepend" style={{ width: "30%" }}>

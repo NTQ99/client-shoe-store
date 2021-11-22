@@ -61,7 +61,7 @@ class ProductForm extends Component {
           id: form.id,
           productCode: productCode,
           productName: form.productName,
-          shortTitle: form.shortTitle,
+          shortTitle: `${form.productName}, size ${form.size[i]}, ${form.color[i]}`,
           brand: form.brand,
           category: form.category,
           price: form.price,
@@ -208,15 +208,6 @@ class ProductForm extends Component {
                   {this.validator.message(
                     "productName",
                     this.state.form.productName,
-                    "required"
-                  )}
-                </Form.Group>
-                <Form.Group as={Col} className="mb-3" controlId="shortTitle">
-                  <Form.Label className="required">Têu đề sản phẩm</Form.Label>
-                  <Form.Control autoComplete="none" type="text" defaultValue={form.shortTitle} onChange={this.handleInputChange} placeholder="Tiêu đề sản phẩm" />
-                  {this.validator.message(
-                    "shortTitle",
-                    this.state.form.shortTitle,
                     "required"
                   )}
                 </Form.Group>
