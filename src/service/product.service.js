@@ -15,6 +15,16 @@ class ProductService {
     });
   }
 
+  getProductCategory() {
+    return axios({
+      method: "post",
+      url: BASE_URL + "/product/get/group",
+      headers: {
+        Authorization: authHeader(),
+      },
+    });
+  }
+
   getProductById(id) {
     return axios({
       method: "post",
@@ -51,6 +61,16 @@ class ProductService {
     return axios({
       method: "post",
       url: BASE_URL + "/product/delete/" + id,
+      headers: {
+        Authorization: authHeader(),
+      },
+    })
+  }
+
+  async getColorCode(id) {
+    return axios({
+      method: "post",
+      url: BASE_URL + "/product/color/" + id,
       headers: {
         Authorization: authHeader(),
       },

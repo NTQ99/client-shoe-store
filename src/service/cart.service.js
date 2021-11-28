@@ -6,20 +6,21 @@ const cookies = new Cookies();
 const BASE_URL = process.env.REACT_APP_BASE_URL_API;
 
 class CartService {
-    addToCart(id) {
+    addToCart(id, qnt) {
+        qnt = Number(qnt);
         let currentCart = []
         currentCart = cookies.get('cart', {path:'/'});
         if (currentCart == null) {
-            currentCart=[{productId: id, quantity: 1}];
+            currentCart=[{productId: id, quantity: qnt}];
         } else {
             let check = 0;
             currentCart.forEach(product => {
                 if (product.productId === id) {
-                    product.quantity += 1;
+                    product.quantity += qnt;
                     check = 1;
                 }
             });
-            if (!check) currentCart.push({productId: id, quantity: 1});
+            if (!check) currentCart.push({productId: id, quantity: qnt});
         }
         cookies.set('cart', currentCart, {path:'/'});
         let token = authHeader();
@@ -35,14 +36,15 @@ class CartService {
         }
     }
     
-    updateItemCart(index, quantity) {
+    updateItemCart(index, qnt) {
+        qnt = Number(qnt)
         let currentCart = []
         currentCart = cookies.get('cart', {path:'/'});
         if (currentCart != null) {
-            if (Number(quantity) === 0) {
+            if (qnt === 0) {
                 currentCart.splice(index, 1);
             } else {
-                currentCart[index].quantity = Number(quantity);
+                currentCart[index].quantity = qnt;
             }
             cookies.set('cart', currentCart, {path:'/'});
             let token = authHeader();
@@ -92,6 +94,10 @@ class CartService {
               });
         }
         else return currentCart;
+    }
+
+    clearCart() {
+        cookies.remove('cart');
     }
 }
 

@@ -43,19 +43,20 @@ class CartPage extends Component {
   
   updateProductToCart(value, index) {
     let products = this.state.products;
+    let totalMoney = this.state.totalMoney + (Number(value)-products[index].quantity)*products[index].data.price;
     this.setState({numOfCart: this.state.numOfCart + Number(value)});
     if (Number(value) === 0) {
       products.splice(index, 1);
     } else {
       products[index].quantity = Number(value);
     }
-    this.setState({products: [...products]});
+    this.setState({products: [...products], totalMoney: totalMoney});
     cartService.updateItemCart(index, value);
   }
   
   handleChangeNumProduct = (value, index) => {
     let products = this.state.products;
-    let totalMoney = this.state.totalMoney + (Number(value)-products[index].quantity)*products[index].data.price
+    let totalMoney = this.state.totalMoney + (Number(value)-products[index].quantity)*products[index].data.price;
     products[index].quantity = Number(value);
     this.setState({products: [...products], totalMoney: totalMoney});
   }
@@ -106,6 +107,7 @@ class CartPage extends Component {
                   </thead>
                   <tbody>
                     {products.map((item, index) => {
+                      console.log(products)
                       if (!item.data.productPhotos[0].startsWith('http') && !item.data.productPhotos[0].startsWith('/')) {
                         item.data.productPhotos[0] = '/'+item.data.productPhotos[0]
                       }
@@ -117,7 +119,7 @@ class CartPage extends Component {
                                 <img src={item.data.productPhotos[0]} width="100px" alt="" />
                               </div>
                               <div className="media-body">
-                                <p>{item.data.productName}</p>
+                                <p>{item.data.shortTitle}</p>
                               </div>
                             </div>
                           </td>

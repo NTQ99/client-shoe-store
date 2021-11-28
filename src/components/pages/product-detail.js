@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import cartService from "../../service/cart.service";
-import ProductService from "../../service/product.service";
+import productService from "../../service/product.service";
 import Footer from "../layouts/shoe-store/footer";
 import Header from "../layouts/shoe-store/header";
 
@@ -14,30 +14,123 @@ class ProductDetailPage extends Component {
         productDetail: "",
         productName: "",
         productPhotos: [],
-        stock: 0
-      }
-    }
+        stock: 0,
+      },
+      productSelected: {
+        color: "",
+        size: "",
+        productId: "",
+        quantity: 1,
+        stock: 0,
+      },
+      productStocks: [],
+      colorCodes: [],
+    };
   }
 
-  componentDidMount() {
-    ProductService.getProductById(this.props.match.params.productCode).then(res =>{
-      if (res.data.error.statusCode === 100) {
-        this.setState({productDetail: res.data.data})
-      } else console.log(res.data.error.message)
-    })
+  async componentDidMount() {
+    await productService
+      .getProductById(this.props.match.params.productCode)
+      .then(async (res) => {
+        if (res.data.error.statusCode === 100) {
+          this.setState({
+            productDetail: res.data.data[0],
+            products: res.data.data,
+          });
+        } else alert(res.data.error.message);
+      });
+    let productStocks = [];
+    let colorCodes = [];
+    for (let i = 0; i < this.state.products.length; i++) {
+      let item = this.state.products[i];
+      let color = item.color || "";
+      let size = item.size.toString() || "";
+      let obj = {
+        stock: item.stock,
+        id: item.id,
+      };
+      if (!productStocks[size]) productStocks[size] = [];
+      productStocks[size][color] = obj;
+      colorCodes[color] = await productService
+        .getColorCode(color)
+        .then((res) => res.data);
+      if (i === 0)
+        this.setState({
+          productSelected: {
+            color: color,
+            size: size,
+            productId: item.id,
+            quantity: 1,
+            stock: item.stock,
+          },
+        });
+    }
+
+    this.setState({ productStocks: productStocks, colorCodes: colorCodes });
   }
 
   addProductToCart = (e) => {
     e.preventDefault();
-    this.setState({numOfcart: this.state.numOfcart + 1});
-    cartService.addToCart(this.state.productDetail.id);
-  }
-  
+    if (this.state.productSelected.stock === 0) {
+      alert("Số lượng sản phẩm đã hết!")
+      return;
+    }
+    this.setState({
+      numOfcart: this.state.numOfcart + this.state.productSelected.quantity,
+    });
+    cartService.addToCart(
+      this.state.productSelected.productId,
+      this.state.productSelected.quantity
+    );
+  };
+
+  onSelectColor = (color) => {
+    let productStocks = this.state.productStocks;
+    let size = this.state.productSelected.size;
+    this.setState({
+      productSelected: {
+        ...this.state.productSelected,
+        color: color,
+        productId: productStocks[size][color]
+          ? productStocks[size][color].id
+          : "",
+        quantity: 1,
+        stock: productStocks[size][color]
+          ? productStocks[size][color].stock
+          : 0,
+      },
+    });
+  };
+
+  onSelectSize = (size) => {
+    let productStocks = this.state.productStocks;
+    let color = this.state.productSelected.color;
+    this.setState({
+      productSelected: {
+        ...this.state.productSelected,
+        size: size,
+        productId: productStocks[size][color]
+          ? productStocks[size][color].id
+          : "",
+        quantity: 1,
+        stock: productStocks[size][color]
+          ? productStocks[size][color].stock
+          : 0,
+      },
+    });
+  };
+
   render() {
-    const {productDetail, numOfcart} = this.state;
-    
+    const {
+      productDetail,
+      numOfcart,
+      productStocks,
+      colorCodes,
+      productSelected,
+    } = this.state;
+
     return (
-      <div style={{backgroundColor:"#fff"}}>
+      <div style={{ backgroundColor: "#fff" }}>
         <Header numOfcart={numOfcart} />
 
         {/* Start Banner Area */}
@@ -68,20 +161,17 @@ class ProductDetailPage extends Component {
             <div className="row s_product_inner">
               <div className="col-lg-6">
                 <div className="s_Product_carousel">
-                  {productDetail.productPhotos !== null && productDetail.productPhotos.map(function(item,i) {
-                    if (!item.startsWith('http') && !item.startsWith('/')) {
-                      item = '/'+item
-                    }
-                    return (
-                      <div className="single-prd-item">
-                        <img
-                          className="img-fluid"
-                          src={item}
-                          alt=""
-                        />
-                      </div>
-                    )
-                  })}
+                  {productDetail.productPhotos !== null &&
+                    productDetail.productPhotos.map(function (item, i) {
+                      if (!item.startsWith("http") && !item.startsWith("/")) {
+                        item = "/" + item;
+                      }
+                      return (
+                        <div className="single-prd-item">
+                          <img className="img-fluid" src={item} alt="" />
+                        </div>
+                      );
+                    })}
                 </div>
               </div>
               <div className="col-lg-5 offset-lg-1">
@@ -96,48 +186,104 @@ class ProductDetailPage extends Component {
                     </li>
                     <li>
                       <a href="#">
-                        <span>Số lượng còn</span> : {productDetail.stock}
+                        <span>Số lượng còn</span> : {productSelected.stock}
                       </a>
                     </li>
                   </ul>
-                  <p>
-                    {productDetail.productDetail}
-                  </p>
-                  <div className="product_count">
-                    <label htmlFor="qty">Số luọng:</label>
-                    <input
-                      type="text"
-                      name="qty"
-                      id="sst"
-                      maxLength={12}
-                      defaultValue={1}
-                      title="Quantity:"
-                      className="input-text qty"
-                    />
-                    <button
-                      onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
-                      className="increase items-count"
-                      type="button"
-                    >
-                      <i className="lnr lnr-chevron-up" />
-                    </button>
-                    <button
-                      onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) && sst > 0 ) result.value--;return false;"
-                      className="reduced items-count"
-                      type="button"
-                    >
-                      <i className="lnr lnr-chevron-down" />
-                    </button>
+                  <p>{productDetail.productDetail}</p>
+                  <div className="product__details__option">
+                    <div className="product__details__option__size">
+                      <span>Size:</span>
+                      {Object.keys(productStocks).map((item) => (
+                        <label
+                          htmlFor={`size${item}`}
+                          className={
+                            productSelected.size === item ? "active" : ""
+                          }
+                          onClick={() => this.onSelectSize(item)}
+                        >
+                          {item}
+                          <input type="radio" id={`size${item}`} />
+                        </label>
+                      ))}
+                    </div>
+                    <div className="product__details__option__color">
+                      <span>Màu sắc:</span>
+                      {Object.keys(colorCodes).map((item) => {
+                        return (
+                          <label
+                            htmlFor={`color${item}`}
+                            className={
+                              productSelected.color === item ? "active" : ""
+                            }
+                            onClick={() => this.onSelectColor(item)}
+                            style={{ background: colorCodes[item] }}
+                          >
+                            <input type="radio" id={`color${item}`} />
+                          </label>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  <div className="product__details__cart__option">
+                    <span>Số lượng:</span>
+                    <div className="quantity">
+                      <div className="pro-qty">
+                        <span
+                          className="fa fa-angle-up dec qtybtn"
+                          onClick={() =>
+                            this.setState({
+                              productSelected: {
+                                ...this.state.productSelected,
+                                quantity:
+                                  this.state.productSelected.quantity + 1,
+                              },
+                            })
+                          }
+                        ></span>
+                        <input
+                          className="form-control"
+                          type="text"
+                          value={productSelected.quantity}
+                          onChange={(e) =>
+                            this.setState({
+                              productSelected: {
+                                ...this.state.productSelected,
+                                quantity: e.target.value,
+                              },
+                            })
+                          }
+                        />
+                        <span
+                          className="fa fa-angle-down inc qtybtn"
+                          onClick={() =>
+                            productSelected.quantity > 1 &&
+                            this.setState({
+                              productSelected: {
+                                ...this.state.productSelected,
+                                quantity:
+                                  this.state.productSelected.quantity - 1,
+                              },
+                            })
+                          }
+                        ></span>
+                      </div>
+                    </div>
                   </div>
                   <div className="card_area d-flex align-items-center">
-                    <a className="primary-btn" href="/" onClick={this.addProductToCart}>
+                    <a
+                      className="primary-btn"
+                      href="/"
+                      onClick={this.addProductToCart}
+                    >
                       Thêm vào giỏ hàng
                     </a>
                     <a className="icon_btn" href="#">
-                      <i className="lnr lnr lnr-diamond" />
+                      <i className="lnr lnr lnr-diamond" style={{lineHeight: "unset"}} />
                     </a>
                     <a className="icon_btn" href="#">
-                      <i className="lnr lnr lnr-heart" />
+                      <i className="lnr lnr lnr-heart" style={{lineHeight: "unset"}} />
                     </a>
                   </div>
                 </div>
@@ -202,31 +348,30 @@ class ProductDetailPage extends Component {
                   artists .Beryl’s pictures feature women of all shapes and
                   sizes enjoying themselves .Born between the two world wars,
                   Beryl Cook eventually left Kendrick School in Reading at the
-                  age of 15, where she went to secretarial school and then
-                  into an insurance office. After moving to London and then
-                  Hampton, she eventually married her next door neighbour from
-                  Reading, John Cook. He was an officer in the Merchant Navy
-                  and after he left the sea in 1956, they bought a pub for a
-                  year before John took a job in Southern Rhodesia with a
-                  motor company. Beryl bought their young son a box of
-                  watercolours, and when showing him how to use it, she
-                  decided that she herself quite enjoyed painting. John
-                  subsequently bought her a child’s painting set for her
-                  birthday and it was with this that she produced her first
-                  significant work, a half-length portrait of a dark-skinned
-                  lady with a vacant expression and large drooping breasts. It
-                  was aptly named ‘Hangover’ by Beryl’s husband and
+                  age of 15, where she went to secretarial school and then into
+                  an insurance office. After moving to London and then Hampton,
+                  she eventually married her next door neighbour from Reading,
+                  John Cook. He was an officer in the Merchant Navy and after he
+                  left the sea in 1956, they bought a pub for a year before John
+                  took a job in Southern Rhodesia with a motor company. Beryl
+                  bought their young son a box of watercolours, and when showing
+                  him how to use it, she decided that she herself quite enjoyed
+                  painting. John subsequently bought her a child’s painting set
+                  for her birthday and it was with this that she produced her
+                  first significant work, a half-length portrait of a
+                  dark-skinned lady with a vacant expression and large drooping
+                  breasts. It was aptly named ‘Hangover’ by Beryl’s husband and
                 </p>
                 <p>
                   It is often frustrating to attempt to plan meals that are
                   designed for one. Despite this fact, we are seeing more and
-                  more recipe books and Internet websites that are dedicated
-                  to the act of cooking for one. Divorce and the death of
-                  spouses or grown children leaving for college are all
-                  reasons that someone accustomed to cooking for more than one
-                  would suddenly need to learn how to adjust all the cooking
-                  practices utilized before into a streamlined plan of cooking
-                  that is more efficient for one person creating less
+                  more recipe books and Internet websites that are dedicated to
+                  the act of cooking for one. Divorce and the death of spouses
+                  or grown children leaving for college are all reasons that
+                  someone accustomed to cooking for more than one would suddenly
+                  need to learn how to adjust all the cooking practices utilized
+                  before into a streamlined plan of cooking that is more
+                  efficient for one person creating less
                 </p>
               </div>
               <div
@@ -241,7 +386,10 @@ class ProductDetailPage extends Component {
                       <div className="review_item">
                         <div className="media">
                           <div className="d-flex">
-                            <img src="/assets/img/product/review-1.png" alt="" />
+                            <img
+                              src="/assets/img/product/review-1.png"
+                              alt=""
+                            />
                           </div>
                           <div className="media-body">
                             <h4>Blake Ruiz</h4>
@@ -262,7 +410,10 @@ class ProductDetailPage extends Component {
                       <div className="review_item Trả lời">
                         <div className="media">
                           <div className="d-flex">
-                            <img src="/assets/img/product/review-2.png" alt="" />
+                            <img
+                              src="/assets/img/product/review-2.png"
+                              alt=""
+                            />
                           </div>
                           <div className="media-body">
                             <h4>Blake Ruiz</h4>
@@ -283,7 +434,10 @@ class ProductDetailPage extends Component {
                       <div className="review_item">
                         <div className="media">
                           <div className="d-flex">
-                            <img src="/assets/img/product/review-3.png" alt="" />
+                            <img
+                              src="/assets/img/product/review-3.png"
+                              alt=""
+                            />
                           </div>
                           <div className="media-body">
                             <h4>Blake Ruiz</h4>
@@ -445,7 +599,10 @@ class ProductDetailPage extends Component {
                       <div className="review_item">
                         <div className="media">
                           <div className="d-flex">
-                            <img src="/assets/img/product/review-1.png" alt="" />
+                            <img
+                              src="/assets/img/product/review-1.png"
+                              alt=""
+                            />
                           </div>
                           <div className="media-body">
                             <h4>Blake Ruiz</h4>
@@ -467,7 +624,10 @@ class ProductDetailPage extends Component {
                       <div className="review_item">
                         <div className="media">
                           <div className="d-flex">
-                            <img src="/assets/img/product/review-2.png" alt="" />
+                            <img
+                              src="/assets/img/product/review-2.png"
+                              alt=""
+                            />
                           </div>
                           <div className="media-body">
                             <h4>Blake Ruiz</h4>
@@ -489,7 +649,10 @@ class ProductDetailPage extends Component {
                       <div className="review_item">
                         <div className="media">
                           <div className="d-flex">
-                            <img src="/assets/img/product/review-3.png" alt="" />
+                            <img
+                              src="/assets/img/product/review-3.png"
+                              alt=""
+                            />
                           </div>
                           <div className="media-body">
                             <h4>Blake Ruiz</h4>
@@ -557,8 +720,8 @@ class ProductDetailPage extends Component {
                               id="name"
                               name="name"
                               placeholder="Tên của bạn"
-                              onfocus="this.placeholder = ''"
-                              onblur="this.placeholder = 'Tên của bạn'"
+                              onFocus="this.placeholder = ''"
+                              onBlur="this.placeholder = 'Tên của bạn'"
                             />
                           </div>
                         </div>
@@ -570,8 +733,8 @@ class ProductDetailPage extends Component {
                               id="email"
                               name="email"
                               placeholder="Địa chỉ email"
-                              onfocus="this.placeholder = ''"
-                              onblur="this.placeholder = 'Địa chỉ email'"
+                              onFocus="this.placeholder = ''"
+                              onBlur="this.placeholder = 'Địa chỉ email'"
                             />
                           </div>
                         </div>
@@ -583,8 +746,8 @@ class ProductDetailPage extends Component {
                               id="number"
                               name="number"
                               placeholder="Số điện thoại"
-                              onfocus="this.placeholder = ''"
-                              onblur="this.placeholder = 'Số điện thoại'"
+                              onFocus="this.placeholder = ''"
+                              onBlur="this.placeholder = 'Số điện thoại'"
                             />
                           </div>
                         </div>
@@ -596,8 +759,8 @@ class ProductDetailPage extends Component {
                               id="message"
                               rows={1}
                               placeholder="Review"
-                              onfocus="this.placeholder = ''"
-                              onblur="this.placeholder = 'Đánh giá'"
+                              onFocus="this.placeholder = ''"
+                              onBlur="this.placeholder = 'Đánh giá'"
                               defaultValue={""}
                             />
                           </div>

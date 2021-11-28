@@ -10,7 +10,7 @@ class ProductForm extends Component {
         size: [],
         color: [],
         stock: [],
-        category: "Nam"
+        category: ""
       },
       btnLoading: false,
       productRows: []
@@ -69,7 +69,7 @@ class ProductForm extends Component {
           color: form.color[i],
           size: form.size[i],
           stock: form.stock[i],
-          productPhotos: (form.productPhotos || "").replace(' ', '').split(','),
+          productPhotos: (form.productPhotos || "").replace(' ', '').split(';'),
           productDetail: form.productDetail || ""
         })
       }
@@ -139,7 +139,22 @@ class ProductForm extends Component {
         )}
       </Form.Group>
       <Form.Group as={Col} xs={3} className="mb-3" controlId="color">
-        <Form.Control autoComplete="none" type="text" bsPrefix={`form-control ${index+1}`} defaultValue={this.state.form.color[index+1]} onChange={this.handleInputChange} />
+        <Form.Control as="select" bsPrefix={`form-control ${index+1}`} value={this.state.form.color[index+1]} onChange={this.handleInputChange} >
+          <option value=""></option>
+          <option value="DE">Đen</option>
+          <option value="TR">Trắng</option>
+          <option value="XL">Xanh lục</option>
+          <option value="XB">Xanh biển</option>
+          <option value="DO">Đỏ</option>
+          <option value="BE">Be</option>
+          <option value="NA">Nâu</option>
+          <option value="TI">Tím</option>
+          <option value="VA">Vàng</option>
+          <option value="XA">Xám</option>
+          <option value="CA">Cam</option>
+          <option value="HO">Hồng</option>
+          <option value="XX">Khác</option>
+        </Form.Control>
         {this.validator.message(
           "color",
           this.state.form.color[index+1],
@@ -159,14 +174,14 @@ class ProductForm extends Component {
         style={{width: "30px", height: "30px"}}
         onClick={this.addProductRow}
       >
-        <i className="fas fa-plus pr-0"></i>
+        <i className="fa fa-plus pr-0"></i>
       </button>}
       {index === this.state.productRows.length - 1 &&<button
         className="btn btn-primary mt-1 ml-3 d-flex justify-content-center align-items-center"
         style={{width: "30px", height: "30px"}}
         onClick={this.removeProductRow}
       >
-        <i className="fas fa-minus pr-0"></i>
+        <i className="fa fa-minus pr-0"></i>
       </button>}
     </Row>);
 
@@ -224,10 +239,11 @@ class ProductForm extends Component {
                 </Form.Group>
                 <Form.Group as={Col} className="mb-3" controlId="category">
                   <Form.Label className="required">Phân loại</Form.Label>
-                  <Form.Control as="select" defaultValue={form.category} onChange={this.handleInputChange} >
-                    <option value="Nam" selected>Nam</option>
-                    <option value="Nữ">Nữ</option>
-                    <option value="Trẻ em">Trẻ em</option>
+                  <Form.Control as="select" value={form.category} onChange={this.handleInputChange} >
+                    <option value=""></option>
+                    <option value="Giày nam">Giày nam</option>
+                    <option value="Giày nữ">Giày nữ</option>
+                    <option value="Giày trẻ em">Giày trẻ em</option>
                   </Form.Control>
                   {this.validator.message(
                     "category",
@@ -285,7 +301,22 @@ class ProductForm extends Component {
                   )}
                 </Form.Group>
                 <Form.Group as={Col} xs={3} className="mb-3" controlId="color">
-                  <Form.Control autoComplete="none" type="text" bsPrefix="form-control 0" defaultValue={form.color[0]} onChange={this.handleInputChange}/>
+                  <Form.Control as="select" bsPrefix="form-control 0" value={form.color[0]} onChange={this.handleInputChange} >
+                    <option value=""></option>
+                    <option value="DE">Đen</option>
+                    <option value="TR">Trắng</option>
+                    <option value="XL">Xanh lục</option>
+                    <option value="XB">Xanh biển</option>
+                    <option value="DO">Đỏ</option>
+                    <option value="BE">Be</option>
+                    <option value="NA">Nâu</option>
+                    <option value="TI">Tím</option>
+                    <option value="VA">Vàng</option>
+                    <option value="XA">Xám</option>
+                    <option value="CA">Cam</option>
+                    <option value="HO">Hồng</option>
+                    <option value="XX">Khác</option>
+                  </Form.Control>
                   {this.validator.message(
                     "color",
                     this.state.form.color[0],
@@ -305,14 +336,19 @@ class ProductForm extends Component {
                   style={{width: "30px", height: "30px"}}
                   onClick={this.addProductRow}
                 >
-                  <i className="fas fa-plus pr-0"></i>
+                  <i className="fa fa-plus pr-0"></i>
                 </button>}
               </Row>
               {!form.id && productRows.map((row,index) => row(index))}
               <Row>
                 <Form.Group as={Col} className="mb-3" controlId="productPhotos">
-                  <Form.Label>Link ảnh sản phẩm</Form.Label>
-                  <Form.Control autoComplete="none" type="text" defaultValue={form.productPhotos} onChange={this.handleInputChange} placeholder="https://photo1.com,https://photo2.com,... (2 url cách nhau bởi dấu ',')" />
+                  <Form.Label className="required">Link ảnh sản phẩm</Form.Label>
+                  <Form.Control autoComplete="none" type="text" defaultValue={form.productPhotos} onChange={this.handleInputChange} placeholder="https://photo1.com,https://photo2.com;... (2 url cách nhau bởi dấu ';')" />
+                  {this.validator.message(
+                    "productPhotos",
+                    this.state.form.productPhotos,
+                    "required"
+                  )}
                 </Form.Group>
               </Row>
               <Row>

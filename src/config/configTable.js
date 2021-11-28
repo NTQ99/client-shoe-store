@@ -491,6 +491,7 @@ export function productColumns(obj) {
       dataField: "productCode",
       text: "Mã sản phẩm",
       headerStyle: { width: "100px" },
+      formatter: (cell, row) => `${cell}-${row.color}${row.size}`
     },
     {
       dataField: "productName",

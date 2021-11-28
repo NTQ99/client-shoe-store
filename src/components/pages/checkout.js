@@ -29,6 +29,7 @@ class CheckoutPage extends Component {
     this.state = {
       orderCode: null,
       orderTime: now(),
+      numOfCart: 0,
       notSuccess: true,
       notAuth: true,
       products: [],
@@ -125,7 +126,8 @@ class CheckoutPage extends Component {
     }).then(res => {
       alert(res.data.error.message);
       if (res.data.error.statusCode === 102) {
-        this.setState({notSuccess: false});
+        cartService.clearCart();
+        this.setState({notSuccess: false, numOfCart: this.state.numOfCart + 1});
       }
     });
   }
@@ -134,6 +136,7 @@ class CheckoutPage extends Component {
     const {
       notSuccess,
       notAuth,
+      numOfCart,
       totalMoney,
       deliveryTo,
       addressList,
@@ -147,7 +150,7 @@ class CheckoutPage extends Component {
     } = this.state;
     return (
       <div>
-        <Header />
+        <Header numOfCart={numOfCart} />
         {/* Start Banner Area */}
         <section className="banner-area organic-breadcrumb">
           <div className="container">

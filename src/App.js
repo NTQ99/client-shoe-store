@@ -10,8 +10,9 @@ import ProductPage from "./components/pages/product";
 import DeliveryPage from "./components/pages/delivery";
 import CategoryPage from "./components/pages/category";
 import CartPage from "./components/pages/cart";
+import ChartPage from "./components/pages/chart";
 import CheckoutPage from "./components/pages/checkout";
-import ProductDetailPage from "./components/pages/productDetail";
+import ProductDetailPage from "./components/pages/product-detail";
 
 import './App.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
@@ -31,6 +32,7 @@ function App() {
             <Route exact path="/home" component={HomePage} />
             <Route exact path="/category" component={CategoryPage} />
             <Route exact path="/cart" component={CartPage} />
+            <Route exact path="/chart" component={ChartPage} />
             <Route exact path="/checkout" component={CheckoutPage} />
             <Route strict path="/product-detail/:productCode" component={ProductDetailPage} />
             <Route exact path="/" render={() => <Redirect to='/home' />} />

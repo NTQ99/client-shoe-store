@@ -85,6 +85,42 @@ function AdminAside() {
           </a>
         </li>
         {/* end::Quản lý */}
+        {/* begin::Thống kê */}
+        <li className="menu-section">
+          <h4 className="menu-text">Thống kê</h4>
+          <i className="menu-icon ki ki-bold-more-hor icon-md" />
+        </li>
+        <li className="menu-item menu-item-submenu" data-menu-toggle="hover" id="aside_chart">
+          <a className="menu-link menu-toggle" href="/chart">
+            <span className="svg-icon menu-icon">
+              <SVG src="assets/media/svg/icons/Media/Equalizer.svg" />
+            </span>
+            <span className="menu-text">Thống kê</span>
+            <i className="menu-arrow" />
+          </a>
+          <div className="menu-submenu">
+            <i className="menu-arrow" />
+            <ul className="menu-subnav">
+              <li className="menu-item menu-item-submenu" id="aside_chart_child">
+                <a className="menu-link" href="/chart">
+                  <i className="menu-bullet menu-bullet-dot">
+                    <span />
+                  </i>
+                  <span className="menu-text">Biểu đồ</span>
+                </a>
+              </li>
+              <li className="menu-item menu-item-submenu" id="aside_export_chart">
+                <a className="menu-link" href="/">
+                  <i className="menu-bullet menu-bullet-dot">
+                    <span />
+                  </i>
+                  <span className="menu-text">Tải xuống báo cáo</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+        {/* end::Thống kê */}
       </ul>
       {/*end::Menu Nav*/}
     </div>

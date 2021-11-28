@@ -9,28 +9,28 @@ import cartService from "../../service/cart.service";
 class HomePage extends Component {
   constructor(props) {
     super(props);
-    this.state={
+    this.state = {
       products: [],
-      numOfcart: 0
-    }
+      numOfcart: 0,
+    };
   }
 
   componentDidMount() {
-    ProductService.getProductBoard().then(res => {
-      this.setState({products: res.data.data})
-    })
+    ProductService.getProductBoard().then((res) => {
+      this.setState({ products: res.data.data });
+    });
   }
 
   addProductToCart(id) {
-    this.setState({numOfcart: this.state.numOfcart + 1});
-    cartService.addToCart(id);
+    this.setState({ numOfcart: this.state.numOfcart + 1 });
+    cartService.addToCart(id, 1);
   }
-  
+
   render() {
-    const {products, numOfcart} = this.state
+    const { products, numOfcart } = this.state;
     return (
       <div>
-        <Header numOfcart={numOfcart}/>
+        <Header numOfcart={numOfcart} />
         {/* start banner Area */}
         <section className="banner-area">
           <div className="container">
@@ -122,7 +122,7 @@ class HomePage extends Component {
                     <img src="/assets/img/features/f-icon1.png" alt="" />
                   </div>
                   <h6>Miễn phí vận chuyển</h6>
-                  <p>Miễn phí vận chuyển với đơn hàng trên 1 triệu đồng</p>
+                  <p>Miễn phí vận chuyển toàn quốc</p>
                 </div>
               </div>
               {/* single features */}
@@ -284,7 +284,7 @@ class HomePage extends Component {
                 </div>
               </div>
               <div className="row">
-              {products.map((item, i) => {
+                {/* {products.map((item, i) => {
                   return (
                     <div className="col-lg-3 col-md-6">
                       <div className="single-product">
@@ -312,16 +312,72 @@ class HomePage extends Component {
                               <span className="lnr lnr-sync" />
                               <p className="hover-text">So sánh</p>
                             </a>
-                            <a href={"/product-detail/" + item.productCode} className="social-info">
+                            <a href={"/product-detail/" + item.productCode.split("-")[0]} className="social-info">
                               <span className="lnr lnr-move" />
                               <p className="hover-text">Chi tiết</p>
                             </a>
                           </div>
                         </div>
                       </div>
+                    </div> */}
+                    <div className="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix hot-sales">
+                      <div className="product__item">
+                        <div
+                          className="product__item__pic set-bg"
+                        >
+                          <img
+                            className="product__item__pic set-bg"
+                            src="/assets/img/category/s-p1.jpg"
+                            alt=""
+                          />
+                          <ul className="product__hover">
+                            <li>
+                              <a href="#">
+                                <img src="/assets/img/icon/heart.png" alt />
+                              </a>
+                            </li>
+                            <li>
+                              <a href="#">
+                                <img src="/assets/img/icon/compare.png" alt />{" "}
+                                <span>Compare</span>
+                              </a>
+                            </li>
+                            <li>
+                              <a href="#">
+                                <img src="/assets/img/icon/search.png" alt />
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                        <div className="product__item__text">
+                          <h6>Piqué Biker Jacket</h6>
+                          <a href="#" className="add-cart">
+                            + Add To Cart
+                          </a>
+                          <div className="rating">
+                            <i className="fa fa-star-o" />
+                            <i className="fa fa-star-o" />
+                            <i className="fa fa-star-o" />
+                            <i className="fa fa-star-o" />
+                            <i className="fa fa-star-o" />
+                          </div>
+                          <h5>$67.24</h5>
+                          <div className="product__color__select">
+                            <label htmlFor="pc-4">
+                              <input type="radio" id="pc-4" />
+                            </label>
+                            <label className="active black" htmlFor="pc-5">
+                              <input type="radio" id="pc-5" />
+                            </label>
+                            <label className="grey" htmlFor="pc-6">
+                              <input type="radio" id="pc-6" />
+                            </label>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                  )
-                })}
+                  {/* );
+                })} */}
               </div>
             </div>
           </div>
@@ -341,7 +397,7 @@ class HomePage extends Component {
                 </div>
               </div>
               <div className="row">
-                {products.map(function(item, i){
+                {products.map(function (item, i) {
                   return (
                     <div className="col-lg-3 col-md-6">
                       <div className="single-product">
@@ -377,7 +433,7 @@ class HomePage extends Component {
                         </div>
                       </div>
                     </div>
-                  )
+                  );
                 })}
               </div>
             </div>

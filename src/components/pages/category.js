@@ -10,25 +10,26 @@ class CategoryPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      products: [],
+      productGroups: [],
     };
   }
 
   componentDidMount() {
-    ProductService.getProductBoard().then((res) => {
-      this.setState({ products: res.data.data });
+    ProductService.getProductCategory().then((res) => {
+      this.setState({ productGroups: res.data.data });
     });
   }
 
-  addProductToCart(id) {
+  addProductToCart(e, id) {
+    e.preventDefault();
     this.setState({numOfcart: this.state.numOfcart + 1});
-    cartService.addToCart(id);
+    cartService.addToCart(id, 1);
   }
 
   render() {
-    const { products, numOfcart } = this.state;
+    const { productGroups, numOfcart } = this.state;
     return (
-      <div>
+      <div style={{backgroundColor:"#fff"}}>
         <Header numOfcart={numOfcart} />
         {/* Start Banner Area */}
         <section className="banner-area organic-breadcrumb">
@@ -257,14 +258,14 @@ class CategoryPage extends Component {
               {/* Start Filter Bar */}
               <div className="filter-bar d-flex flex-wrap align-items-center">
                 <div className="sorting">
-                  <select>
+                  <select className="form-select">
                     <option value={1}>Sắp xếp mặc định</option>
                     <option value={1}>Sắp xếp theo giá thấp nhất</option>
                     <option value={1}>Sắp xếp theo giá cao nhất</option>
                   </select>
                 </div>
                 <div className="sorting mr-auto">
-                  <select>
+                  <select className="form-select">
                     <option value={1}>Hiển thị 10</option>
                     <option value={1}>Hiển thị 20</option>
                     <option value={1}>Hiển thị 30</option>
@@ -290,46 +291,103 @@ class CategoryPage extends Component {
               </div>
               {/* End Filter Bar */}
               {/* Start Best Seller */}
-              <section className="lattest-product-area pb-40 category-list">
+              <section className="lattest-product-area pb-40 category-list mt-8">
                 <div className="row">
-                  {products.map((item, i) => {
+                  {productGroups.map((item, i) => {
+                    if (!item.productPhotos[0].startsWith("http") && !item.productPhotos[0].startsWith("/")) {
+                      item.productPhotos[0] = "/" + item.productPhotos[0];
+                    }
                     return (
-                      <div className="col-lg-3 col-md-6">
-                        <div className="single-product">
-                          <img
-                            className="img-fluid"
-                            src={item.productPhotos[0]}
-                            alt=""
-                          />
-                          <div className="product-details">
-                            <h6>{item.productName}</h6>
-                            <div className="price">
-                              <h6>{item.price + " đ"}</h6>
-                              <h6 className="l-through">
-                                {item.price + " đ"}
-                              </h6>
-                            </div>
-                            <div className="prd-bottom">
-                              <a href className="social-info" onClick={() => this.addProductToCart(item.id)}>
-                                <span className="ti-bag" />
-                                <p className="hover-text">add to bag</p>
+                      <div className="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix hot-sales">
+                      <div className="product__item">
+                        <div
+                          className="product__item__pic set-bg"
+                        >
+                          <a href={"/product-detail/" + item.productCode}>
+                            <img
+                              className="product__item__pic set-bg"
+                              src={item.productPhotos[0]}
+                              alt=""
+                            />
+                          </a>
+                          <ul className="product__hover">
+                            <li>
+                              <a href="#">
+                                <img src="/assets/img/icon/heart.png" alt="" />
+                                <span>Yêu thích</span>
                               </a>
-                              <a href className="social-info">
-                                <span className="lnr lnr-heart" />
-                                <p className="hover-text">Wishlist</p>
+                            </li>
+                            <li>
+                              <a href="#">
+                                <img src="/assets/img/icon/compare.png" alt="" />{" "}
+                                <span>So sánh</span>
                               </a>
-                              <a href className="social-info">
-                                <span className="lnr lnr-sync" />
-                                <p className="hover-text">compare</p>
+                            </li>
+                            <li>
+                              <a href={"/product-detail/" + item.productCode}>
+                                <img src="/assets/img/icon/search.png" alt="" />
+                                <span>Chi tiết</span>
                               </a>
-                              <a href={"/product-detail/" + item.productCode} className="social-info">
-                                <span className="lnr lnr-move" />
-                                <p className="hover-text">view more</p>
-                              </a>
-                            </div>
+                            </li>
+                          </ul>
+                        </div>
+                        <div className="product__item__text">
+                          <h6>{item.productName}</h6>
+                          <a href={"/product-detail/" + item.productCode} className="add-cart">
+                            + Thêm vào giỏ hàng
+                          </a>
+                          <div className="rating">
+                            <i className="fa fa-star-o" />
+                            <i className="fa fa-star-o" />
+                            <i className="fa fa-star-o" />
+                            <i className="fa fa-star-o" />
+                            <i className="fa fa-star-o" />
+                          </div>
+                          <h5>{item.price.toLocaleString("it-IT", { style: "currency", currency: "VND" })}</h5>
+                          {/* <div className="product__details__option__size">
+                            <span>Size:</span>
+                            {Object.keys(productStocks).map((item) => (
+                              <label
+                                htmlFor={`size${item}`}
+                                className={
+                                  productSelected.size === item ? "active" : ""
+                                }
+                                onClick={() => this.onSelectSize(item)}
+                              >
+                                {item}
+                                <input type="radio" id={`size${item}`} />
+                              </label>
+                            ))}
+                          </div>
+                          <div className="product__details__option__color">
+                            <span>Màu sắc:</span>
+                            {Object.keys(colorCodes).map((item) => {
+                              return (
+                                <label
+                                  htmlFor={`color${item}`}
+                                  className={
+                                    productSelected.color === item ? "active" : ""
+                                  }
+                                  onClick={() => this.onSelectColor(item)}
+                                  style={{ background: colorCodes[item] }}
+                                >
+                                  <input type="radio" id={`color${item}`} />
+                                </label>
+                              );
+                            })}
+                          </div>
+                        </div> */}
+                          <div className="product__color__select">
+                            {item.color.map((value,indexx) => {
+                              return(
+                              <label style={{background: value}} className={indexx === 0 ? "active": ""}>
+                                <input type="radio" />
+                              </label>
+                            )})}
                           </div>
                         </div>
                       </div>
+                    </div>
                     );
                   })}
                 </div>
@@ -338,7 +396,7 @@ class CategoryPage extends Component {
               {/* Start Filter Bar */}
               <div className="filter-bar d-flex flex-wrap align-items-center">
                 <div className="sorting mr-auto">
-                  <select>
+                  <select className="form-select">
                     <option value={1}>Hiển thị 10</option>
                     <option value={1}>Hiển thị 20</option>
                     <option value={1}>Hiển thị 30</option>
