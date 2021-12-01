@@ -107,7 +107,6 @@ class CartPage extends Component {
                   </thead>
                   <tbody>
                     {products.map((item, index) => {
-                      console.log(products)
                       if (!item.data.productPhotos[0].startsWith('http') && !item.data.productPhotos[0].startsWith('/')) {
                         item.data.productPhotos[0] = '/'+item.data.productPhotos[0]
                       }

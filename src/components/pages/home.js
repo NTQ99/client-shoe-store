@@ -10,14 +10,14 @@ class HomePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      products: [],
+      productGroups: [],
       numOfcart: 0,
     };
   }
 
   componentDidMount() {
-    ProductService.getProductBoard().then((res) => {
-      this.setState({ products: res.data.data });
+    ProductService.getProductCategory().then((res) => {
+      this.setState({ productGroups: res.data.data });
     });
   }
 
@@ -27,7 +27,7 @@ class HomePage extends Component {
   }
 
   render() {
-    const { products, numOfcart } = this.state;
+    const { productGroups, numOfcart } = this.state;
     return (
       <div>
         <Header numOfcart={numOfcart} />
@@ -284,100 +284,70 @@ class HomePage extends Component {
                 </div>
               </div>
               <div className="row">
-                {/* {products.map((item, i) => {
+                {productGroups.map((item, i) => {
+                  if (!item.productPhotos[0].startsWith("http") && !item.productPhotos[0].startsWith("/")) {
+                    item.productPhotos[0] = "/" + item.productPhotos[0];
+                  }
                   return (
-                    <div className="col-lg-3 col-md-6">
-                      <div className="single-product">
-                        <img
-                          className="img-fluid"
-                          src={item.productPhotos[0]}
-                          alt=""
-                        />
-                        <div className="product-details">
-                          <h6>{item.productName}</h6>
-                          <div className="price">
-                            <h6>{item.price + " đ"}</h6>
-                            <h6 className="l-through">{item.price + " đ"}</h6>
-                          </div>
-                          <div className="prd-bottom">
-                            <a href className="social-info" onClick={() => this.addProductToCart(item.id)}>
-                              <span className="ti-bag" />
-                              <p className="hover-text">Thêm vào giỏ</p>
-                            </a>
-                            <a href className="social-info">
-                              <span className="lnr lnr-heart" />
-                              <p className="hover-text">Yêu thích</p>
-                            </a>
-                            <a href className="social-info">
-                              <span className="lnr lnr-sync" />
-                              <p className="hover-text">So sánh</p>
-                            </a>
-                            <a href={"/product-detail/" + item.productCode.split("-")[0]} className="social-info">
-                              <span className="lnr lnr-move" />
-                              <p className="hover-text">Chi tiết</p>
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
-                    <div className="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix hot-sales">
-                      <div className="product__item">
-                        <div
-                          className="product__item__pic set-bg"
-                        >
+                    <div className="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6">
+                    <div className="product__item">
+                      <div
+                        className="product__item__pic set-bg"
+                      >
+                        <a href={"/product-detail/" + item.productCode}>
                           <img
                             className="product__item__pic set-bg"
-                            src="/assets/img/category/s-p1.jpg"
+                            src={item.productPhotos[0]}
                             alt=""
                           />
-                          <ul className="product__hover">
-                            <li>
-                              <a href="#">
-                                <img src="/assets/img/icon/heart.png" alt />
-                              </a>
-                            </li>
-                            <li>
-                              <a href="#">
-                                <img src="/assets/img/icon/compare.png" alt />{" "}
-                                <span>Compare</span>
-                              </a>
-                            </li>
-                            <li>
-                              <a href="#">
-                                <img src="/assets/img/icon/search.png" alt />
-                              </a>
-                            </li>
-                          </ul>
+                        </a>
+                        <ul className="product__hover">
+                          <li>
+                            <a href="#">
+                              <img src="/assets/img/icon/heart.png" alt="" />
+                              <span>Yêu thích</span>
+                            </a>
+                          </li>
+                          <li>
+                            <a href="#">
+                              <img src="/assets/img/icon/compare.png" alt="" />{" "}
+                              <span>So sánh</span>
+                            </a>
+                          </li>
+                          <li>
+                            <a href={"/product-detail/" + item.productCode}>
+                              <img src="/assets/img/icon/search.png" alt="" />
+                              <span>Chi tiết</span>
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                      <div className="product__item__text">
+                        <h6>{item.productName}</h6>
+                        <a href={"/product-detail/" + item.productCode} className="add-cart">
+                          + Xem thêm
+                        </a>
+                        <div className="rating">
+                          <i className="fa fa-star-o" />
+                          <i className="fa fa-star-o" />
+                          <i className="fa fa-star-o" />
+                          <i className="fa fa-star-o" />
+                          <i className="fa fa-star-o" />
                         </div>
-                        <div className="product__item__text">
-                          <h6>Piqué Biker Jacket</h6>
-                          <a href="#" className="add-cart">
-                            + Add To Cart
-                          </a>
-                          <div className="rating">
-                            <i className="fa fa-star-o" />
-                            <i className="fa fa-star-o" />
-                            <i className="fa fa-star-o" />
-                            <i className="fa fa-star-o" />
-                            <i className="fa fa-star-o" />
-                          </div>
-                          <h5>$67.24</h5>
-                          <div className="product__color__select">
-                            <label htmlFor="pc-4">
-                              <input type="radio" id="pc-4" />
+                        <h5>{item.price.toLocaleString("it-IT", { style: "currency", currency: "VND" })}</h5>
+                        <div className="product__color__select">
+                          {item.color.map((value,indexx) => {
+                            return(
+                            <label style={{background: value}} className={indexx === 0 ? "active": ""}>
+                              <input type="radio" />
                             </label>
-                            <label className="active black" htmlFor="pc-5">
-                              <input type="radio" id="pc-5" />
-                            </label>
-                            <label className="grey" htmlFor="pc-6">
-                              <input type="radio" id="pc-6" />
-                            </label>
-                          </div>
+                          )})}
                         </div>
                       </div>
                     </div>
-                  {/* );
-                })} */}
+                  </div>
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -397,44 +367,70 @@ class HomePage extends Component {
                 </div>
               </div>
               <div className="row">
-                {products.map(function (item, i) {
-                  return (
-                    <div className="col-lg-3 col-md-6">
-                      <div className="single-product">
-                        <img
-                          className="img-fluid"
-                          src="/assets/img/product/p6.jpg"
-                          alt=""
-                        />
-                        <div className="product-details">
-                          <h6>addidas New Hammer sole for Sports person</h6>
-                          <div className="price">
-                            <h6>500,000 đ</h6>
-                            <h6 className="l-through">700,000 đ</h6>
+              {productGroups.map((item, i) => {
+                    if (!item.productPhotos[0].startsWith("http") && !item.productPhotos[0].startsWith("/")) {
+                      item.productPhotos[0] = "/" + item.productPhotos[0];
+                    }
+                    return (
+                      <div className="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6">
+                      <div className="product__item">
+                        <div
+                          className="product__item__pic set-bg"
+                        >
+                          <a href={"/product-detail/" + item.productCode}>
+                            <img
+                              className="product__item__pic set-bg"
+                              src={item.productPhotos[0]}
+                              alt=""
+                            />
+                          </a>
+                          <ul className="product__hover">
+                            <li>
+                              <a href="#">
+                                <img src="/assets/img/icon/heart.png" alt="" />
+                                <span>Yêu thích</span>
+                              </a>
+                            </li>
+                            <li>
+                              <a href="#">
+                                <img src="/assets/img/icon/compare.png" alt="" />{" "}
+                                <span>So sánh</span>
+                              </a>
+                            </li>
+                            <li>
+                              <a href={"/product-detail/" + item.productCode}>
+                                <img src="/assets/img/icon/search.png" alt="" />
+                                <span>Chi tiết</span>
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                        <div className="product__item__text">
+                          <h6>{item.productName}</h6>
+                          <a href={"/product-detail/" + item.productCode} className="add-cart">
+                            + Xem thêm
+                          </a>
+                          <div className="rating">
+                            <i className="fa fa-star-o" />
+                            <i className="fa fa-star-o" />
+                            <i className="fa fa-star-o" />
+                            <i className="fa fa-star-o" />
+                            <i className="fa fa-star-o" />
                           </div>
-                          <div className="prd-bottom">
-                            <a href className="social-info">
-                              <span className="ti-bag" />
-                              <p className="hover-text">Thêm vào giỏ</p>
-                            </a>
-                            <a href className="social-info">
-                              <span className="lnr lnr-heart" />
-                              <p className="hover-text">Yêu thích</p>
-                            </a>
-                            <a href className="social-info">
-                              <span className="lnr lnr-sync" />
-                              <p className="hover-text">So sánh</p>
-                            </a>
-                            <a href className="social-info">
-                              <span className="lnr lnr-move" />
-                              <p className="hover-text">Chi tiết</p>
-                            </a>
+                          <h5>{item.price.toLocaleString("it-IT", { style: "currency", currency: "VND" })}</h5>
+                          <div className="product__color__select">
+                            {item.color.map((value,indexx) => {
+                              return(
+                              <label style={{background: value}} className={indexx === 0 ? "active": ""}>
+                                <input type="radio" />
+                              </label>
+                            )})}
                           </div>
                         </div>
                       </div>
                     </div>
-                  );
-                })}
+                    );
+                  })}
               </div>
             </div>
           </div>

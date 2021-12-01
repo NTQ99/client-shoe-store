@@ -4,6 +4,10 @@ import productService from "../../service/product.service";
 import Footer from "../layouts/shoe-store/footer";
 import Header from "../layouts/shoe-store/header";
 
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick-theme.css";
+
 class ProductDetailPage extends Component {
   constructor(props) {
     super(props);
@@ -129,6 +133,14 @@ class ProductDetailPage extends Component {
       productSelected,
     } = this.state;
 
+    const sliderSetting = {
+      dots: true,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 1,
+      slidesToScroll: 1
+    };
+
     return (
       <div style={{ backgroundColor: "#fff" }}>
         <Header numOfcart={numOfcart} />
@@ -160,19 +172,19 @@ class ProductDetailPage extends Component {
           <div className="container">
             <div className="row s_product_inner">
               <div className="col-lg-6">
-                <div className="s_Product_carousel">
+                <Slider {...sliderSetting}>
                   {productDetail.productPhotos !== null &&
-                    productDetail.productPhotos.map(function (item, i) {
+                    productDetail.productPhotos.map((item, i) => {
                       if (!item.startsWith("http") && !item.startsWith("/")) {
                         item = "/" + item;
                       }
                       return (
                         <div className="single-prd-item">
-                          <img className="img-fluid" src={item} alt="" />
+                          <img className="img-fluid" src={item} alt=""/>
                         </div>
                       );
                     })}
-                </div>
+                </Slider>
               </div>
               <div className="col-lg-5 offset-lg-1">
                 <div className="s_product_text">

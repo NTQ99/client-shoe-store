@@ -9,6 +9,7 @@ class Header extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      word: "",
       numOfCart: 0
     }
   }
@@ -26,7 +27,7 @@ class Header extends Component {
     AuthService.logout(() => window.location.replace("/"));
   };
   render() {
-    const {numOfCart} = this.state
+    const {numOfCart,word} = this.state
     return (
       <header className="header_area sticky-header">
         <div className="main_menu">
@@ -135,12 +136,13 @@ class Header extends Component {
         </div>
         <div className="search_input" id="search_input_box">
           <div className="container">
-            <form className="d-flex justify-content-between">
+            <form className="d-flex justify-content-between" onSubmit={(e)=> { e.preventDefault();word&&window.location.replace(`/category?search=${word}`)}}>
               <input
                 type="text"
                 className="form-control"
                 id="search_input"
-                placeholder="Search Here"
+                placeholder="Nhập tên sản phẩm"
+                onChange={(e) => this.setState({word: e.target.value})}
               />
               <button type="submit" className="btn" />
               <span

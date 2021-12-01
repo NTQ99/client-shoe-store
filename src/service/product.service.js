@@ -15,13 +15,14 @@ class ProductService {
     });
   }
 
-  getProductCategory() {
+  getProductCategory(data) {
     return axios({
       method: "post",
       url: BASE_URL + "/product/get/group",
       headers: {
         Authorization: authHeader(),
       },
+      data: data
     });
   }
 
@@ -71,6 +72,34 @@ class ProductService {
     return axios({
       method: "post",
       url: BASE_URL + "/product/color/" + id,
+      headers: {
+        Authorization: authHeader(),
+      },
+    })
+  }
+
+  getCategoryNum() {
+    return axios({
+      method: "post",
+      url: BASE_URL + "/product/category/count",
+      headers: {
+        Authorization: authHeader(),
+      },
+    })
+  }
+  getBrandNum() {
+    return axios({
+      method: "post",
+      url: BASE_URL + "/product/brand/count",
+      headers: {
+        Authorization: authHeader(),
+      },
+    })
+  }
+  getColorNum() {
+    return axios({
+      method: "post",
+      url: BASE_URL + "/product/color/count",
       headers: {
         Authorization: authHeader(),
       },

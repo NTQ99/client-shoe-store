@@ -6,18 +6,63 @@ import Footer from "../layouts/shoe-store/footer";
 import ProductService from "../../service/product.service";
 import cartService from "../../service/cart.service";
 
+const colorCode = {
+  "DE": "Đen",
+  "TR": "Trắng",
+  "XL": "Xanh lục",
+  "XB": "Xanh biển",
+  "DO": "Đỏ",
+  "BE": "Be",
+  "NA": "Nâu",
+  "TI": "Tím",
+  "VA": "Vàng",
+  "XA": "Xám",
+  "CA": "Cam",
+  "HO": "Hồng",
+  "XX": "Khác"
+}
+
 class CategoryPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
       productGroups: [],
+      cateList: {},
+      brandList: {},
+      colorList: {},
+      querySearch: {}
     };
   }
 
   componentDidMount() {
-    ProductService.getProductCategory().then((res) => {
+    let urlParams = new URLSearchParams(this.props.location.search.substring(1));
+    let params = Object.fromEntries(urlParams);
+    this.setState({querySearch: params});
+
+    ProductService.getProductCategory(params).then((res) => {
       this.setState({ productGroups: res.data.data });
     });
+    ProductService.getCategoryNum().then((res) => {
+      this.setState({ cateList: res.data.data });
+    });
+    ProductService.getBrandNum().then((res) => {
+      this.setState({ brandList: res.data.data });
+    });
+    ProductService.getColorNum().then((res) => {
+      this.setState({ colorList: res.data.data });
+    });
+
+  }
+
+  setFilter = (e, queryName, queryValue) => {
+    e.preventDefault();
+    let urlParams = new URLSearchParams(this.props.location.search.substring(1));
+    let params = Object.fromEntries(urlParams);
+
+    params[queryName] = queryValue;
+
+    let queryString = new URLSearchParams(params).toString();
+    window.location.href = "/category?" + queryString;
   }
 
   addProductToCart(e, id) {
@@ -27,7 +72,8 @@ class CategoryPage extends Component {
   }
 
   render() {
-    const { productGroups, numOfcart } = this.state;
+    const { productGroups, numOfcart, cateList, brandList, colorList, querySearch } = this.state;
+    const { search, pathname } = this.props.location;
     return (
       <div style={{backgroundColor:"#fff"}}>
         <Header numOfcart={numOfcart} />
@@ -55,124 +101,44 @@ class CategoryPage extends Component {
               <div className="sidebar-categories">
                 <div className="head">Danh mục</div>
                 <ul className="main-categories">
-                  <li className="main-nav-list">
-                    <a
-                      data-toggle="collapse"
-                      href="#fruitsVegetable"
-                      aria-expanded="false"
-                      aria-controls="fruitsVegetable"
-                    >
-                      <span className="lnr lnr-arrow-right" />
-                      Giày nam<span className="number">(53)</span>
-                    </a>
-                  </li>
-                  <li className="main-nav-list">
-                    <a
-                      data-toggle="collapse"
-                      href="#meatFish"
-                      aria-expanded="false"
-                      aria-controls="meatFish"
-                    >
-                      <span className="lnr lnr-arrow-right" />
-                      Giày nữ<span className="number">(53)</span>
-                    </a>
-                  </li>
-                  <li className="main-nav-list">
-                    <a
-                      data-toggle="collapse"
-                      href="#cooking"
-                      aria-expanded="false"
-                      aria-controls="cooking"
-                    >
-                      <span className="lnr lnr-arrow-right" />
-                      Giày trẻ em<span className="number">(53)</span>
-                    </a>
-                    <ul
-                      className="collapse"
-                      id="cooking"
-                      data-toggle="collapse"
-                      aria-expanded="false"
-                      aria-controls="cooking"
-                    >
-                      <li className="main-nav-list child">
-                        <a href="#">
-                          Frozen Fish<span className="number">(13)</span>
-                        </a>
-                      </li>
-                      <li className="main-nav-list child">
-                        <a href="#">
-                          Dried Fish<span className="number">(09)</span>
-                        </a>
-                      </li>
-                      <li className="main-nav-list child">
-                        <a href="#">
-                          Fresh Fish<span className="number">(17)</span>
-                        </a>
-                      </li>
-                      <li className="main-nav-list child">
-                        <a href="#">
-                          Meat Alternatives<span className="number">(01)</span>
-                        </a>
-                      </li>
-                      <li className="main-nav-list child">
-                        <a href="#">
-                          Meat<span className="number">(11)</span>
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
+                  {Object.keys(cateList).map(item => (
+                    <li className="main-nav-list">
+                      <a
+                        className={querySearch.type === item? "active" : ""}
+                        onClick={(e) => this.setFilter(e, "type", item)}
+                        href="/"
+                        
+                      >
+                        <span className="lnr lnr-arrow-right" />
+                        {item}<span className="number">({cateList[item]})</span>
+                      </a>
+                    </li>
+                  ))}
                 </ul>
               </div>
               <div className="sidebar-filter mt-50">
-                <div className="top-filter-head">Lọc sản phẩm</div>
+                <div className="top-filter-head">
+                  Lọc sản phẩm
+                  <a href="/category">Xóa bộ lọc</a>
+                </div>
                 <div className="common-filter">
                   <div className="head">Nhãn hiệu</div>
                   <form action="#">
                     <ul>
-                      <li className="filter-list">
-                        <input
-                          className="pixel-radio"
-                          type="radio"
-                          id="apple"
-                          name="brand"
-                        />
-                        <label htmlFor="apple">
-                          Nike<span>(29)</span>
-                        </label>
-                      </li>
-                      <li className="filter-list">
-                        <input
-                          className="pixel-radio"
-                          type="radio"
-                          id="asus"
-                          name="brand"
-                        />
-                        <label htmlFor="asus">
-                          Adidas<span>(29)</span>
-                        </label>
-                      </li>
-                      <li className="filter-list">
-                        <input
-                          className="pixel-radio"
-                          type="radio"
-                          id="gionee"
-                          name="brand"
-                        />
-                        <label htmlFor="gionee">
-                          Puma<span>(19)</span>
-                        </label>
-                      </li>
-                      <li className="filter-list">
-                        <input
-                          className="pixel-radio"
-                          type="radio"
-                          id="micromax"
-                          name="brand"
-                        />
-                        <label htmlFor="micromax">
-                          Biti's<span>(19)</span>
-                        </label>
-                      </li>
+                      {Object.keys(brandList).map((item, index) => (
+                        <li className="filter-list">
+                          <input
+                            className="pixel-radio"
+                            id={`brand-${index}`}
+                            type="radio"
+                            checked={querySearch.brand === item? true : false}
+                            onClick={(e) => this.setFilter(e, "brand", item)}
+                          />
+                          <label htmlFor={`brand-${index}`}>
+                            {item}<span>({brandList[item]})</span>
+                          </label>
+                        </li>
+                      ))}
                     </ul>
                   </form>
                 </div>
@@ -180,61 +146,20 @@ class CategoryPage extends Component {
                   <div className="head">Color</div>
                   <form action="#">
                     <ul>
-                      <li className="filter-list">
-                        <input
-                          className="pixel-radio"
-                          type="radio"
-                          id="black"
-                          name="color"
-                        />
-                        <label htmlFor="black">
-                          Đen<span>(29)</span>
-                        </label>
-                      </li>
-                      <li className="filter-list">
-                        <input
-                          className="pixel-radio"
-                          type="radio"
-                          id="balckleather"
-                          name="color"
-                        />
-                        <label htmlFor="balckleather">
-                          Đỏ<span>(29)</span>
-                        </label>
-                      </li>
-                      <li className="filter-list">
-                        <input
-                          className="pixel-radio"
-                          type="radio"
-                          id="blackred"
-                          name="color"
-                        />
-                        <label htmlFor="blackred">
-                          Xanh biển<span>(19)</span>
-                        </label>
-                      </li>
-                      <li className="filter-list">
-                        <input
-                          className="pixel-radio"
-                          type="radio"
-                          id="gold"
-                          name="color"
-                        />
-                        <label htmlFor="gold">
-                          Vàng<span>(19)</span>
-                        </label>
-                      </li>
-                      <li className="filter-list">
-                        <input
-                          className="pixel-radio"
-                          type="radio"
-                          id="spacegrey"
-                          name="color"
-                        />
-                        <label htmlFor="spacegrey">
-                          Hồng<span>(19)</span>
-                        </label>
-                      </li>
+                    {Object.keys(colorList).sort().map((item, index) => (
+                        colorList[item] > 0 && <li className="filter-list">
+                          <input
+                            className="pixel-radio"
+                            type="radio"
+                            id={`color-${index}`}
+                            checked={querySearch.color === item? true : false}
+                            onClick={(e) => this.setFilter(e, "color", item)}
+                          />
+                          <label htmlFor={`color-${index}`}>
+                            {colorCode[item]}<span>({colorList[item]})</span>
+                          </label>
+                        </li>
+                      ))}
                     </ul>
                   </form>
                 </div>
@@ -244,11 +169,11 @@ class CategoryPage extends Component {
                     <div id="price-range" />
                     <div className="value-wrapper d-flex">
                       <div className="price">Từ:</div>
-                      <span>$</span>
                       <div id="lower-value" />
+                      <span>đ</span>
                       <div className="to">đến</div>
-                      <span>$</span>
                       <div id="upper-value" />
+                      <span>đ</span>
                     </div>
                   </div>
                 </div>
@@ -298,7 +223,7 @@ class CategoryPage extends Component {
                       item.productPhotos[0] = "/" + item.productPhotos[0];
                     }
                     return (
-                      <div className="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix hot-sales">
+                      <div className="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6">
                       <div className="product__item">
                         <div
                           className="product__item__pic set-bg"
@@ -334,7 +259,7 @@ class CategoryPage extends Component {
                         <div className="product__item__text">
                           <h6>{item.productName}</h6>
                           <a href={"/product-detail/" + item.productCode} className="add-cart">
-                            + Thêm vào giỏ hàng
+                            + Xem thêm
                           </a>
                           <div className="rating">
                             <i className="fa fa-star-o" />
@@ -344,39 +269,6 @@ class CategoryPage extends Component {
                             <i className="fa fa-star-o" />
                           </div>
                           <h5>{item.price.toLocaleString("it-IT", { style: "currency", currency: "VND" })}</h5>
-                          {/* <div className="product__details__option__size">
-                            <span>Size:</span>
-                            {Object.keys(productStocks).map((item) => (
-                              <label
-                                htmlFor={`size${item}`}
-                                className={
-                                  productSelected.size === item ? "active" : ""
-                                }
-                                onClick={() => this.onSelectSize(item)}
-                              >
-                                {item}
-                                <input type="radio" id={`size${item}`} />
-                              </label>
-                            ))}
-                          </div>
-                          <div className="product__details__option__color">
-                            <span>Màu sắc:</span>
-                            {Object.keys(colorCodes).map((item) => {
-                              return (
-                                <label
-                                  htmlFor={`color${item}`}
-                                  className={
-                                    productSelected.color === item ? "active" : ""
-                                  }
-                                  onClick={() => this.onSelectColor(item)}
-                                  style={{ background: colorCodes[item] }}
-                                >
-                                  <input type="radio" id={`color${item}`} />
-                                </label>
-                              );
-                            })}
-                          </div>
-                        </div> */}
                           <div className="product__color__select">
                             {item.color.map((value,indexx) => {
                               return(
