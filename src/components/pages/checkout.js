@@ -54,6 +54,7 @@ class CheckoutPage extends Component {
         if (!res.data.data) return;
         if (!res.data.data.customerAddresses) return;
         let defaultAddress = res.data.data.customerAddresses[res.data.data.defaultAddressId];
+        if (!defaultAddress) return;
 
         let provinceObject = addressData.find((province) => province.name === defaultAddress.province);
         let districtObject = provinceObject.level2s.find((district) => district.name === defaultAddress.district);
@@ -127,7 +128,7 @@ class CheckoutPage extends Component {
       alert(res.data.error.message);
       if (res.data.error.statusCode === 102) {
         cartService.clearCart();
-        this.setState({notSuccess: false, numOfCart: this.state.numOfCart + 1});
+        this.setState({notSuccess: false, numOfCart: this.state.numOfCart + 1, orderCode: res.data.data.orderCode});
       }
     });
   }

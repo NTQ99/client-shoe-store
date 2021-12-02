@@ -73,7 +73,6 @@ class CategoryPage extends Component {
 
   render() {
     const { productGroups, numOfcart, cateList, brandList, colorList, querySearch } = this.state;
-    const { search, pathname } = this.props.location;
     return (
       <div style={{backgroundColor:"#fff"}}>
         <Header numOfcart={numOfcart} />
@@ -119,7 +118,7 @@ class CategoryPage extends Component {
               <div className="sidebar-filter mt-50">
                 <div className="top-filter-head">
                   Lọc sản phẩm
-                  <a href="/category">Xóa bộ lọc</a>
+                  {Object.keys(querySearch).length > 0 && <a href="/category">Xóa bộ lọc</a>}
                 </div>
                 <div className="common-filter">
                   <div className="head">Nhãn hiệu</div>
