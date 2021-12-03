@@ -65,10 +65,10 @@ class CategoryPage extends Component {
     window.location.href = "/category?" + queryString;
   }
 
-  addProductToCart(e, id) {
+  addProductToCart(e, id, title) {
     e.preventDefault();
     this.setState({numOfcart: this.state.numOfcart + 1});
-    cartService.addToCart(id, 1);
+    cartService.addToCart(id, 1, title);
   }
 
   render() {

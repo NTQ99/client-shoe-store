@@ -82,6 +82,7 @@ class CheckoutPage extends Component {
     let currentCart = [];
     let totalMoney = 0;
     currentCart = await cartService.getCart();
+    console.log(currentCart)
     currentCart.forEach((item) => {
       productService.getProductById(item.productId).then((res) => {
         totalMoney += res.data.data.price * item.quantity;
@@ -116,6 +117,7 @@ class CheckoutPage extends Component {
   };
 
   onOrderSubmit = async () => {
+    console.log(this.state);
     this.setState({btnLoading: true});
     await orderService.createOrder({
       customerName: (this.state.customerFirstName.trim() + " " + this.state.customerLastName.trim()).trim(),
@@ -227,7 +229,9 @@ class CheckoutPage extends Component {
                     <h3>Thông tin khách hàng</h3>
                     <Col className="mb-5">
                       <Row>
-                        <Form.Group as={Col} className="mb-3">
+                        <Form.Group as={Col} className="mb-3" onChange={(e) =>
+                            this.setState({ customerFirstName: e.target.value })
+                          }>
                           <Form.Label className="required">Họ</Form.Label>
                           <Form.Control
                             defaultValue={customerFirstName}
@@ -236,7 +240,9 @@ class CheckoutPage extends Component {
                             autoComplete="off"
                           />
                         </Form.Group>
-                        <Form.Group as={Col} className="mb-3">
+                        <Form.Group as={Col} className="mb-3" onChange={(e) =>
+                            this.setState({ customerLastName: e.target.value })
+                          }>
                           <Form.Label className="required">Tên</Form.Label>
                           <Form.Control
                             defaultValue={customerLastName}

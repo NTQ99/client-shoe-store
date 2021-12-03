@@ -84,7 +84,8 @@ class ProductDetailPage extends Component {
     });
     cartService.addToCart(
       this.state.productSelected.productId,
-      this.state.productSelected.quantity
+      this.state.productSelected.quantity,
+      this.state.productDetail.productName + ", size" + this.state.productSelected.size + ", " + this.state.productSelected.color 
     );
   };
 

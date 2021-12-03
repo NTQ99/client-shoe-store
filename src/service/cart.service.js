@@ -6,12 +6,12 @@ const cookies = new Cookies();
 const BASE_URL = process.env.REACT_APP_BASE_URL_API;
 
 class CartService {
-    addToCart(id, qnt) {
+    addToCart(id, qnt, title) {
         qnt = Number(qnt);
         let currentCart = []
         currentCart = cookies.get('cart', {path:'/'});
         if (currentCart == null) {
-            currentCart=[{productId: id, quantity: qnt}];
+            currentCart=[{productId: id, quantity: qnt, productName: title}];
         } else {
             let check = 0;
             currentCart.forEach(product => {
@@ -20,7 +20,7 @@ class CartService {
                     check = 1;
                 }
             });
-            if (!check) currentCart.push({productId: id, quantity: qnt});
+            if (!check) currentCart.push({productId: id, quantity: qnt, productName: title});
         }
         cookies.set('cart', currentCart, {path:'/'});
         let token = authHeader();
