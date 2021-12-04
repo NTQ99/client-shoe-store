@@ -16,6 +16,7 @@ import * as XLSX from "xlsx";
 import {getTimeFormat, Timer} from '../../../commons/helper';
 import GeneralDialog from "../modal/GeneralDialog";
 import SendOrderForm from "../modal/SendOrderForm";
+import EditOrderForm from "../modal/EditOrderForm";
 
 const orderStatus = {
   wait_confirm: "Chờ xác nhận",
@@ -376,6 +377,9 @@ class OrderContent extends Component {
       formProps: {
         show: false,
       },
+      editFormProps: {
+        show: false,
+      },
       entities: [],
     };
   }
@@ -414,6 +418,7 @@ class OrderContent extends Component {
         }
       })
       .catch((error) => console.log(error));
+    console.log(this.state.entities)
     this.setState({isLoading: false});
   }
 
@@ -490,7 +495,12 @@ class OrderContent extends Component {
     await this.openResponseDialog(orderService.updateOrder(data));
     this.setState({formProps:{...this.state.formProps, show: false}});
   }
-
+  updateOrderStatus =  async (id, status) => {
+    let objStatus;
+    if (status != null) objStatus = {status: status}
+    await this.openResponseDialog(orderService.updateOrderStatus(id, objStatus));
+    this.setState({formProps:{...this.state.formProps, show: false}});
+  }
   openSendOrderForm = (id) => {
     this.setState({
       formProps: {
@@ -503,11 +513,11 @@ class OrderContent extends Component {
   }
   openEditOrderForm = (data) => {
     this.setState({
-      formProps: {
+      editFormProps: {
         show: true,
         formData: data,
         handleOk: this.updateOrder,
-        handleClose: () => this.setState({formProps:{show: false}}),
+        handleClose: () => this.setState({editFormProps:{show: false}}),
       },
     })
   }
@@ -564,7 +574,7 @@ class OrderContent extends Component {
   };
 
   render() {
-    const {entities, isLoading, reloadTime, dialogProps, formProps} = this.state;
+    const {entities, isLoading, reloadTime, dialogProps, formProps, editFormProps} = this.state;
     const columns = orderColumns(this);
     const options = getPaginationOptions(entities.length);
 
@@ -591,6 +601,7 @@ class OrderContent extends Component {
       >
         <GeneralDialog { ...dialogProps } />
         <SendOrderForm { ...formProps } />
+        <EditOrderForm { ...editFormProps } />
       </CustomTable>
     );
   }

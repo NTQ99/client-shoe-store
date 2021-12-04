@@ -478,7 +478,7 @@ class CheckoutPage extends Component {
                 Cảm ơn. Đơn hàng của bạn đã được ghi nhận.
               </h3>
               <div className="row order_d_inner">
-                <div className="col-lg-6">
+                <div className="col-lg-4">
                   <div className="details_item">
                     <h4>Thông tin đơn hàng</h4>
                     <ul className="list">
@@ -511,7 +511,34 @@ class CheckoutPage extends Component {
                     </ul>
                   </div>
                 </div>
-                <div className="col-lg-6">
+                <div className="col-lg-4">
+                  <div className="details_item">
+                    <h4>Thông tin người nhận</h4>
+                    <ul className="list">
+                      <li>
+                        <a href="#">
+                          <span>Họ</span> : {customerFirstName}
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#">
+                          <span>Tên</span> : {customerLastName}
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#">
+                          <span>Số điện thoại</span> : {customerPhone}
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#">
+                          <span>Email</span> : {customerEmail}
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div className="col-lg-4">
                   <div className="details_item">
                     <h4>Địa chỉ nhận hàng</h4>
                     <ul className="list">

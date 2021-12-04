@@ -417,18 +417,21 @@ export function orderColumns(obj) {
           {row.status === "await_trans" && (<>
             <div
               className="btn btn-sm btn-clean btn-icon mr-2"
-              title={`In vận đơn | ${row.printed? "Đã in": "Chưa in"}`}
-              // onClick={()=> obj.printOrder(row.id)}
-              onClick={()=> console.log(row)}
-            >
+              title="Thành công"
+              onClick={(e)=> {e.stopPropagation();obj.updateOrderStatus(row.id, "success")}}
+              >
               <span className="svg-icon svg-icon-md">
-              <div className="symbol symbol-20">
-                <i className="la la-print" />
-                <i className={`symbol-badge bg-${row.printed? "success": "danger"}`} style={{width: '10px', height: '10px', top: '-5px', right: '-5px'}}></i>
-              </div>
+                <div className="symbol symbol-20">
+                  <i className="las la-truck" />
+                  <i className="las la-check-circle" style={{position: "absolute", fontSize: "0.8rem", top: "-4px", right: "-7px"}} />
+                </div>
               </span>
             </div>
-            <div className="btn btn-sm btn-clean btn-icon mr-2" title="Hủy">
+            <div
+              className="btn btn-sm btn-clean btn-icon mr-2"
+              title="Hủy"
+              onClick={(e)=> {e.stopPropagation();obj.updateOrderStatus(row.id, "canceled")}}
+              >
               <span className="svg-icon svg-icon-md">
                 <i className="las la-ban"></i>
               </span>
@@ -438,19 +441,19 @@ export function orderColumns(obj) {
             <div
               className={`btn btn-sm btn-clean btn-icon mr-2${getDisabled(row.status)}`}
               title="Gửi vận đơn"
-              onClick={() => obj.openSendOrderForm(row.id)}
+              onClick={(e)=> {e.stopPropagation(); if (!getDisabled(row.status)) obj.openSendOrderForm(row.id)}}
             >
               <span className="svg-icon svg-icon-md">
                 <i className="las la-truck"></i>
               </span>
             </div>
-            <div className={`btn btn-sm btn-clean btn-icon mr-2${getDisabled(row.status)}`} title="Sửa" onClick={() => obj.openEditOrderForm(row)}>
+            <div className={`btn btn-sm btn-clean btn-icon mr-2${getDisabled(row.status)}`} title="Sửa" onClick={(e)=> {e.stopPropagation(); if (!getDisabled(row.status)) obj.openEditOrderForm(row)}}>
               <span className="svg-icon svg-icon-md">
                 <i className="las la-edit"></i>
               </span>
             </div>
           </>)}
-          <div className="btn btn-sm btn-clean btn-icon" title="Xóa" onClick={() => obj.openDeleteOrderDialog(row.id)}>
+          <div className="btn btn-sm btn-clean btn-icon" title="Xóa" onClick={(e)=> {e.stopPropagation(); obj.openDeleteOrderDialog(row.id)}}>
             <span className="svg-icon svg-icon-md">
               <i className="las la-trash-alt"></i>
             </span>
@@ -657,7 +660,7 @@ export const orderHistoryColumns = [
     dataField: "productsQuantity",
     text: "số lượng",
     headerStyle: { width: "100px" },
-    formatter: (cell, row) => row.products.map(product => product.quantity)
+    formatter: (cell, row) => row.products.map(product => <>{product.quantity}<br/></>)
   },
   {
     dataField: "createdAt",

@@ -83,6 +83,17 @@ class OrderService {
     });
   }
 
+  updateOrderStatus(id, statusObj) {
+    return axios({
+      method: "post",
+      url: BASE_URL + "/order/update/status/" + id,
+      headers: {
+        Authorization: authHeader(),
+      },
+      data: statusObj
+    });
+  }
+
   deleteOrder(id) {
     return axios({
       method: "post",
