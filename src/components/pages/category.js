@@ -234,26 +234,6 @@ class CategoryPage extends Component {
                               alt=""
                             />
                           </a>
-                          <ul className="product__hover">
-                            <li>
-                              <a href="#">
-                                <img src="/assets/img/icon/heart.png" alt="" />
-                                <span>Yêu thích</span>
-                              </a>
-                            </li>
-                            <li>
-                              <a href="#">
-                                <img src="/assets/img/icon/compare.png" alt="" />{" "}
-                                <span>So sánh</span>
-                              </a>
-                            </li>
-                            <li>
-                              <a href={"/product-detail/" + item.productCode}>
-                                <img src="/assets/img/icon/search.png" alt="" />
-                                <span>Chi tiết</span>
-                              </a>
-                            </li>
-                          </ul>
                         </div>
                         <div className="product__item__text">
                           <h6>{item.productName}</h6>

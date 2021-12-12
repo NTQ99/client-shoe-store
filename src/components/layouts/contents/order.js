@@ -23,7 +23,7 @@ const orderStatus = {
   not_responded: "Không phản hồi",
   canceled: "Đã hủy",
   success: "Giao thành công",
-  await_trans: "Chờ vận chuyển",
+  await_trans: "Đang vận chuyển",
   fail: "Giao thất bại"
 };
 
@@ -381,6 +381,7 @@ class OrderContent extends Component {
         show: false,
       },
       entities: [],
+      statusDropdown: []
     };
   }
   
@@ -418,7 +419,6 @@ class OrderContent extends Component {
         }
       })
       .catch((error) => console.log(error));
-    console.log(this.state.entities)
     this.setState({isLoading: false});
   }
 
@@ -438,7 +438,7 @@ class OrderContent extends Component {
         show: true,
         handleOk: () => this.setState({dialogProps:{...this.state.dialogProps, show: false}}),
         variant: "error",
-        message: error.message
+        message: error.response.data? error.response.data.error.message : error.message
       }
     })) 
   }
@@ -460,7 +460,7 @@ class OrderContent extends Component {
         show: true,
         handleOk: () => this.setState({dialogProps:{...this.state.dialogProps, show: false}}),
         variant: "error",
-        message: error.message
+        message: error.response.data? error.response.data.error.message : error.message
       }
     })) 
   }
@@ -481,7 +481,7 @@ class OrderContent extends Component {
         show: true,
         handleOk: () => this.setState({dialogProps:{...this.state.dialogProps, show: false}}),
         variant: "error",
-        message: error.message
+        message: error.response.data? error.response.data.error.message : error.message
       }
     }))
   }
@@ -572,6 +572,18 @@ class OrderContent extends Component {
         return "Bạn có chắc chắn muốn mở khóa tài khoản này?";
     }
   };
+
+  showStatusDropdown = (index) => {
+    let statusDropdown = this.state.statusDropdown;
+    statusDropdown[index] = true;
+    this.setState({statusDropdown: statusDropdown})
+  }
+
+  hideStatusDropdown = (index) => {
+    let statusDropdown = this.state.statusDropdown;
+    statusDropdown[index] = false;
+    this.setState({statusDropdown: statusDropdown})
+  }
 
   render() {
     const {entities, isLoading, reloadTime, dialogProps, formProps, editFormProps} = this.state;

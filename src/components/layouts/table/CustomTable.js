@@ -15,7 +15,7 @@ import { Pagination } from "../pagination/Pagination";
 
 class CustomTable extends Component {
   render() {
-    const {loading, options, entities, columns, Search, Toolbar, expandRow, defaultSorted, rowStyle, title, children} = this.props;
+    const {loading, options, entities, columns, Search, Toolbar, expandRow, defaultSorted, rowStyle, title, children, rowEvents} = this.props;
     const customStyle = this.props.customStyle? this.props.customStyle: {};
     return (
       <PaginationProvider pagination={paginationFactory(options)}>
@@ -58,6 +58,7 @@ class CustomTable extends Component {
                       defaultSorted={ defaultSorted } 
                       expandRow={expandRow}
                       rowStyle={rowStyle}
+                      rowEvents={rowEvents}
                       filter={ filterFactory() }
                       noDataIndication="Không tìm thấy bản ghi nào"
                       overlay={ overlayFactory({ spinner: TableLoading(), styles: { overlay: (base) => ({...base, background: '#fff', fontSize: '13px'}) }}) }

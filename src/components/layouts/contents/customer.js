@@ -240,7 +240,7 @@ class CustomerContent extends Component {
         show: true,
         handleOk: () => this.setState({dialogProps:{...this.state.dialogProps, show: false}}),
         variant: "error",
-        message: error.message
+        message: error.response.data? error.response.data.error.message : error.message
       }
     })) 
   }

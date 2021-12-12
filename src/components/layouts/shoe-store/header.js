@@ -15,7 +15,12 @@ class Header extends Component {
   }
 
   componentDidMount() {
-    this.setState({numOfCart: cartService.getTotalNum()})
+    let urlParams = new URLSearchParams(window.location.search);
+    let params = Object.fromEntries(urlParams);
+    if (params.search) {
+      document.getElementById("search_input_box").style.display = "block"
+    }
+    this.setState({numOfCart: cartService.getTotalNum(), word: params.search})
   }
   
   componentWillReceiveProps(nextProps) {
@@ -26,8 +31,17 @@ class Header extends Component {
     e.preventDefault();
     AuthService.logout(() => window.location.replace("/"));
   };
+
+  searchWord = (e) => {
+    e.preventDefault();
+    if (this.state.word) {
+      window.location.replace(`/category?search=${this.state.word}`)
+    } else {
+      window.location.replace("/category");
+    }
+  }
   render() {
-    const {numOfCart,word} = this.state
+    const {numOfCart, word} = this.state
     return (
       <header className="header_area sticky-header">
         <div className="main_menu">
@@ -73,29 +87,33 @@ class Header extends Component {
                       Sản phẩm
                     </a>
                   </li>
-                  <li className="nav-item ">
-                    <a
-                      href="/"
-                      className="nav-link"
-                    >
-                      Bộ sưu tập
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a
-                      href="/"
-                      className="nav-link"
-                    >
-                      Sale
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a className="nav-link" href="contact.html">
-                      Giới thiệu
-                    </a>
-                  </li>
+                  {!authHeader() && (
+                    <li className="nav-item">
+                      <a
+                        href="/tracking"
+                        className="nav-link"
+                      >
+                        Tra cứu đơn hàng
+                      </a>
+                    </li>
+                  )}
+                  {authHeader() && (
+                    <li className="nav-item">
+                      <a
+                        href="/my-order"
+                        className="nav-link"
+                      >
+                        Đơn hàng của tôi
+                      </a>
+                    </li>
+                  )}
                 </ul>
                 <ul className="nav navbar-nav navbar-right">
+                  <li className="nav-item">
+                    <button className="search">
+                      <span className="lnr lnr-magnifier" id="search" />
+                    </button>
+                  </li>
                   <li className="nav-item">
                     <a href="/cart" className="cart">
                       <span className="ti-bag" />
@@ -104,31 +122,34 @@ class Header extends Component {
                         style={{
                           position: "absolute",
                           borderRadius: "50%",
-                          fontSize: "60%",
-                          top: "30%"
+                          fontSize: "7px",
+                          lineHeight: "8px",
+                          top: "25%"
                         }}
                       >
                         {numOfCart}
                       </div>
                     </a>
                   </li>
-                  <li className="nav-item">
-                    <button className="search">
-                      <span className="lnr lnr-magnifier" id="search" />
-                    </button>
-                  </li>
-                  <li className="nav-item">
-                    {!authHeader() && (
+                  {!authHeader() && (
+                    <li className="nav-item">
                       <a href="/login">
                         <span className="lnr lnr-enter"></span>
                       </a>
-                    )}
-                    {authHeader() && (
+                    </li>
+                  )}
+                  {authHeader() && (<>
+                    <li className="nav-item">
+                      <a href="/info">
+                        <span className="lar la-user-circle" style={{fontSize: "15px"}}></span>
+                      </a>
+                    </li>
+                    <li className="nav-item">
                       <a href="/logout" onClick={this.logout}>
                         <span className="lnr lnr-exit"></span>
                       </a>
-                    )}
-                  </li>
+                    </li>
+                  </>)}
                 </ul>
               </div>
             </div>
@@ -136,12 +157,13 @@ class Header extends Component {
         </div>
         <div className="search_input" id="search_input_box">
           <div className="container">
-            <form className="d-flex justify-content-between" onSubmit={(e)=> { e.preventDefault();word&&window.location.replace(`/category?search=${word}`)}}>
+            <form className="d-flex justify-content-between" onSubmit={(e)=> this.searchWord(e)}>
               <input
                 type="text"
                 className="form-control"
                 id="search_input"
                 placeholder="Nhập tên sản phẩm"
+                defaultValue={word}
                 onChange={(e) => this.setState({word: e.target.value})}
               />
               <button type="submit" className="btn" />

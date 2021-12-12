@@ -243,7 +243,7 @@ var KTDatatableChildRemoteDataDemo = function() {
 									'class': ' label-light-success'
 								},
 								"await_trans": {
-									'title': 'Chờ vận chuyển',
+									'title': 'Đang vận chuyển',
 									'class': ' label-light-info'
 								},
 								"fail": {

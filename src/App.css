@@ -520,3 +520,145 @@ i.lnr {
 	float: right;
 	font-size: small;
 }
+.dropdown-status:after {
+	display: none!important;
+}
+.dropdown-status {
+	color: unset!important;
+	background-color: transparent!important;
+	color: #b5b5c3!important;
+	border-color: transparent!important;
+}
+.dropdown-status i {
+	color: unset!important;
+}
+.dropdown-status:hover {
+	color: #ffba00!important;
+}
+.dropdown-status-menu {
+	transform: unset!important;
+	left: 20px!important;
+	top: 20px!important;
+}
+.dropdown-success i,.dropdown-success span {
+	color: #1bc5bd!important;
+}
+.dropdown-fail i,.dropdown-fail span {
+	color: #f64e60!important;
+}
+.dropdown-item span {
+	background-color: unset;
+}
+.dropdown-success:active {
+	background-color: #c9f7f5;
+}
+.dropdown-fail:active {
+	background-color: #ffe2e5;
+}
+.track {
+    position: relative;
+    height: 4px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    margin-bottom: 100px;
+    margin-top: 50px
+}
+
+.track .step {
+	-webkit-box-flex: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    width: 25%;
+    margin-top: -28px;
+    text-align: center;
+    position: relative
+}
+
+.track .step.active:before {
+	border-bottom: 4px solid #2dc258;
+}
+.track .step.deactive:before {
+	border-bottom: 4px dashed #d73211;
+}
+.track .step.deactive.current:before {
+	border-bottom: 4px solid #d73211;
+}
+
+.track .step::before {
+	height: 4px;
+    position: absolute;
+    content: "";
+    width: 100%;
+    left: 0;
+    top: 28px;
+	border-bottom: 4px solid #ddd;
+}
+
+.track .step.active .icon {
+    background-color: #fff;
+	border: 4px solid #2dc258;
+}
+.track .step.active.current .icon {
+    background-color: #2dc258;
+}
+.track .step.deactive.current .icon {
+    background-color: #d73211;
+}
+.track .step.deactive .icon {
+    background-color: #fff;
+	border: 4px solid #d73211;
+}
+
+.track .svg-order-icon {
+	border-color: #ddd;
+    color: #ddd;
+	display: inline-block;
+    width: 2em;
+    height: 2em;
+	line-height: 2em;
+    fill: currentColor;
+    position: relative;
+    stroke: currentColor;
+}
+.track .active .svg-order-icon {
+    color: #2dc258;
+}
+.track .deactive .svg-order-icon {
+    color: #d73211;
+}
+.track .deactive.current .svg-order-icon {
+    color: #fff;
+}
+
+.track .current .svg-order-icon {
+    color: #fff;
+}
+
+.track .icon {
+	display: flex;
+    justify-content: center;
+    align-items: center;
+	position: relative;
+	margin: auto;
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    position: relative;
+    border-radius: 100%;
+	background-color: #fff;
+    border: 4px solid #ddd
+}
+
+.track .step.active .text {
+    font-weight: 400;
+    color: #000
+}
+
+.track .text {
+    display: block;
+    margin-top: 4px
+}
+#registerForm .login_form_inner {
+	padding-top: 61px;
+}

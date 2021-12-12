@@ -22,6 +22,12 @@ class ErrorPage extends Component {
               There may be a misspelling in the URL entered,or the page you are
               looking for may no longer exist.
             </p>
+            <a href="/home">
+              <p className="font-size-h4 line-height-md">
+            <i className="las la-redo"></i>
+              Go home
+              </p>
+            </a>
           </div>
           {/*end::Content*/}
         </div>

@@ -62,11 +62,16 @@ class AuthService {
     setTimeout(cb, 100);
   }
 
-  register(username, password, firstName, lastName, phone, email) {
-    return axios.post(BASE_URL + "/auth/register", {
-      username,
-      password, firstName, lastName, phone, email
-    }).then(res => res.data);
+  register(data) {
+    return axios.post(BASE_URL + "/auth/register", data).then(res => res.data);
+  }
+
+  changePassword(data) {
+    return axios.post(BASE_URL + "/auth/changepass", {
+      username: this.getCurrentUser().username,
+      password: data.oldPassword,
+      newPassword: data.newPassword
+    });
   }
 
   getCurrentUser() {
@@ -75,6 +80,11 @@ class AuthService {
 
   getRoles() {
     if (this.getCurrentUser() != null) return this.getCurrentUser().roles[0].name;
+    else return null;
+  }
+
+  getCustomerCode() {
+    if (this.getCurrentUser() != null) return this.getCurrentUser().customerCode;
     else return null;
   }
 }

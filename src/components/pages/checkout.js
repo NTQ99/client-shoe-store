@@ -22,6 +22,8 @@ import {
 } from "react-bootstrap";
 import { now } from "moment";
 import orderService from "../../service/order.service";
+import GeneralDialog from "../layouts/modal/GeneralDialog";
+import SimpleReactValidator from "simple-react-validator";
 
 class CheckoutPage extends Component {
   constructor(props) {
@@ -36,6 +38,20 @@ class CheckoutPage extends Component {
       deliveryTo: {},
       addressList: { district: [], ward: [] },
     };
+    SimpleReactValidator.addLocale("vi", {
+      required: "Không được bỏ trống!",
+      email: "Email không hợp lệ.",
+      url: "Đường dẫn không hợp lệ."
+    });
+    this.validator = new SimpleReactValidator({
+      autoForceUpdate: this,
+      locale: "vi",
+      element: (message) => (
+        <div className="fv-plugins-bootstrap fv-plugins-message-container">
+          <div className="fv-help-block">{message}</div>
+        </div>
+      ),
+    });
     this.onAddressSelect = helper.onAddressSelect.bind(this);
   }
 
@@ -97,42 +113,65 @@ class CheckoutPage extends Component {
     });
   };
 
+  openResponseDialog = (variant, message) => {
+    this.setState({
+      dialogProps: {
+        show: true,
+        handleOk: () => this.setState({dialogProps:{...this.state.dialogProps, show: false}}),
+        variant: variant,
+        message: message
+      }
+    });
+  }
+
   login = (e) => {
     e.preventDefault();
     let username = e.target.username.value;
     let password = e.target.password.value;
     AuthService.login(username, password).then((res) => {
-      alert(res.error.message);
       if (res.error.statusCode === 200) {
-        if (
-          AuthService.getRoles().includes("ROLE_SELLER") ||
-          AuthService.getRoles().includes("ROLE_ADMIN")
-        ) {
-          window.location.replace("/order");
-        } else {
-          window.location.reload();
-        }
-      }
-    });
+        this.openResponseDialog("success", res.error.message);
+        setTimeout(() => {
+          if (
+            AuthService.getRoles().includes("ROLE_SELLER") ||
+            AuthService.getRoles().includes("ROLE_ADMIN")
+          ) {
+            window.location.replace("/order");
+          } else {
+            window.location.reload();
+          }
+        }, 1000);
+      } else this.openResponseDialog("error", res.error.message);
+    }).catch(error => this.openResponseDialog("error", error.response.error.message));
   };
 
   onOrderSubmit = async () => {
-    console.log(this.state);
-    this.setState({btnLoading: true});
-    await orderService.createOrder({
-      customerName: (this.state.customerFirstName.trim() + " " + this.state.customerLastName.trim()).trim(),
-      customerPhone: this.state.customerPhone,
-      products: this.state.products,
-      deliveryTo: this.state.deliveryTo,
-      totalPrice: this.state.totalPrice,
-      codAmount: this.state.totalPrice
-    }).then(res => {
-      alert(res.data.error.message);
-      if (res.data.error.statusCode === 102) {
-        cartService.clearCart();
-        this.setState({notSuccess: false, numOfCart: this.state.numOfCart + 1, orderCode: res.data.data.orderCode});
-      }
-    });
+    if (this.validator.allValid()) {
+      this.setState({btnLoading: true});
+      await orderService.createOrder({
+        customerName: (this.state.customerFirstName.trim() + " " + this.state.customerLastName.trim()).trim(),
+        customerPhone: this.state.customerPhone,
+        products: this.state.products,
+        deliveryTo: this.state.deliveryTo,
+        totalPrice: this.state.totalPrice,
+        codAmount: this.state.totalPrice
+      }).then(res => {
+        if (res.data.error.statusCode === 102) {
+          this.openResponseDialog("success", res.data.error.message);
+          cartService.clearCart();
+          setTimeout(() => {
+            this.setState({
+              notSuccess: false, numOfCart: this.state.numOfCart + 1, orderCode: res.data.data.orderCode,
+              dialogProps: {
+                show: false
+              }
+            });
+          }, 1000)
+        } else this.openResponseDialog("error", res.data.error.message);
+      }).catch(error => this.openResponseDialog("error", error.response.error.message));
+    } else {
+      this.validator.showMessages();
+    }
   }
 
   render() {
@@ -149,10 +188,12 @@ class CheckoutPage extends Component {
       customerFirstName,
       customerLastName,
       customerPhone,
-      customerEmail
+      customerEmail,
+      dialogProps
     } = this.state;
     return (
       <div>
+        <GeneralDialog { ...dialogProps } />
         <Header numOfCart={numOfCart} />
         {/* Start Banner Area */}
         <section className="banner-area organic-breadcrumb">
@@ -229,7 +270,7 @@ class CheckoutPage extends Component {
                     <h3>Thông tin khách hàng</h3>
                     <Col className="mb-5">
                       <Row>
-                        <Form.Group as={Col} className="mb-3" onChange={(e) =>
+                        <Form.Group as={Col} className="mb-3" controlId="customerFirstName" onChange={(e) =>
                             this.setState({ customerFirstName: e.target.value })
                           }>
                           <Form.Label className="required">Họ</Form.Label>
@@ -239,8 +280,13 @@ class CheckoutPage extends Component {
                             placeholder="Họ"
                             autoComplete="off"
                           />
+                          {this.validator.message(
+                            "customerFirstName",
+                            this.state.customerFirstName,
+                            "required"
+                          )}
                         </Form.Group>
-                        <Form.Group as={Col} className="mb-3" onChange={(e) =>
+                        <Form.Group as={Col} className="mb-3" controlId="customerLastName" onChange={(e) =>
                             this.setState({ customerLastName: e.target.value })
                           }>
                           <Form.Label className="required">Tên</Form.Label>
@@ -250,6 +296,11 @@ class CheckoutPage extends Component {
                             placeholder="Tên"
                             autoComplete="off"
                           />
+                          {this.validator.message(
+                            "customerLastName",
+                            this.state.customerLastName,
+                            "required"
+                          )}
                         </Form.Group>
                       </Row>
                       <Row>
@@ -270,6 +321,11 @@ class CheckoutPage extends Component {
                             placeholder="0123456789"
                             autoComplete="off"
                           />
+                          {this.validator.message(
+                            "customerPhone",
+                            this.state.customerPhone,
+                            "required"
+                          )}
                         </Form.Group>
                         <Form.Group
                           as={Col}
@@ -279,13 +335,18 @@ class CheckoutPage extends Component {
                             this.setState({ customerEmail: e.target.value })
                           }
                         >
-                          <Form.Label>Email</Form.Label>
+                          <Form.Label className="required">Email</Form.Label>
                           <Form.Control
                             defaultValue={customerEmail}
                             type="email"
                             placeholder="example@domain.com"
                             autoComplete="off"
                           />
+                          {this.validator.message(
+                            "customerEmail",
+                            this.state.customerEmail,
+                            "required|email"
+                          )}
                         </Form.Group>
                       </Row>
                     </Col>
@@ -312,6 +373,11 @@ class CheckoutPage extends Component {
                               </option>
                             ))}
                           </Form.Control>
+                          {this.validator.message(
+                            "addressProvince",
+                            deliveryTo.provinceId,
+                            "required"
+                          )}
                         </Form.Group>
                         <Form.Group
                           as={Col}
@@ -333,6 +399,11 @@ class CheckoutPage extends Component {
                               </option>
                             ))}
                           </Form.Control>
+                          {this.validator.message(
+                            "addressDistrict",
+                            deliveryTo.districtId,
+                            "required"
+                          )}
                         </Form.Group>
                         <Form.Group
                           as={Col}
@@ -351,6 +422,11 @@ class CheckoutPage extends Component {
                               </option>
                             ))}
                           </Form.Control>
+                          {this.validator.message(
+                            "addressWard",
+                            deliveryTo.wardId,
+                            "required"
+                          )}
                         </Form.Group>
                       </Row>
                       <Row>
@@ -367,6 +443,11 @@ class CheckoutPage extends Component {
                             defaultValue={deliveryTo.detail}
                             placeholder="Số nhà, tên tòa nhà, tên đường, tên khu vực"
                           />
+                          {this.validator.message(
+                            "addressDetail",
+                            deliveryTo.detail,
+                            "required"
+                          )}
                         </Form.Group>
                       </Row>
                     </Col>

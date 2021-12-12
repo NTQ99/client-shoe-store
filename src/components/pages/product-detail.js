@@ -7,6 +7,7 @@ import Header from "../layouts/shoe-store/header";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
+import GeneralDialog from "../layouts/modal/GeneralDialog";
 
 class ProductDetailPage extends Component {
   constructor(props) {
@@ -41,8 +42,8 @@ class ProductDetailPage extends Component {
             productDetail: res.data.data[0],
             products: res.data.data,
           });
-        } else alert(res.data.error.message);
-      });
+        } else this.openResponseDialog("error", res.data.error.message);
+      }).catch(error => this.openResponseDialog("error", error.response.error.message));
     let productStocks = [];
     let colorCodes = [];
     for (let i = 0; i < this.state.products.length; i++) {
@@ -73,10 +74,21 @@ class ProductDetailPage extends Component {
     this.setState({ productStocks: productStocks, colorCodes: colorCodes });
   }
 
+  openResponseDialog = (variant, message) => {
+    this.setState({
+      dialogProps: {
+        show: true,
+        handleOk: () => this.setState({dialogProps:{...this.state.dialogProps, show: false}}),
+        variant: variant,
+        message: message
+      }
+    });
+  }
+
   addProductToCart = (e) => {
     e.preventDefault();
     if (this.state.productSelected.stock === 0) {
-      alert("Số lượng sản phẩm đã hết!")
+      this.openResponseDialog("error", "Số lượng sản phẩm đã hết!");
       return;
     }
     this.setState({
@@ -132,6 +144,7 @@ class ProductDetailPage extends Component {
       productStocks,
       colorCodes,
       productSelected,
+      dialogProps
     } = this.state;
 
     const sliderSetting = {
@@ -144,6 +157,7 @@ class ProductDetailPage extends Component {
 
     return (
       <div style={{ backgroundColor: "#fff" }}>
+        <GeneralDialog { ...dialogProps } />
         <Header numOfcart={numOfcart} />
 
         {/* Start Banner Area */}
@@ -291,12 +305,6 @@ class ProductDetailPage extends Component {
                       onClick={this.addProductToCart}
                     >
                       Thêm vào giỏ hàng
-                    </a>
-                    <a className="icon_btn" href="#">
-                      <i className="lnr lnr lnr-diamond" style={{lineHeight: "unset"}} />
-                    </a>
-                    <a className="icon_btn" href="#">
-                      <i className="lnr lnr lnr-heart" style={{lineHeight: "unset"}} />
                     </a>
                   </div>
                 </div>

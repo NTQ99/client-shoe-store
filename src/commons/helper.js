@@ -131,3 +131,28 @@ export function onAddressSelect(e) {
       break;
   }
 };
+export function openResponseDialog(cb) {
+  return cb.then(res => {
+    console.log(res);
+    this.setState({
+      dialogProps: {
+        show: true,
+        handleOk: () => this.setState({dialogProps:{...this.state.dialogProps, show: false}}),
+        variant: "success",
+        message: res.data.error.message
+      }
+    });
+    return res.data;
+  }).catch(error => {
+    console.log(error);
+    this.setState({
+      dialogProps: {
+        show: true,
+        handleOk: () => this.setState({dialogProps:{...this.state.dialogProps, show: false}}),
+        variant: "error",
+        message: error.response.data? error.response.data.error.message : error.message
+      }
+    })
+    return "error";
+  }) 
+}

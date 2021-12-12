@@ -15,14 +15,26 @@ import CheckoutPage from "./components/pages/checkout";
 import ProductDetailPage from "./components/pages/product-detail";
 import authHeader from "./service/auth-header";
 import AuthService from './service/auth.service';
+import ErrorPage from './components/pages/error';
 
 import './App.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
+import TrackingPage from "./components/pages/tracking";
+import OrderDetailPage from "./components/pages/order-detail";
+import InfoPage from "./components/pages/info";
+import MyOrderPage from "./components/pages/my-order";
 
 const AdminRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={(props) => (
-    (authHeader() && AuthService.getRoles().includes("ROLE_ADMIN"))? <Component {...props} />
+    (authHeader() && (AuthService.getRoles().includes("ROLE_ADMIN") || AuthService.getRoles().includes("ROLE_SELLER")))? <Component {...props} />
+      : <Redirect to='/not-found' />
+  )} />
+)
+
+const UserRoute = ({ component: Component, ...rest }) => (
+  <Route {...rest} render={(props) => (
+    (authHeader() && AuthService.getRoles().includes("ROLE_BUYER"))? <Component {...props} />
       : <Redirect to='/not-found' />
   )} />
 )
@@ -43,7 +55,12 @@ function App() {
             <Route exact path="/category" component={CategoryPage} />
             <Route exact path="/cart" component={CartPage} />
             <Route exact path="/checkout" component={CheckoutPage} />
+            <Route exact path="/tracking" component={TrackingPage} />
+            <Route exact path="/order-detail" component={OrderDetailPage} />
+            <UserRoute exact path="/info" component={InfoPage} />
+            <UserRoute exact path="/my-order" component={MyOrderPage} />
             <Route strict path="/product-detail/:productCode" component={ProductDetailPage} />
+            <Route exact path="/not-found" component={ErrorPage} />
             <Route exact path="/" render={() => <Redirect to='/home' />} />
           </Switch>
         </Suspense>

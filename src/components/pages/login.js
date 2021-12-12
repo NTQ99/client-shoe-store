@@ -5,13 +5,51 @@ import AuthService from "../../service/auth.service";
 import authHeader from "../../service/auth-header";
 import Header from "../layouts/shoe-store/header";
 import Footer from "../layouts/shoe-store/footer";
+import GeneralDialog from "../layouts/modal/GeneralDialog";
+import SimpleReactValidator from "simple-react-validator";
+
+import DatePicker from "react-datepicker";
 
 class LoginPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      typePage: "login"
+      typePage: "login",
+      login: {},
+      register: {}
     }
+    SimpleReactValidator.addLocale("vi", {
+      required: "Không được bỏ trống!",
+      email: "Email không hợp lệ.",
+      url: "Đường dẫn không hợp lệ."
+    });
+    this.validatorLogin = new SimpleReactValidator({
+      autoForceUpdate: this,
+      locale: "vi",
+      element: (message) => (
+        <div className="fv-plugins-bootstrap fv-plugins-message-container">
+          <div className="fv-help-block text-left">{message}</div>
+        </div>
+      ),
+    });
+    this.validatorRegister = new SimpleReactValidator({
+      autoForceUpdate: this,
+      locale: "vi",
+      element: (message) => (
+        <div className="fv-plugins-bootstrap fv-plugins-message-container">
+          <div className="fv-help-block text-left">{message}</div>
+        </div>
+      ),
+      validators: {
+        confirmedPass: {  // name the rule
+          message: 'Mật khẩu không khớp',
+          rule: (val, params, validator) => {
+            return val === this.state.register.password
+          },
+          required: true  // optional
+        }
+      }
+    });
   }
 
   componentDidMount() {
@@ -25,41 +63,57 @@ class LoginPage extends Component {
       }
     }
   }
+
+  openResponseDialog = (variant, message) => {
+    this.setState({
+      dialogProps: {
+        show: true,
+        handleOk: () => this.setState({dialogProps:{...this.state.dialogProps, show: false}}),
+        variant: variant,
+        message: message
+      }
+    });
+  }
   
   login = (e) => {
     e.preventDefault();
-    let username = e.target.username.value
-    let password = e.target.password.value
-    AuthService.login(username, password).then(res=>{
-      alert(res.error.message)
-      if (res.error.statusCode === 200) {
-        if (AuthService.getRoles().includes("ROLE_SELLER") || AuthService.getRoles().includes("ROLE_ADMIN")) {
-          window.location.replace("/order");
+    let loginObj = this.state.login;
+    if (this.validatorLogin.allValid()) {
+      AuthService.login(loginObj.username, loginObj.password).then(res=>{
+        if (res.error.statusCode === 200) {
+          this.openResponseDialog("success", res.error.message);
+          setTimeout(() => {
+            if (AuthService.getRoles().includes("ROLE_SELLER") || AuthService.getRoles().includes("ROLE_ADMIN")) {
+              window.location.replace("/order");
+            } else {
+              window.location.replace("/home");
+            }
+          }, 1000)
         } else {
-          window.location.replace("/home");
+          this.openResponseDialog("error", res.error.message);
         }
-      }
-    })
+      }).catch(error => this.openResponseDialog("error", error.response.data.error.message))
+    } else this.validatorLogin.showMessages();
   }
   register = (e) => {
     e.preventDefault();
-    let firstName = e.target.firstName.value
-    let lastName = e.target.lastName.value
-    let phone = e.target.phone.value
-    let email = e.target.username.value
-    let username = e.target.username.value
-    let password = e.target.password.value
-    AuthService.register(username, password, firstName, lastName, phone, email).then(res=>{
-      
-      alert(res.error.message)
-      console.log(res)
-      if (res.error.statusCode === 206) window.location.replace('/')
-    })
+    let registerObj = this.state.register;
+    if (this.validatorRegister.allValid()) {
+      AuthService.register(registerObj).then(res=>{
+        if (res.error.statusCode === 206) {
+          this.openResponseDialog("success", res.error.message);
+          setTimeout(() => window.location.replace('/login'), 1000);
+        } else {
+          this.openResponseDialog("error", res.error.message);
+        }
+      }).catch(error => this.openResponseDialog("error", error.response.data.error.message))
+    } else this.validatorRegister.showMessages();
   }
   render() {
-    const {typePage} = this.state
+    const {typePage, login, register, dialogProps} = this.state
     return (
       <div>
+        <GeneralDialog { ...dialogProps } />
         {/* Start Header Area */}
         <Header />
         {/* End Header Area */}
@@ -70,11 +124,11 @@ class LoginPage extends Component {
               <div className="col-first">
                 <h1>Tài khoản</h1>
                 <nav className="d-flex align-items-center">
-                  <a href="index.html">
+                  <a href="/home">
                     Trang chủ
                     <span className="lnr lnr-arrow-right" />
                   </a>
-                  <a href="category.html">Tài khoản</a>
+                  <a href="/login">Tài khoản</a>
                 </nav>
               </div>
             </div>
@@ -93,7 +147,11 @@ class LoginPage extends Component {
                     <p>
                       Chúng tôi sẽ mang tới cho bạn những sản phẩm tốt nhất cùng với trải nghiệm tuyệt vời nhất
                     </p>
-                    <a className="primary-btn" href="/" onClick={(e)=>{e.preventDefault();this.setState({typePage:  "register"})}}>
+                    <a className="primary-btn" href="/" onClick={(e)=>{
+                          e.preventDefault();
+                          this.validatorLogin.hideMessages();
+                          this.validatorLogin.visibleFields.length = 0;
+                          this.setState({typePage: "register"})}}>
                       Đăng ký
                     </a>
                   </div>
@@ -101,7 +159,7 @@ class LoginPage extends Component {
               </div>
               <div className="col-lg-6">
                 <div className="login_form_inner">
-                  <h3>ĐẢNG NHẬP</h3>
+                  <h3>ĐĂNG NHẬP</h3>
                   <form
                     className="row login_form"
                     onSubmit={this.login}
@@ -115,9 +173,13 @@ class LoginPage extends Component {
                         id="username"
                         name="username"
                         placeholder="Tài khoản"
-                        onFocus={(o) => {o.placeholder = ''}}
-                        onBlur={(o) => {o.placeholder = 'Tài khoản'}}
+                        onChange={(e) => this.setState({login: {...login, username: e.target.value}})}
                       />
+                      {this.validatorLogin.message(
+                        "username",
+                        login.username,
+                        "required"
+                      )}
                     </div>
                     <div className="col-md-12 form-group">
                       <input
@@ -126,9 +188,13 @@ class LoginPage extends Component {
                         id="password"
                         name="password"
                         placeholder="Mật khẩu"
-                        onFocus={(o) => {o.placeholder = ''}}
-                        onBlur={(o) => {o.placeholder = 'Mật khẩu'}}
+                        onChange={(e) => this.setState({login: {...login, password: e.target.value}})}
                       />
+                      {this.validatorLogin.message(
+                        "password",
+                        login.password,
+                        "required"
+                      )}
                     </div>
                     <div className="col-md-12 form-group">
                       <div className="creat_account">
@@ -156,29 +222,55 @@ class LoginPage extends Component {
               noValidate="novalidate">
               <div className="col-lg-6">
                 <div className="login_form_inner">
-                  <h3>ĐĂNG KÝ</h3>
+                  <h3 style ={{marginTop: "31px"}}>ĐĂNG KÝ</h3>
                   <div className="row login_form">
                     <div className="col-md-12 form-group">
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="lastName"
-                        name="lastName"
-                        placeholder="Họ"
-                        onFocus={(o) => {o.placeholder = ''}}
-                        onBlur={(o) => {o.placeholder = 'Họ'}}
-                      />
+                      <div className="row">
+                        <div className="col">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="lastName"
+                            name="lastName"
+                            placeholder="Họ"
+                            onChange={(e) => this.setState({register: {...register, lastName: e.target.value}})}
+                          />
+                          {this.validatorRegister.message(
+                            "lastName",
+                            register.lastName,
+                            "required"
+                          )}
+                        </div>
+                        <div className="col">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="firstName"
+                            name="firstName"
+                            placeholder="Tên"
+                            onChange={(e) => this.setState({register: {...register, firstName: e.target.value}})}
+                          />
+                          {this.validatorRegister.message(
+                            "firstName",
+                            register.firstName,
+                            "required"
+                          )}
+                        </div>
+                      </div>
                     </div>
                     <div className="col-md-12 form-group">
-                      <input
-                        type="text"
+                      <DatePicker
                         className="form-control"
-                        id="firstName"
-                        name="firstName"
-                        placeholder="Tên"
-                        onFocus={(o) => {o.placeholder = ''}}
-                        onBlur={(o) => {o.placeholder = 'Tên'}}
+                        selected={register.birthday? new Date(register.birthday) : register.birthday}
+                        onChange={date => this.setState({register: {...register, birthday: date? date.toString(): date}})}
+                        dateFormat="dd/MM/yyyy"
+                        placeholderText="Ngày sinh"
                       />
+                      {this.validatorRegister.message(
+                        "birthday",
+                        register.birthday,
+                        "required"
+                      )}
                     </div>
                     <div className="col-md-12 form-group">
                       <input
@@ -187,9 +279,28 @@ class LoginPage extends Component {
                         id="phone"
                         name="phone"
                         placeholder="Số điện thoại"
-                        onFocus={(o) => {o.placeholder = ''}}
-                        onBlur={(o) => {o.placeholder = 'Số điện thoại'}}
+                        onChange={(e) => this.setState({register: {...register, phone: e.target.value}})}
                       />
+                      {this.validatorRegister.message(
+                        "phone",
+                        register.phone,
+                        "required"
+                      )}
+                    </div>
+                    <div className="col-md-12 form-group">
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="email"
+                        name="email"
+                        placeholder="Email"
+                        onChange={(e) => this.setState({register: {...register, email: e.target.value}})}
+                      />
+                      {this.validatorRegister.message(
+                        "email",
+                        register.email,
+                        "required|email"
+                      )}
                     </div>
                   </div>
                 </div>
@@ -202,11 +313,15 @@ class LoginPage extends Component {
                         type="text"
                         className="form-control"
                         id="username"
-                        name="username"
-                        placeholder="Email/Tài khoản"
-                        onFocus={(o) => {o.placeholder = ''}}
-                        onBlur={(o) => {o.placeholder = 'Email/Tài khoản'}}
+                        name=""
+                        placeholder="Tài khoản"
+                        onChange={(e) => this.setState({register: {...register, username: e.target.value}})}
                       />
+                      {this.validatorRegister.message(
+                        "username",
+                        register.username,
+                        "required"
+                      )}
                     </div>
                     <div className="col-md-12 form-group">
                       <input
@@ -215,9 +330,28 @@ class LoginPage extends Component {
                         id="password"
                         name="password"
                         placeholder="Mật khẩu"
-                        onFocus={(o) => {o.placeholder = ''}}
-                        onBlur={(o) => {o.placeholder = 'Mật khẩu'}}
+                        onChange={(e) => this.setState({register: {...register, password: e.target.value}})}
                       />
+                      {this.validatorRegister.message(
+                        "password",
+                        register.password,
+                        "required"
+                      )}
+                    </div>
+                    <div className="col-md-12 form-group">
+                      <input
+                        type="password"
+                        className="form-control"
+                        id="confirmedPass"
+                        name="confirmedPass"
+                        placeholder="Xác nhận mật khẩu"
+                        onChange={(e) => this.setState({register: {...register, confirmedPass: e.target.value}})}
+                      />
+                      {this.validatorRegister.message(
+                        "confirmedPass",
+                        register.confirmedPass,
+                        "confirmedPass"
+                      )}
                     </div>
                     <div className="col-md-12 form-group">
                       <div className="creat_account">
@@ -243,7 +377,11 @@ class LoginPage extends Component {
                         <div>Bạn đã có tài khoản? 
                         </div>
                         <button className="primary-btn ml-3" style={{width: "auto", padding: "0 10px", lineHeight: "28px", background: "none", border: "solid 2px", borderImage: "linear-gradient(90deg, #ffba00, #ff6c00) 1 10", color: "#ffba00"}}
-                        onClick={(e)=>{e.preventDefault();this.setState({typePage:  "login"})}}>
+                        onClick={(e)=>{
+                          e.preventDefault();
+                          this.validatorRegister.hideMessages();
+                          this.validatorRegister.visibleFields.length = 0;
+                          this.setState({typePage: "login"})}}>
                           Đăng nhập
                         </button>
                       </div>

@@ -15,6 +15,18 @@ class OrderService {
     });
   }
 
+  getOrderByCode(code, phone) {
+    return axios({
+      method: "post",
+      url: BASE_URL + "/order/get/" + code,
+      headers: {
+        Authorization: authHeader(),
+        'Content-Type': 'text/plain'
+      },
+      data: phone
+    });
+  }
+
   getOrderHistoryOfCustomer(id) {
     return axios({
       method: "post",

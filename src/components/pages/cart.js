@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import cartService from "../../service/cart.service";
 import productService from "../../service/product.service";
+import GeneralDialog from "../layouts/modal/GeneralDialog";
 import Footer from "../layouts/shoe-store/footer";
 import Header from "../layouts/shoe-store/header";
 
@@ -30,6 +31,17 @@ class CartPage extends Component {
           totalMoney: totalMoney
         })
       })
+    });
+  }
+
+  openResponseDialog = (variant, message) => {
+    this.setState({
+      dialogProps: {
+        show: true,
+        handleOk: () => this.setState({dialogProps:{...this.state.dialogProps, show: false}}),
+        variant: variant,
+        message: message
+      }
     });
   }
 
@@ -64,14 +76,15 @@ class CartPage extends Component {
   handleCheckout = (e) => {
     if (this.state.products.length === 0) {
       e.preventDefault();
-      alert("Giỏ hàng đang trống! Hãy thêm sản phẩm vào giỏ hàng của bạn!");
+      this.openResponseDialog("error", "Giỏ hàng đang trống! Hãy thêm sản phẩm vào giỏ hàng của bạn!");
     }
   }
   
   render() {
-    const {products, totalMoney, numOfCart} = this.state;
+    const {products, totalMoney, numOfCart, dialogProps} = this.state;
     return (
       <div>
+        <GeneralDialog { ...dialogProps } />
         <Header numOfCart={numOfCart} />
         {/* Start Banner Area */}
         <section className="banner-area organic-breadcrumb">
@@ -80,7 +93,7 @@ class CartPage extends Component {
               <div className="col-first">
                 <h1>Giỏ hàng</h1>
                 <nav className="d-flex align-items-center">
-                  <a href="index.html">
+                  <a href="/home">
                     Trang chủ
                     <span className="lnr lnr-arrow-right" />
                   </a>
@@ -115,7 +128,7 @@ class CartPage extends Component {
                           <td>
                             <div className="media">
                               <div className="d-flex">
-                                <img src={item.data.productPhotos[0]} width="100px" alt="" />
+                                <img src={item.data.productPhotos[0]} width="100px" height="100px" alt="" />
                               </div>
                               <div className="media-body">
                                 <p>{item.data.shortTitle}</p>
@@ -125,7 +138,7 @@ class CartPage extends Component {
                           <td>
                             <h5>{item.data.price.toLocaleString("it-IT", { style: "currency", currency: "VND" })}</h5>
                           </td>
-                          <td style={{maxWidth: '100px'}}>
+                          <td style={{minWidth: '150px'}}>
                             <div className="input-group" style={{width: 'fit-content'}}>
                               <span class="input-group-btn">
                                   <button
@@ -170,14 +183,6 @@ class CartPage extends Component {
                       </td>
                       <td></td>
                       <td></td>
-                      <td>
-                        <div className="cupon_text d-flex align-items-center">
-                          <input type="text" placeholder="Nhập mã giảm giá" />
-                          <a className="primary-btn" href="#">
-                            Áp dụng
-                          </a>
-                        </div>
-                      </td>
                     </tr>
                     <tr>
                       <td></td>

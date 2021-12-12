@@ -3,6 +3,8 @@ import { Form } from "react-bootstrap";
 import { customFilter, FILTER_TYPES } from 'react-bootstrap-table2-filter';
 import { getTimeFormat } from "../commons/helper";
 
+import { Dropdown } from "react-bootstrap";
+
 export const getPaginationOptions = (totalSize) => {
   return {
     custom: true,
@@ -26,75 +28,38 @@ export const deliveryColumns = (obj) => [
   },
   {
     dataField: "id",
-    text: "deliveryId",
+    text: "productId",
     hidden: true,
   },
   {
-    dataField: "deliveryUnitName",
-    text: "ĐVVC",
+    dataField: "productName",
+    text: "Sản phẩm",
     headerTitle: () => "Đơn vị vận chuyển",
-    headerStyle: { width: "150px" },
     formatter: (_, row) => {
-      var name = {
-        "GHN": "Giao hàng nhanh",
-        "J&T": "J&T",
-        "VTP": "Viettel Post",
-      };
-      return name[row.deliveryUnitName]
+      if (!row.productPhotos[0].startsWith('http') && !row.productPhotos[0].startsWith('/')) {
+        row.productPhotos[0] = '/'+row.productPhotos[0]
+      }
+      return (<div className="media align-items-center">
+        <div className="d-flex mr-15">
+          <img src={row.productPhotos[0]} width="70px" height="70px" alt="" />
+        </div>
+        <div className="media-body">
+          <span>{row.productName}</span><br />
+          <span>Giá bán: {row.price.toLocaleString("it-IT", { style: "currency", currency: "VND" })}</span>
+        </div>
+      </div>)
     }
   },
   {
-    dataField: "token",
-    text: "Mã bí mật",
-    headerStyle: { width: "200px" },
-    style: { overflow: 'overlay', whiteSpace: 'nowrap'}
+    dataField: "numOfPrtsSold",
+    headerStyle: { width: "300px" },
+    text: "Só lượng đã bán"
   },
   {
-    dataField: "shopId",
-    text: "Mã CH",
-    headerTitle: () => "Mã cửa hàng",
-    headerStyle: { width: "90px" },
-  },
-  {
-    dataField: "action",
-    text: "Hành động",
-    headerStyle: { textAlign: 'center', width: "120px" },
-    formatter: function (
-      cellContent,
-      row,
-      rowIndex,
-      { showEditDeliveryDialog, showDeleteDeliveryDialog }
-    ) {
-      return (
-        <div className="d-flex justify-content-center">
-          <div
-            title="Sửa"
-            className="btn btn-icon btn-light btn-hover-primary btn-sm mx-3"
-            onClick={()=>showEditDeliveryDialog(row)}
-          >
-            <span className="svg-icon svg-icon-md">
-              <i className="las la-edit"></i>
-            </span>
-          </div>
-          <> </>
-
-          <div
-            title="Xóa"
-            className="btn btn-icon btn-light btn-hover-danger btn-sm"
-            onClick={()=>showDeleteDeliveryDialog(row)}
-          >
-            <span className="svg-icon svg-icon-md">
-              <i className="las la-trash-alt"></i>
-            </span>
-          </div>
-        </div>
-      );
-    },
-    formatExtraData: {
-      showEditDeliveryDialog: (row) => obj.showEditDeliveryDialog(row),
-      showDeleteDeliveryDialog: (row) => obj.showDeleteDeliveryDialog(row),
-    },
-  },
+    dataField: "stock",
+    headerStyle: { width: "300px" },
+    text: "Số lượng sãn có"
+  }
 ];
 
 export function orderProductColumns(obj) {
@@ -376,27 +341,27 @@ export function orderColumns(obj) {
         var status = {
           wait_confirm: {
             text: "Chờ xác nhận",
-            class: " label-light-primary",
+            class: "label-light-primary",
           },
           not_responded: {
             text: "Không phản hồi",
-            class: " label-light-warning",
+            class: "label-light-warning",
           },
           canceled: {
             text: "Đã hủy",
-            class: " label-light-danger",
+            class: "label-light-danger",
           },
           success: {
             text: "Giao thành công",
-            class: " label-light-success",
+            class: "label-light-success",
           },
           await_trans: {
-            text: "Chờ vận chuyển",
-            class: " label-light-info",
+            text: "Đang vận chuyển",
+            class: "label-light-info",
           },
           fail: {
             text: "Giao thất bại",
-            class: " label-light-danger",
+            class: "label-light-danger",
           },
         };
         return (
@@ -415,18 +380,46 @@ export function orderColumns(obj) {
       formatter: (cellContent, row, rowIndex, {getDisabled}) => (
         <div className="d-flex justify-content-center">
           {row.status === "await_trans" && (<>
-            <div
-              className="btn btn-sm btn-clean btn-icon mr-2"
+            <Dropdown variant="secondary" className="btn btn-sm btn-clean btn-icon mr-2" show={obj.state.statusDropdown[rowIndex]}
+              onMouseEnter={() => obj.showStatusDropdown(rowIndex)} 
+              onMouseLeave={() => obj.hideStatusDropdown(rowIndex)}>
+              <Dropdown.Toggle className="dropdown-status">
+                <div className="symbol symbol-20">
+                  <i className="las la-truck" />
+                  <i className="las la-retweet" style={{position: "absolute", fontSize: "0.8rem", top: "-4px", right: "-7px"}} />
+                </div>
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu className="dropdown-status-menu">
+                <Dropdown.Item className="dropdown-success" onClick={(e)=> {e.stopPropagation();obj.updateOrderStatus(row.id, "success")}}>
+                  <div className="symbol symbol-20">
+                    <i className="las la-truck" />
+                    <i className="las la-check-circle" style={{position: "absolute", fontSize: "0.8rem", top: "-4px", right: "-7px"}} />
+                  </div>
+                  <span className="label font-weight-bold label-lg label-inline">
+                    Thành công
+                  </span>
+                </Dropdown.Item>
+                <Dropdown.Divider />
+                <Dropdown.Item className="dropdown-fail" onClick={(e)=> {e.stopPropagation();obj.updateOrderStatus(row.id, "fail")}}>
+                  <div className="symbol symbol-20">
+                    <i className="las la-truck" />
+                    <i className="las la-times-circle" style={{position: "absolute", fontSize: "0.8rem", top: "-4px", right: "-7px"}} />
+                  </div>
+                  <span className="label font-weight-bold label-lg label-inline">
+                    Thất bại
+                  </span>
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+            {/* <div
+              
               title="Thành công"
               onClick={(e)=> {e.stopPropagation();obj.updateOrderStatus(row.id, "success")}}
               >
-              <span className="svg-icon svg-icon-md">
-                <div className="symbol symbol-20">
-                  <i className="las la-truck" />
-                  <i className="las la-check-circle" style={{position: "absolute", fontSize: "0.8rem", top: "-4px", right: "-7px"}} />
-                </div>
+              <span>
               </span>
-            </div>
+            </div> */}
             <div
               className="btn btn-sm btn-clean btn-icon mr-2"
               title="Hủy"
@@ -701,7 +694,7 @@ export const orderHistoryColumns = [
           class: " label-light-success",
         },
         await_trans: {
-          text: "Chờ vận chuyển",
+          text: "Đang vận chuyển",
           class: " label-light-info",
         },
         fail: {
