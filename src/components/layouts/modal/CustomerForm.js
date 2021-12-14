@@ -4,6 +4,9 @@ import BootstrapTable from "react-bootstrap-table-next";
 import SimpleReactValidator from "simple-react-validator";
 import { addressData } from "../../../config/dvhcvn";
 
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 class CustomerForm extends Component {
   constructor(props) {
     super(props);
@@ -85,7 +88,7 @@ class CustomerForm extends Component {
           customerGender: formData.customerGender,
           customerPhone: formData.customerPhone,
           customerEmail: formData.customerEmail,
-          customerFacebook: formData.customerFacebook,
+          customerBirth: formData.customerBirth,
           customerAddresses: formData.customerAddresses,
           defaultAddressId: formData.defaultAddressId,
         },
@@ -105,7 +108,7 @@ class CustomerForm extends Component {
         customerGender: form.customerGender || 0,
         customerPhone: form.customerPhone,
         customerEmail: form.customerEmail || "",
-        customerFacebook: form.customerFacebook || "",
+        customerBirth: form.customerBirth || "",
         customerAddresses: form.customerAddresses,
         defaultAddressId: form.defaultAddressId
       })
@@ -352,14 +355,13 @@ class CustomerForm extends Component {
                     "required"
                   )}
                 </Form.Group>
-                <Form.Group as={Col} className="mb-3" controlId="customerEmail">
-                  <Form.Label>Địa chỉ Email</Form.Label>
-                  <Form.Control autoComplete="none" defaultValue={form.customerEmail} onChange={this.handleInputChange} placeholder="example@domain.com" />
-                  {this.validator.message(
-                    "customerEmail",
-                    this.state.form.customerEmail,
-                    "email"
-                  )}
+                <Form.Group as={Col} className="mb-3" controlId="customerBirth">
+                  <Form.Label>Ngày sinh</Form.Label>
+                  <Form.Control as={DatePicker}
+                    selected={form.customerBirth? new Date(form.customerBirth) : form.customerBirth}
+                    onChange={date => this.setState({form: {...this.state.form, customerBirth: date? date.toString(): date}})}
+                    dateFormat="dd/MM/yyyy"
+                    placeholderText="dd/MM/yyyy" />
                 </Form.Group>
               </Row>
               <Row>
@@ -374,13 +376,13 @@ class CustomerForm extends Component {
                     "required"
                   )}
                 </Col>
-                <Form.Group as={Col} className="mb-3" controlId="customerFacebook">
-                  <Form.Label>Đường dẫn Facebook</Form.Label>
-                  <Form.Control autoComplete="none" defaultValue={form.customerFacebook} onChange={this.handleInputChange} placeholder="https://www.facebook.com/abc" />
+                <Form.Group as={Col} className="mb-3" controlId="customerEmail">
+                  <Form.Label className="required">Địa chỉ Email</Form.Label>
+                  <Form.Control autoComplete="none" defaultValue={form.customerEmail} onChange={this.handleInputChange} placeholder="example@domain.com" />
                   {this.validator.message(
-                    "customerFacebook",
-                    this.state.form.customerFacebook,
-                    "url"
+                    "customerEmail",
+                    this.state.form.customerEmail,
+                    "required|email"
                   )}
                 </Form.Group>
               </Row>

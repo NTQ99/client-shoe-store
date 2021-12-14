@@ -10,7 +10,8 @@ class Header extends Component {
     super(props);
     this.state = {
       word: "",
-      numOfCart: 0
+      numOfCart: 0,
+      pathname: ""
     }
   }
 
@@ -20,7 +21,7 @@ class Header extends Component {
     if (params.search) {
       document.getElementById("search_input_box").style.display = "block"
     }
-    this.setState({numOfCart: cartService.getTotalNum(), word: params.search})
+    this.setState({numOfCart: cartService.getTotalNum(), word: params.search, pathname: window.location.pathname})
   }
   
   componentWillReceiveProps(nextProps) {
@@ -41,7 +42,7 @@ class Header extends Component {
     }
   }
   render() {
-    const {numOfCart, word} = this.state
+    const {numOfCart, word, pathname} = this.state
     return (
       <header className="header_area sticky-header">
         <div className="main_menu">
@@ -74,12 +75,12 @@ class Header extends Component {
                 id="navbarSupportedContent"
               >
                 <ul className="nav navbar-nav menu_nav ml-auto">
-                  <li className="nav-item active">
+                  <li className={`nav-item ${pathname.includes("/home")? "active" : ""}`}>
                     <a className="nav-link" href="/home">
                       Trang chủ
                     </a>
                   </li>
-                  <li className="nav-item">
+                  <li className={`nav-item ${pathname.includes("/category")? "active" : ""}`}>
                     <a
                       href="/category"
                       className="nav-link"
@@ -88,7 +89,7 @@ class Header extends Component {
                     </a>
                   </li>
                   {!authHeader() && (
-                    <li className="nav-item">
+                    <li className={`nav-item ${pathname.includes("/tracking")? "active" : ""}`}>
                       <a
                         href="/tracking"
                         className="nav-link"
@@ -98,7 +99,7 @@ class Header extends Component {
                     </li>
                   )}
                   {authHeader() && (
-                    <li className="nav-item">
+                    <li className={`nav-item ${pathname.includes("/my-order")? "active" : ""}`}>
                       <a
                         href="/my-order"
                         className="nav-link"
@@ -114,7 +115,7 @@ class Header extends Component {
                       <span className="lnr lnr-magnifier" id="search" />
                     </button>
                   </li>
-                  <li className="nav-item">
+                  <li className={`nav-item ${pathname.includes("/cart")? "active" : ""}`}>
                     <a href="/cart" className="cart">
                       <span className="ti-bag" />
                       <div
@@ -132,14 +133,14 @@ class Header extends Component {
                     </a>
                   </li>
                   {!authHeader() && (
-                    <li className="nav-item">
+                    <li className={`nav-item ${pathname.includes("/login")? "active" : ""}`}>
                       <a href="/login">
                         <span className="lnr lnr-enter"></span>
                       </a>
                     </li>
                   )}
                   {authHeader() && (<>
-                    <li className="nav-item">
+                    <li className={`nav-item ${pathname.includes("/info")? "active" : ""}`}>
                       <a href="/info">
                         <span className="lar la-user-circle" style={{fontSize: "15px"}}></span>
                       </a>

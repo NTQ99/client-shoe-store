@@ -98,7 +98,17 @@ class CheckoutPage extends Component {
     let currentCart = [];
     let totalMoney = 0;
     currentCart = await cartService.getCart();
-    console.log(currentCart)
+    if (currentCart.length === 0) {
+      this.setState({
+        dialogProps: {
+          show: true,
+          handleOk: () => this.setState({dialogProps:{...this.state.dialogProps, show: false}}),
+          variant: "error",
+          message: "Giỏ hàng đang trống!"
+        }
+      });
+      setTimeout(() => window.location.replace("/home"), 1000);
+    }
     currentCart.forEach((item) => {
       productService.getProductById(item.productId).then((res) => {
         totalMoney += res.data.data.price * item.quantity;

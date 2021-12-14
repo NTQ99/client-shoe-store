@@ -78,7 +78,7 @@ class CartService {
         let currentCart = cookies.get('cart')
         if (currentCart == null) {
             let token = authHeader();
-            if (token === null) return [];
+            if (!token) return [];
             else return axios({
                 method: "post",
                 url: BASE_URL + "/cart/get",

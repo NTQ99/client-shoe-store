@@ -14,6 +14,7 @@ import CreatableSelect from "react-select/creatable"
 import Select from "react-select"
 import orderService from "../../../service/order.service";
 import GeneralDialog from "../modal/GeneralDialog";
+import SimpleReactValidator from "simple-react-validator";
 
 class CreateOrderContent extends Component {
   constructor(props) {
@@ -38,6 +39,20 @@ class CreateOrderContent extends Component {
       promotion: 0,
       products: [],
     };
+    SimpleReactValidator.addLocale("vi", {
+      required: "Không được bỏ trống!",
+      email: "Email không hợp lệ.",
+      url: "Đường dẫn không hợp lệ."
+    });
+    this.validator = new SimpleReactValidator({
+      autoForceUpdate: this,
+      locale: "vi",
+      element: (message) => (
+        <div className="fv-plugins-bootstrap fv-plugins-message-container">
+          <div className="fv-help-block">{message}</div>
+        </div>
+      ),
+    });
   }
 
   componentDidMount() {
@@ -84,8 +99,8 @@ class CreateOrderContent extends Component {
       await data.forEach((product, index) => productList.push({
         productId: product.id,
         value: index,
-        label: product.productName,
-        productName: product.productName,
+        label: product.shortTitle,
+        productName: product.shortTitle,
         stock: product.stock,
         price: product.price,
       }));
@@ -295,16 +310,33 @@ class CreateOrderContent extends Component {
   }
 
   onOrderSubmit = async () => {
-    this.setState({btnLoading: true});
-    await this.openResponseDialog(orderService.createOrder({
-      customerId: this.state.customerId,
-      customerName: this.state.customerName,
-      customerPhone: this.state.customerPhone,
-      products: this.state.products,
-      deliveryTo: this.state.deliveryTo,
-      totalPrice: this.state.totalPrice,
-      codAmount: this.state.totalPrice * (100 - this.state.promotion) / 100 - this.state.paid,
-    }))
+    let products = this.state.products;
+    let quantityValidateMsg = "";
+    await products.forEach((product, index) => {
+      if (product.quantity < 1) {
+        quantityValidateMsg = `Đặt tối thiểu 1 ${product.shortTitle}`;
+      }
+      else if (product.quantity > product.stock) {
+        quantityValidateMsg = `Đặt tối đa ${product.stock} ${product.shortTitle}`;
+      }
+    })
+    this.setState({quantityValidateMsg: quantityValidateMsg});
+    if (quantityValidateMsg) {
+      return;
+    }
+
+    if (this.validator.allValid()) {
+      this.setState({btnLoading: true});
+      await this.openResponseDialog(orderService.createOrder({
+        customerId: this.state.customerId,
+        customerName: this.state.customerName,
+        customerPhone: this.state.customerPhone,
+        products: this.state.products,
+        deliveryTo: this.state.deliveryTo,
+        totalPrice: this.state.totalPrice,
+        codAmount: this.state.totalPrice * (100 - this.state.promotion) / 100 - this.state.paid,
+      }))
+    } else this.validator.showMessages();
   }
 
   render() {
@@ -312,7 +344,7 @@ class CreateOrderContent extends Component {
     let columns = [
       ...orderProductColumns(this),
     ];
-    const {dialogProps, customerLoading, customerList, customerPhone, customerEmail, productLoading, productList, deliveryTo, addressList, deliveryUnitName, shipFee, totalPrice, promotion, paid, btnLoading} = this.state;
+    const {dialogProps, quantityValidateMsg, customerLoading, customerName, customerList, customerPhone, customerEmail, productLoading, productList, deliveryTo, addressList, deliveryUnitName, shipFee, totalPrice, promotion, paid, btnLoading} = this.state;
     return (
       <Form>
         <GeneralDialog { ...dialogProps } />
@@ -328,7 +360,7 @@ class CreateOrderContent extends Component {
                     as={Col}
                     className="mb-3"
                   >
-                    <Form.Label>Tên khách hàng</Form.Label>
+                    <Form.Label className="required">Tên khách hàng</Form.Label>
                     <CreatableSelect components={{DropdownIndicator:() => null, IndicatorSeparator:() => null}}
                       classNamePrefix="input"
                       isLoading={customerLoading}
@@ -339,6 +371,11 @@ class CreateOrderContent extends Component {
                       formatCreateLabel={(inputText) => `Thêm mới "${inputText}"`}
                       onChange={this.handleCustomerSelect}
                     />
+                    {this.validator.message(
+                      "customerName",
+                      customerName,
+                      "required"
+                    )}
                   </Form.Group>
                 </Row>
                 <Row>
@@ -348,13 +385,18 @@ class CreateOrderContent extends Component {
                     controlId="customerPhone"
                     onChange={(e) => this.setState({customerPhone: e.target.value})}
                   >
-                    <Form.Label>Số điện thoại</Form.Label>
+                    <Form.Label className="required">Số điện thoại</Form.Label>
                     <Form.Control
                       defaultValue={customerPhone}
                       type="phone"
                       placeholder="0123456789"
                       autoComplete="off"
                     />
+                    {this.validator.message(
+                      "customerPhone",
+                      customerPhone,
+                      "required"
+                    )}
                   </Form.Group>
                   <Form.Group
                     as={Col}
@@ -419,6 +461,14 @@ class CreateOrderContent extends Component {
                     />
                   )}
                 </ToolkitProvider>
+                {this.validator.message(
+                  "products",
+                  products,
+                  "required"
+                )}
+                {quantityValidateMsg && <div className="fv-plugins-bootstrap fv-plugins-message-container">
+                  <div className="fv-help-block">{quantityValidateMsg}</div>
+                </div>}
                 <Form.Text muted style={{ fontSize: "100%" }}>
                   Chọn và nhập số lượng để thay đổi.
                 </Form.Text>
@@ -436,7 +486,7 @@ class CreateOrderContent extends Component {
                     className="mb-3"
                     onChange={this.onAddressSelect}
                   >
-                    <Form.Label>Tỉnh/Thành phố</Form.Label>
+                    <Form.Label className="required">Tỉnh/Thành phố</Form.Label>
                     <Form.Control as="select" value={deliveryTo.provinceId || "-1"} >
                       <option value={"-1"}>Chọn</option>
                       {addressData.map((province) => (
@@ -445,6 +495,11 @@ class CreateOrderContent extends Component {
                         </option>
                       ))}
                     </Form.Control>
+                    {this.validator.message(
+                      "addressProvince",
+                      deliveryTo.provinceId,
+                      "required"
+                    )}
                   </Form.Group>
                   <Form.Group
                     as={Col}
@@ -452,13 +507,18 @@ class CreateOrderContent extends Component {
                     className="mb-3"
                     onChange={this.onAddressSelect}
                   >
-                    <Form.Label>Quận/Huyện</Form.Label>
+                    <Form.Label className="required">Quận/Huyện</Form.Label>
                     <Form.Control as="select" value={deliveryTo.districtId}>
                       <option value={"-1"}>Chọn</option>
                       {addressList.district.map((district) => (
                             <option value={district.level2_id}>{district.name}</option>
                           ))}
                     </Form.Control>
+                    {this.validator.message(
+                      "addressDistrict",
+                      deliveryTo.districtId,
+                      "required"
+                    )}
                   </Form.Group>
                   <Form.Group
                     as={Col}
@@ -466,13 +526,18 @@ class CreateOrderContent extends Component {
                     className="mb-3"
                     onChange={this.onAddressSelect}
                   >
-                    <Form.Label>Xã/Phường</Form.Label>
+                    <Form.Label className="required">Xã/Phường</Form.Label>
                     <Form.Control as="select" value={deliveryTo.wardId}>
                       <option value={"-1"}>Chọn</option>
                       {addressList.ward.map((ward) => (
                         <option value={ward.level3_id}>{ward.name}</option>
                       ))}
                     </Form.Control>
+                    {this.validator.message(
+                      "addressWard",
+                      deliveryTo.wardId,
+                      "required"
+                    )}
                   </Form.Group>
                 </Row>
                 <Row>
@@ -482,8 +547,13 @@ class CreateOrderContent extends Component {
                     className="mb-3"
                     onBlur={this.onAddressSelect} 
                   >
-                    <Form.Label>Địa chỉ chi tiết</Form.Label>
+                    <Form.Label className="required">Địa chỉ chi tiết</Form.Label>
                     <Form.Control defaultValue={deliveryTo.detail} placeholder="Số nhà, tên tòa nhà, tên đường, tên khu vực" />
+                    {this.validator.message(
+                      "addressDetail",
+                      deliveryTo.detail,
+                      "required"
+                    )}
                   </Form.Group>
                 </Row>
               </Card.Body>

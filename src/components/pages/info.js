@@ -66,6 +66,7 @@ class InfoPage extends Component {
       if (!res.data) return;
       if (!res.data.error) return;
       if (res.data.error.statusCode === 100) {
+        console.log(res)
         this.loadData(res.data.data);
       } else {
         this.setState({errorMsg: res.data.error.message});
@@ -74,6 +75,7 @@ class InfoPage extends Component {
   }
 
   loadData = (formData) => {
+    if (!formData.customerAddresses) formData.customerAddresses = [];
     formData.customerAddresses.forEach((element,index) => {
       element.id = index;
     });

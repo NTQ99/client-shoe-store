@@ -89,21 +89,24 @@ export function orderProductColumns(obj) {
     {
       dataField: "_quantity",
       text: "Số lượng",
-      formatter: (_, row) => {
-        return (
+      formatter: (_, row, rowIndex) => {
+        return (<>
           <Form.Control
             defaultValue={1}
             min={1}
             max={row.stock}
-            onChange={(e) =>
+            onChange={(e) => {
               obj.calcPrice({
                 productId: row.productId,
                 quantity: e.target.value,
               })
-            }
+            }}
             type="number"
           />
-        );
+        {row.invalid && <div className="fv-plugins-bootstrap fv-plugins-message-container">
+          <div className="fv-help-block">{row.invalid}</div>
+        </div>}
+        </>);
       },
     },
     {

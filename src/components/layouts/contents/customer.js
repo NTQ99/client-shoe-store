@@ -56,17 +56,14 @@ const OrderToolbar = (onCreateHandle) => {
       let jsonData = [...props.baseProps.data];
       const headers = {
         recordId: "#",
-        orderCode: "Mã đơn hàng",
-        customerName: "Tên khách hàng",
-        customerPhone: "SĐT khách hàng",
-        priceType: "Phân loại",
-        totalPrice: "Tổng giá trị",
-        deliveryUnitName: "Đơn vị vận chuyển",
-        shipFee: "Phí vận chuyển",
-        deliveryTo: "Địa chỉ",
-        status: "Trạng thái",
-        createdAt: "Thời gian tạo",
-        note: "Ghi chú",
+        customerCode: "Mã KH",
+        customerFirstName: "Họ",
+        customerLastName: "Tên",
+        customerPhone: "SĐT",
+        customerEmail: "Email",
+        customerGender: "Giới tính",
+        customerBirth: "Ngày sinh",
+        customerAddress: "Địa chỉ",
       };
 
       jsonData = jsonData.map((el, index) => {
@@ -76,15 +73,21 @@ const OrderToolbar = (onCreateHandle) => {
             case "recordId":
               newJson[header] = index + 1;
               break;
-            case "priceType":
-              newJson[header] = el[header] === 1 ? "Đơn lẻ" : "Đơn sỉ";
+            case "customerGender":
+              switch (el[header]) {
+                case 0: newJson[header] = "Khác"; break;
+                case 1: newJson[header] = "Nam"; break;
+                case 2: newJson[header] = "Nữ"; break;
+                default: break;
+              }
               break;
-            case "deliveryTo":
+            case "customerAddress":
+              if (el.customerAddresses.length === 0) break;
               newJson[
                 header
-              ] = `${el.deliveryTo.detail}; ${el.deliveryTo.ward}, ${el.deliveryTo.district}, ${el.deliveryTo.province}`;
+              ] = `${el.customerAddresses[el.defaultAddressId].detail}; ${el.customerAddresses[el.defaultAddressId].ward}, ${el.customerAddresses[el.defaultAddressId].district}, ${el.customerAddresses[el.defaultAddressId].province}`;
               break;
-            case "createdAt":
+            case "customerBirth":
               newJson[header] = new Date(el[header]);
               break;
             default:
@@ -102,7 +105,7 @@ const OrderToolbar = (onCreateHandle) => {
       const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
       const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
       const data = new Blob([excelBuffer], { type: fileType });
-      FileSaver.saveAs(data, "DS_Đơn_hàng" + fileExtension);
+      FileSaver.saveAs(data, "DS_Khách_hàng" + fileExtension);
     };
     return (
       <>

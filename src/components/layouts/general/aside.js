@@ -109,14 +109,6 @@ function AdminAside() {
                   <span className="menu-text">Biểu đồ</span>
                 </a>
               </li>
-              <li className="menu-item menu-item-submenu" id="aside_export_chart">
-                <a className="menu-link" href="/">
-                  <i className="menu-bullet menu-bullet-dot">
-                    <span />
-                  </i>
-                  <span className="menu-text">Tải xuống báo cáo</span>
-                </a>
-              </li>
             </ul>
           </div>
         </li>
