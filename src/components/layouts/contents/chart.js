@@ -82,13 +82,13 @@ class ChartContent extends Component {
       if (!res.data.error) return;
       if (res.data.error.statusCode === 100) this.setState({entities: res.data.data})
       else this.openResponseDialog("error", res.data.error.message);
-    }).catch(error => this.openResponseDialog("error", error.response.error.message));
+    }).catch(error => this.openResponseDialog("error", error.response.data.error.message));
     await chartService.getOrderReport().then(async res => {
       if (!res.data) return;
       if (!res.data.error) return;
       if (res.data.error.statusCode === 100) this.setState({chartData1: {...this.state.chartData1, series: res.data.data}})
       else this.openResponseDialog("error", res.data.error.message);
-    }).catch(error => this.openResponseDialog("error", error.response.error.message));
+    }).catch(error => this.openResponseDialog("error", error.response.data.error.message));
   }
 
   handleDateRange = (start, end) => {

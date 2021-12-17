@@ -1,11 +1,14 @@
 import axios from "axios";
 import Cookies from 'universal-cookie';
+import { firebaseApp } from '../config/firebase';
+import { sendEmailVerification, getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, applyActionCode, verifyPasswordResetCode, confirmPasswordReset } from "firebase/auth";
  
 const cookies = new Cookies();
 const BASE_URL = process.env.REACT_APP_BASE_URL_API;
+const auth = getAuth(firebaseApp);
 
 class AuthService {
-  login(username, password) {
+  async login(username, password) {
     return axios
       .post(BASE_URL + "/auth/login", {
         username,
@@ -15,15 +18,15 @@ class AuthService {
         let body = res.data;
         if (body && body.error.statusCode === 200) {
           var now = new Date();
-          now.setTime(now.getTime() + 86400000);
-          cookies.set('jwt', 'Bearer ' + body.data.accessToken, {path: '/', expires: now})
+          await now.setTime(now.getTime() + 86400000);
+          await cookies.set('jwt', 'Bearer ' + body.data.accessToken, {path: '/', expires: now})
           await axios({
             method: "post",
             url: BASE_URL + "/user/get/info",
             headers: {
               Authorization: 'Bearer ' + body.data.accessToken,
             }
-          }).then(res => {
+          }).then(async res => {
             localStorage.setItem("user", JSON.stringify(res.data.data));
           });
           await axios({
@@ -62,16 +65,65 @@ class AuthService {
     setTimeout(cb, 100);
   }
 
-  register(data) {
-    return axios.post(BASE_URL + "/auth/register", data).then(res => res.data);
+  async register(data) {
+    return axios.post(BASE_URL + "/auth/register", data).then(async res => {
+      if (res.data && res.data.error)
+      if (res.data.error.statusCode === 206 && data.email) {
+        await createUserWithEmailAndPassword(auth, data.email, data.password)
+        .then(async (userCredential) => {
+            const user = userCredential.user;
+            if (!user.emailVerified) {
+              await sendEmailVerification(user).then(() => {
+                res.data.error.message = "Đăng ký tài khoản thành công! Hãy kiểm tra email xác nhận."
+              }).catch(() => {
+                res.data.error.statusCode = 400
+                res.data.error.message = "Đã có lỗi xảy ra!"
+              });
+            }
+          })
+          .catch((error) => {
+            res.data.error.statusCode = 400
+            res.data.error.message = "Đã có lỗi xảy ra!"
+          });
+        }
+      return res;
+    }).then(res => res.data);
   }
 
-  changePassword(data) {
-    return axios.post(BASE_URL + "/auth/changepass", {
+  updatePassword(data) {
+    return axios.post(BASE_URL + "/auth/updatepass", {
       username: this.getCurrentUser().username,
       password: data.oldPassword,
       newPassword: data.newPassword
     });
+  }
+
+  validatePassword(username, email) {
+    return axios.post(BASE_URL + "/auth/validate", {
+      username, email
+    });
+  }
+
+  async resetPassword(email, password) {
+    return axios.post(BASE_URL + "/auth/resetpass", {
+      email, password
+    });
+  }
+
+  async handleFirebaseSendPasswordResetEmail(email) {
+    return sendPasswordResetEmail(auth, email);
+  }
+
+  async handleFirebaseVerifyEmail(actionCode) {
+    return applyActionCode(auth, actionCode);
+  }
+
+  async handleFirebaseVerifyResetPassword(actionCode) {
+    return verifyPasswordResetCode(auth, actionCode);
+  }
+
+  async handleFirebaseconfirmPasswordReset(actionCode, newPassword) {
+    return confirmPasswordReset(auth, actionCode, newPassword);
   }
 
   getCurrentUser() {

@@ -152,7 +152,7 @@ class CheckoutPage extends Component {
           }
         }, 1000);
       } else this.openResponseDialog("error", res.error.message);
-    }).catch(error => this.openResponseDialog("error", error.response.error.message));
+    }).catch(error => this.openResponseDialog("error", error.response.data.error.message));
   };
 
   onOrderSubmit = async () => {
@@ -178,7 +178,7 @@ class CheckoutPage extends Component {
             });
           }, 1000)
         } else this.openResponseDialog("error", res.data.error.message);
-      }).catch(error => this.openResponseDialog("error", error.response.error.message));
+      }).catch(error => this.openResponseDialog("error", error.response.data.error.message));
     } else {
       this.validator.showMessages();
     }
@@ -267,7 +267,7 @@ class CheckoutPage extends Component {
                         <input type="checkbox" id="f-option" name="selector" />
                         <label htmlFor="f-option">Ghi nhớ đăng nhập</label>
                       </div>
-                      <a className="lost_pass" href="#">
+                      <a className="lost_pass" href="/reset-password">
                         Quên mật khẩu?
                       </a>
                     </div>

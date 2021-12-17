@@ -9,6 +9,7 @@ import GeneralDialog from "../layouts/modal/GeneralDialog";
 import SimpleReactValidator from "simple-react-validator";
 
 import DatePicker from "react-datepicker";
+import authService from "../../service/auth.service";
 
 class LoginPage extends Component {
   constructor(props) {
@@ -20,8 +21,8 @@ class LoginPage extends Component {
     }
     SimpleReactValidator.addLocale("vi", {
       required: "Không được bỏ trống!",
-      email: "Email không hợp lệ.",
-      url: "Đường dẫn không hợp lệ."
+      email: "Email không hợp lệ!",
+      url: "Đường dẫn không hợp lệ!"
     });
     this.validatorLogin = new SimpleReactValidator({
       autoForceUpdate: this,
@@ -30,7 +31,7 @@ class LoginPage extends Component {
         <div className="fv-plugins-bootstrap fv-plugins-message-container">
           <div className="fv-help-block text-left">{message}</div>
         </div>
-      ),
+      )
     });
     this.validatorRegister = new SimpleReactValidator({
       autoForceUpdate: this,
@@ -42,9 +43,16 @@ class LoginPage extends Component {
       ),
       validators: {
         confirmedPass: {  // name the rule
-          message: 'Mật khẩu không khớp',
+          message: 'Mật khẩu không khớp!',
           rule: (val, params, validator) => {
             return val === this.state.register.password
+          },
+          required: true  // optional
+        },
+        password: {
+          message: 'Phải có ít nhất 6 ký tự, bao gồm cả số và chữ!',
+          rule: (val, params, validator) => {
+            return validator.helpers.testRegex(val,/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/i) && params.indexOf(val) === -1
           },
           required: true  // optional
         }
@@ -75,11 +83,12 @@ class LoginPage extends Component {
     });
   }
   
-  login = (e) => {
+  login = async (e) => {
     e.preventDefault();
     let loginObj = this.state.login;
     if (this.validatorLogin.allValid()) {
-      AuthService.login(loginObj.username, loginObj.password).then(res=>{
+      this.setState({loginBtnLoading: true});
+      await AuthService.login(loginObj.username, loginObj.password).then(async res=>{
         if (res.error.statusCode === 200) {
           this.openResponseDialog("success", res.error.message);
           setTimeout(() => {
@@ -93,13 +102,16 @@ class LoginPage extends Component {
           this.openResponseDialog("error", res.error.message);
         }
       }).catch(error => this.openResponseDialog("error", error.response.data.error.message))
+      this.setState({loginBtnLoading: false});
     } else this.validatorLogin.showMessages();
   }
-  register = (e) => {
+
+  register = async (e) => {
     e.preventDefault();
     let registerObj = this.state.register;
     if (this.validatorRegister.allValid()) {
-      AuthService.register(registerObj).then(res=>{
+      this.setState({registerBtnLoading: true});
+      await AuthService.register(registerObj).then(async res=>{
         if (res.error.statusCode === 206) {
           this.openResponseDialog("success", res.error.message);
           setTimeout(() => window.location.replace('/login'), 1000);
@@ -107,10 +119,12 @@ class LoginPage extends Component {
           this.openResponseDialog("error", res.error.message);
         }
       }).catch(error => this.openResponseDialog("error", error.response.data.error.message))
+      this.setState({registerBtnLoading: false});
     } else this.validatorRegister.showMessages();
   }
+
   render() {
-    const {typePage, login, register, dialogProps} = this.state
+    const {typePage, login, register, dialogProps, loginBtnLoading, registerBtnLoading} = this.state
     return (
       <div>
         <GeneralDialog { ...dialogProps } />
@@ -208,9 +222,12 @@ class LoginPage extends Component {
                         value="submit"
                         className="primary-btn"
                       >
-                        Đăng nhập
+                        {loginBtnLoading && (
+                          <span className="spinner-border spinner-border-sm"></span>
+                        )}
+                        {!loginBtnLoading && "Đăng nhập"}
                       </button>
-                      <a href="/">Quên mật khẩu?</a>
+                      <a href="/reset-password">Quên mật khẩu?</a>
                     </div>
                   </form>
                 </div>
@@ -335,7 +352,7 @@ class LoginPage extends Component {
                       {this.validatorRegister.message(
                         "password",
                         register.password,
-                        "required"
+                        "password"
                       )}
                     </div>
                     <div className="col-md-12 form-group">
@@ -369,7 +386,11 @@ class LoginPage extends Component {
                         value="submit"
                         className="primary-btn"
                       >
-                        Đăng ký
+                        
+                        {registerBtnLoading && (
+                          <span className="spinner-border spinner-border-sm"></span>
+                        )}
+                        {!registerBtnLoading && "Đăng ký"}
                       </button>
                     </div>
                     <div className="col-md-12 form-group">

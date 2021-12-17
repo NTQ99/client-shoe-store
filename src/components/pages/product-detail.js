@@ -43,7 +43,7 @@ class ProductDetailPage extends Component {
             products: res.data.data,
           });
         } else this.openResponseDialog("error", res.data.error.message);
-      }).catch(error => this.openResponseDialog("error", error.response.error.message));
+      }).catch(error => this.openResponseDialog("error", error.response.data.error.message));
     let productStocks = [];
     let colorCodes = [];
     for (let i = 0; i < this.state.products.length; i++) {

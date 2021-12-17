@@ -37,8 +37,8 @@ class InfoPage extends Component {
     };
     SimpleReactValidator.addLocale("vi", {
       required: "Không được bỏ trống!",
-      email: "Email không hợp lệ.",
-      url: "Đường dẫn không hợp lệ."
+      email: "Email không hợp lệ!",
+      url: "Đường dẫn không hợp lệ!"
     });
     this.validator = new SimpleReactValidator({
       autoForceUpdate: this,
@@ -50,9 +50,16 @@ class InfoPage extends Component {
       ),
       validators: {
         confirmedPass: {  // name the rule
-          message: 'Mật khẩu mới không khớp',
+          message: 'Mật khẩu mới không khớp!',
           rule: (val, params, validator) => {
             return val === this.state.passRequestData.newPassword
+          },
+          required: true  // optional
+        },
+        password: {
+          message: 'Phải có ít nhất 6 ký tự, bao gồm cả số và chữ!',
+          rule: (val, params, validator) => {
+            return validator.helpers.testRegex(val,/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/i) && params.indexOf(val) === -1
           },
           required: true  // optional
         }
@@ -134,7 +141,7 @@ class InfoPage extends Component {
     const requestData = this.state.passRequestData;
     if (this.validator.allValid()) {
       this.setState({btnUserModalLoading: true});
-      await this.openResponseDialog(authService.changePassword(requestData)).then(res => {if (res !== "error") this.handleCloseUserModal()});
+      await this.openResponseDialog(authService.updatePassword(requestData)).then(res => {if (res !== "error") this.handleCloseUserModal()});
       this.setState({btnUserModalLoading: false});
     } else {
       this.validator.showMessages();
@@ -378,7 +385,7 @@ class InfoPage extends Component {
               {this.validator.message(
                 "newPassword",
                 this.state.passRequestData.newPassword,
-                "required"
+                "password"
               )}
             </Form.Group>
             <Form.Group className="mb-3" controlId="confirmedNewPassword">

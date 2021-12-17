@@ -24,6 +24,8 @@ import TrackingPage from "./components/pages/tracking";
 import OrderDetailPage from "./components/pages/order-detail";
 import InfoPage from "./components/pages/info";
 import MyOrderPage from "./components/pages/my-order";
+import AuthPage from "./components/pages/firebase-auth";
+import ResetPassPage from "./components/pages/reset-password";
 
 const AdminRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={(props) => (
@@ -39,6 +41,13 @@ const UserRoute = ({ component: Component, ...rest }) => (
   )} />
 )
 
+const GuestRoute = ({ component: Component, ...rest }) => (
+  <Route {...rest} render={(props) => (
+    (!authHeader())? <Component {...props} />
+      : <Redirect to='/not-found' />
+  )} />
+)
+
 function App() {
   return (
     <Router>
@@ -50,16 +59,18 @@ function App() {
             <AdminRoute exact path="/product" component={ProductPage} />
             <AdminRoute exact path="/delivery" component={DeliveryPage} />
             <AdminRoute exact path="/chart" component={ChartPage} />
+            <GuestRoute exact path="/reset-password" component={ResetPassPage} />
+            <GuestRoute exact path="/tracking" component={TrackingPage} />
+            <UserRoute exact path="/info" component={InfoPage} />
+            <UserRoute exact path="/my-order" component={MyOrderPage} />
             <Route exact path="/login" component={LoginPage} />
             <Route exact path="/home" component={HomePage} />
             <Route exact path="/category" component={CategoryPage} />
+            <Route strict path="/product-detail/:productCode" component={ProductDetailPage} />
             <Route exact path="/cart" component={CartPage} />
             <Route exact path="/checkout" component={CheckoutPage} />
-            <Route exact path="/tracking" component={TrackingPage} />
             <Route exact path="/order-detail" component={OrderDetailPage} />
-            <UserRoute exact path="/info" component={InfoPage} />
-            <UserRoute exact path="/my-order" component={MyOrderPage} />
-            <Route strict path="/product-detail/:productCode" component={ProductDetailPage} />
+            <Route exact path="/__/auth/action" component={AuthPage} />
             <Route exact path="/not-found" component={ErrorPage} />
             <Route exact path="/" render={() => <Redirect to='/home' />} />
           </Switch>
