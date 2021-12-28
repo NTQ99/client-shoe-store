@@ -85,20 +85,23 @@ class ProductDetailPage extends Component {
     });
   }
 
-  addProductToCart = (e) => {
+  addProductToCart = async (e) => {
     e.preventDefault();
     if (this.state.productSelected.stock === 0) {
       this.openResponseDialog("error", "Số lượng sản phẩm đã hết!");
       return;
     }
-    this.setState({
-      numOfcart: this.state.numOfcart + this.state.productSelected.quantity,
-    });
-    cartService.addToCart(
+    this.setState({addToCartStatus: "wait"});
+    await cartService.addToCart(
       this.state.productSelected.productId,
       this.state.productSelected.quantity,
       this.state.productDetail.productName + ", size " + this.state.productSelected.size + ", " + this.state.productSelected.color 
-    );
+      );
+    this.setState({addToCartStatus: "done"});
+    setTimeout(() => this.setState({addToCartStatus: ""}), 2000);
+    this.setState({
+      numOfcart: this.state.numOfcart + this.state.productSelected.quantity,
+    });
   };
 
   onSelectColor = (color) => {
@@ -139,6 +142,7 @@ class ProductDetailPage extends Component {
 
   render() {
     const {
+      addToCartStatus,
       productDetail,
       numOfcart,
       productStocks,
@@ -306,6 +310,13 @@ class ProductDetailPage extends Component {
                     >
                       Thêm vào giỏ hàng
                     </a>
+                    {addToCartStatus === "wait" && <div>
+                      <i className="d-flex justify-content-center align-items-center bi bi-arrow-clockwise fa-spin"></i>
+                    </div>}
+                    {addToCartStatus === "done" && <div className="text-success">
+                      <i className="bi bi-cart-check-fill text-success mr-2"></i>
+                      {`Đã thêm ${productSelected.quantity} sản phẩm vào giỏ hàng`}
+                    </div>}
                   </div>
                 </div>
               </div>

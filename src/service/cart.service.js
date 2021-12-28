@@ -6,15 +6,15 @@ const cookies = new Cookies();
 const BASE_URL = process.env.REACT_APP_BASE_URL_API;
 
 class CartService {
-    addToCart(id, qnt, title) {
+    async addToCart(id, qnt, title) {
         qnt = Number(qnt);
         let currentCart = []
-        currentCart = cookies.get('cart', {path:'/'});
+        currentCart = await cookies.get('cart', {path:'/'});
         if (currentCart == null) {
             currentCart=[{productId: id, quantity: qnt, productName: title}];
         } else {
             let check = 0;
-            currentCart.forEach(product => {
+            await currentCart.forEach(product => {
                 if (product.productId === id) {
                     product.quantity += qnt;
                     check = 1;
@@ -25,7 +25,7 @@ class CartService {
         cookies.set('cart', currentCart, {path:'/'});
         let token = authHeader();
         if (token) {
-            axios({
+            await axios({
                 method: "post",
                 url: BASE_URL + "/cart/updateall",
                 headers: {

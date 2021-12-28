@@ -21,8 +21,8 @@ class LoginPage extends Component {
     }
     SimpleReactValidator.addLocale("vi", {
       required: "Không được bỏ trống!",
-      email: "Email không hợp lệ!",
-      url: "Đường dẫn không hợp lệ!"
+      email: "Email không đúng định dạng!",
+      url: "Đường dẫn không đúng định dạng!"
     });
     this.validatorLogin = new SimpleReactValidator({
       autoForceUpdate: this,
@@ -53,6 +53,13 @@ class LoginPage extends Component {
           message: 'Phải có ít nhất 6 ký tự, bao gồm cả số và chữ!',
           rule: (val, params, validator) => {
             return validator.helpers.testRegex(val,/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/i) && params.indexOf(val) === -1
+          },
+          required: true  // optional
+        },
+        phone: {
+          message: 'Số điện thoại không đúng định dạng!',
+          rule: (val, params, validator) => {
+            return validator.helpers.testRegex(val,/(\+84|84|0)+([0-9]{1,})$/i) && params.indexOf(val) === -1
           },
           required: true  // optional
         }
@@ -301,7 +308,7 @@ class LoginPage extends Component {
                       {this.validatorRegister.message(
                         "phone",
                         register.phone,
-                        "required"
+                        "phone"
                       )}
                     </div>
                     <div className="col-md-12 form-group">

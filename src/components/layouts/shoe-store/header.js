@@ -4,6 +4,7 @@ import authHeader from "../../../service/auth-header";
 
 import AuthService from "../../../service/auth.service";
 import cartService from "../../../service/cart.service";
+import GeneralDialog from "../modal/GeneralDialog";
 
 class Header extends Component {
   constructor(props) {
@@ -11,7 +12,14 @@ class Header extends Component {
     this.state = {
       word: "",
       numOfCart: 0,
-      pathname: ""
+      pathname: "",
+      dialogProps: {
+        show: false,
+        handleOk: this.logout,
+        handleClose: () => this.setState({dialogProps:{...this.state.dialogProps, show: false}}),
+        variant: "danger",
+        message: "Bạn có muốn đăng xuất tài khoản?"
+      }
     }
   }
 
@@ -28,8 +36,12 @@ class Header extends Component {
     this.setState({numOfCart: cartService.getTotalNum()})
   }
 
-  logout = (e) => {
+  openLogoutDialog = (e) => {
     e.preventDefault();
+    this.setState({dialogProps:{...this.state.dialogProps, show: true}});
+  }
+
+  logout = () => {
     AuthService.logout(() => window.location.replace("/"));
   };
 
@@ -42,9 +54,10 @@ class Header extends Component {
     }
   }
   render() {
-    const {numOfCart, word, pathname} = this.state
+    const {numOfCart, word, pathname, dialogProps} = this.state
     return (
       <header className="header_area sticky-header">
+        <GeneralDialog { ...dialogProps } />
         <div className="main_menu">
           <nav className="navbar navbar-expand-lg navbar-light main_box">
             <div className="container">
@@ -146,7 +159,7 @@ class Header extends Component {
                       </a>
                     </li>
                     <li className="nav-item">
-                      <a href="/logout" onClick={this.logout}>
+                      <a href="/logout" onClick={this.openLogoutDialog}>
                         <span className="lnr lnr-exit"></span>
                       </a>
                     </li>

@@ -59,8 +59,8 @@ class AuthService {
   }
 
   logout(cb) {
-    cookies.remove('jwt');
-    cookies.remove('cart');
+    cookies.remove('jwt', {path:'/'});
+    cookies.remove('cart', {path:'/'});
     localStorage.clear();
     setTimeout(cb, 100);
   }
