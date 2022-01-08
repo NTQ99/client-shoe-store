@@ -30,7 +30,12 @@ class CategoryPage extends Component {
       cateList: {},
       brandList: {},
       colorList: {},
-      querySearch: {}
+      querySearch: {},
+      paging: {
+        page: 1,
+        size: 10
+      },
+      pages: []
     };
   }
 
@@ -40,18 +45,106 @@ class CategoryPage extends Component {
     this.setState({querySearch: params});
 
     ProductService.getProductCategory(params).then((res) => {
-      this.setState({ productGroups: res.data.data });
+      let numOfPages = Math.round(res.data.data.length / this.state.paging.size);
+      let pages = [];
+      if (numOfPages <= 5) {
+        for (let index = 1; index <= numOfPages; index ++) {
+          pages.push(index);
+        }
+      }  else {
+        pages = [1, 2, "...", numOfPages - 1, numOfPages];
+      }
+      this.setState({ productGroups: res.data.data, pages: pages });
     });
     ProductService.getCategoryNum().then((res) => {
       this.setState({ cateList: res.data.data });
     });
     ProductService.getBrandNum().then((res) => {
+      console.log(res);
       this.setState({ brandList: res.data.data });
     });
     ProductService.getColorNum().then((res) => {
       this.setState({ colorList: res.data.data });
     });
 
+  }
+
+  pagingSizeClick = (e) => {
+    e.preventDefault();
+    const {productGroups} = this.state;
+    let paging = {
+      page: 1,
+      size: e.target.value
+    };
+    let numOfPages = Math.round(productGroups.length / paging.size);
+    this.pagingHandle(paging, numOfPages);
+  }
+
+  pagingNumClick = (e) => {
+    e.preventDefault();
+    const {productGroups, paging} = this.state;
+    const page = Number(e.target.innerHTML);
+    paging.page = page;
+    let numOfPages = Math.round(productGroups.length / paging.size);
+    this.pagingHandle(paging, numOfPages);
+  }
+
+  pagingArrowClick = (e, param) => {
+    e.preventDefault();
+    const {productGroups, paging} = this.state;
+    let numOfPages = Math.round(productGroups.length / paging.size);
+    if (1 <= paging.page + param && paging.page + param <= numOfPages) {
+      paging.page += param;
+      this.pagingHandle(paging, numOfPages);
+    }
+  }
+
+  pagingHandle = (paging, numOfPages) => {
+    let pages = [];
+    if (numOfPages <= 5) {
+      for (let index = 1; index <= numOfPages; index ++) {
+        pages.push(index);
+      }
+    }  else {
+      switch (paging.page) {
+        case 1:
+        case numOfPages:
+          pages = [1, 2, "...", numOfPages - 1, numOfPages];
+          break;
+        case 2:
+          pages = [1, 2, 3, "...", numOfPages];
+          break;
+        case numOfPages - 1:
+          pages = [1, "...", numOfPages - 2, numOfPages - 1, numOfPages];
+          break;
+        case 3:
+          pages = [1, 2, 3, 4, "...", numOfPages];
+          break;
+        case numOfPages - 2:
+          pages = [1, "...", numOfPages - 3, numOfPages - 2, numOfPages - 1, numOfPages];
+          break;
+        default:
+          pages = [1, "...", paging.page - 1, paging.page, paging.page + 1, "...", numOfPages];
+          break;
+      }
+    }
+    this.setState({paging: paging, pages: pages});
+  }
+
+  sortHandle = (e) => {
+    let productGroups = this.state.productGroups;
+    let querySearch = this.state.querySearch;
+    const value = e.target.value;
+    if (value !== "") {
+      if (value === "desc") {
+        productGroups.sort((a, b) => b.price - a.price);
+      } else if (value === "asc") {
+        productGroups.sort((a, b) => a.price - b.price);
+      }
+      this.setState({productGroups: productGroups});
+    } else ProductService.getProductCategory(querySearch).then((res) => {
+      this.setState({ productGroups: res.data.data });
+    });
   }
 
   setFilter = (e, queryName, queryValue) => {
@@ -72,7 +165,7 @@ class CategoryPage extends Component {
   }
 
   render() {
-    const { productGroups, numOfcart, cateList, brandList, colorList, querySearch } = this.state;
+    const { productGroups, numOfcart, cateList, brandList, colorList, querySearch, paging, pages } = this.state;
     return (
       <div style={{backgroundColor:"#fff"}}>
         <Header numOfcart={numOfcart} />
@@ -162,53 +255,41 @@ class CategoryPage extends Component {
                     </ul>
                   </form>
                 </div>
-                <div className="common-filter">
-                  <div className="head">Khoảng giá</div>
-                  <div className="price-range-area">
-                    <div id="price-range" />
-                    <div className="value-wrapper d-flex">
-                      <div className="price">Từ:</div>
-                      <div id="lower-value" />
-                      <span>đ</span>
-                      <div className="to">đến</div>
-                      <div id="upper-value" />
-                      <span>đ</span>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
             <div className="col-xl-9 col-lg-8 col-md-7">
               {/* Start Filter Bar */}
               <div className="filter-bar d-flex flex-wrap align-items-center">
                 <div className="sorting">
-                  <select className="form-select">
-                    <option value={1}>Sắp xếp mặc định</option>
-                    <option value={1}>Sắp xếp theo giá thấp nhất</option>
-                    <option value={1}>Sắp xếp theo giá cao nhất</option>
+                  <select className="form-select" onChange={this.sortHandle}>
+                    <option value={""}>Sắp xếp mặc định</option>
+                    <option value={"asc"}>Sắp xếp theo giá thấp nhất</option>
+                    <option value={"desc"}>Sắp xếp theo giá cao nhất</option>
                   </select>
                 </div>
                 <div className="sorting mr-auto">
-                  <select className="form-select">
-                    <option value={1}>Hiển thị 10</option>
-                    <option value={1}>Hiển thị 20</option>
-                    <option value={1}>Hiển thị 30</option>
+                  <select className="form-select" value={paging.size} onChange={(e) => this.pagingSizeClick(e)}>
+                    <option value={10}>Hiển thị 10</option>
+                    <option value={20}>Hiển thị 20</option>
+                    <option value={50}>Hiển thị 50</option>
                   </select>
                 </div>
-                <div className="pagination">
-                  <a href="#" className="prev-arrow">
+                <div className="pagination" style={{borderLeft: "unset"}}>
+                  <a href="/" className="prev-arrow" onClick={(e) => this.pagingArrowClick(e, -1)}>
                     <i className="fa fa-long-arrow-left" aria-hidden="true" />
                   </a>
-                  <a href="#" className="active">
-                    1
-                  </a>
-                  <a href="#">2</a>
-                  <a href="#">3</a>
-                  <a href="#" className="dot-dot">
-                    <i className="fa fa-ellipsis-h" aria-hidden="true" />
-                  </a>
-                  <a href="#">6</a>
-                  <a href="#" className="next-arrow">
+                  {pages.map(value => {
+                    if (value !== "...") {
+                      if (paging.page === value) {
+                        return (<a href="/" className="active" onClick={(e) => e.preventDefault()}>{value}</a>)
+                      } else {
+                        return (<a href="/" onClick={(e) => this.pagingNumClick(e)}>{value}</a>)
+                      }
+                    } else {
+                      return (<a href="/" className="dot-dot" onClick={(e) => e.preventDefault()}><i className="fa fa-ellipsis-h" aria-hidden="true" /></a>)
+                    }
+                  })}
+                  <a href="/" className="next-arrow" onClick={(e) => this.pagingArrowClick(e, 1)}>
                     <i className="fa fa-long-arrow-right" aria-hidden="true" />
                   </a>
                 </div>
@@ -221,7 +302,7 @@ class CategoryPage extends Component {
                     if (!item.productPhotos[0].startsWith("http") && !item.productPhotos[0].startsWith("/")) {
                       item.productPhotos[0] = "/" + item.productPhotos[0];
                     }
-                    return (
+                    if ((paging.page-1)*paging.size <= i && i < paging.page*paging.size) return (
                       <div className="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6">
                       <div className="product__item">
                         <div
@@ -267,26 +348,28 @@ class CategoryPage extends Component {
               {/* Start Filter Bar */}
               <div className="filter-bar d-flex flex-wrap align-items-center">
                 <div className="sorting mr-auto">
-                  <select className="form-select">
+                  <select className="form-select" value={paging.size} onChange={(e) => this.pagingSizeClick(e)}>
                     <option value={1}>Hiển thị 10</option>
-                    <option value={1}>Hiển thị 20</option>
-                    <option value={1}>Hiển thị 30</option>
+                    <option value={2}>Hiển thị 20</option>
+                    <option value={5}>Hiển thị 50</option>
                   </select>
                 </div>
-                <div className="pagination">
-                  <a href="#" className="prev-arrow">
+                <div className="pagination" style={{borderLeft: "unset"}}>
+                  <a href="/" className="prev-arrow" onClick={(e) => this.pagingArrowClick(e, -1)}>
                     <i className="fa fa-long-arrow-left" aria-hidden="true" />
                   </a>
-                  <a href="#" className="active">
-                    1
-                  </a>
-                  <a href="#">2</a>
-                  <a href="#">3</a>
-                  <a href="#" className="dot-dot">
-                    <i className="fa fa-ellipsis-h" aria-hidden="true" />
-                  </a>
-                  <a href="#">6</a>
-                  <a href="#" className="next-arrow">
+                  {pages.map(value => {
+                    if (value !== "...") {
+                      if (paging.page === value) {
+                        return (<a href="/" className="active" onClick={(e) => e.preventDefault()}>{value}</a>)
+                      } else {
+                        return (<a href="/" onClick={(e) => this.pagingNumClick(e)}>{value}</a>)
+                      }
+                    } else {
+                      return (<a href="/" className="dot-dot" onClick={(e) => e.preventDefault()}><i className="fa fa-ellipsis-h" aria-hidden="true" /></a>)
+                    }
+                  })}
+                  <a href="/" className="next-arrow" onClick={(e) => this.pagingArrowClick(e, 1)}>
                     <i className="fa fa-long-arrow-right" aria-hidden="true" />
                   </a>
                 </div>
