@@ -2,6 +2,22 @@ import { Component } from "react";
 import { InputGroup, Row, Col, Form, Modal, Button } from "react-bootstrap";
 import SimpleReactValidator from "simple-react-validator";
 
+const colorValue = {
+  DE: "Đen",
+  TR: "Trắng",
+  XL: "Xanh lục",
+  XB: "Xanh biển",
+  DO: "Đỏ",
+  BE: "Be",
+  NA: "Nâu",
+  TI: "Tím",
+  VA: "Vàng",
+  XA: "Xám",
+  CA: "Cam",
+  HO: "Hồng",
+  XX: "Khác"
+}
+
 class ProductForm extends Component {
   constructor(props) {
     super(props);
@@ -61,7 +77,7 @@ class ProductForm extends Component {
           id: form.id,
           productCode: productCode,
           productName: form.productName,
-          shortTitle: `${form.productName}, size ${form.size[i]}, ${form.color[i]}`,
+          shortTitle: `${form.productName}, size ${form.size[i]}, ${colorValue[form.color[i]]}`,
           brand: form.brand,
           category: form.category,
           price: form.price,
@@ -96,7 +112,7 @@ class ProductForm extends Component {
 
   handleInputChange = (e) => {
     const target = e.target;
-    const value = target.value;
+    let value = target.value;
     const name = target.id;
     const index = target.classList[1];
 

@@ -662,3 +662,6 @@ i.lnr {
 #registerForm .login_form_inner {
 	padding-top: 61px;
 }
+.instafeed li img {
+	width: 70px;
+}

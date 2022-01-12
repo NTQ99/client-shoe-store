@@ -221,7 +221,7 @@ class ProductDetailPage extends Component {
                       </a>
                     </li>
                   </ul>
-                  <p>{productDetail.productDetail}</p>
+                  <p>{productDetail.productDetail.length>400?productDetail.productDetail.slice(0,400) + "...":productDetail.productDetail}</p>
                   <div className="product__details__option">
                     <div className="product__details__option__size">
                       <span>Size:</span>
@@ -375,36 +375,7 @@ class ProductDetailPage extends Component {
                 role="tabpanel"
                 aria-labelledby="home-tab"
               >
-                <p>
-                  Beryl Cook is one of Britain’s most talented and amusing
-                  artists .Beryl’s pictures feature women of all shapes and
-                  sizes enjoying themselves .Born between the two world wars,
-                  Beryl Cook eventually left Kendrick School in Reading at the
-                  age of 15, where she went to secretarial school and then into
-                  an insurance office. After moving to London and then Hampton,
-                  she eventually married her next door neighbour from Reading,
-                  John Cook. He was an officer in the Merchant Navy and after he
-                  left the sea in 1956, they bought a pub for a year before John
-                  took a job in Southern Rhodesia with a motor company. Beryl
-                  bought their young son a box of watercolours, and when showing
-                  him how to use it, she decided that she herself quite enjoyed
-                  painting. John subsequently bought her a child’s painting set
-                  for her birthday and it was with this that she produced her
-                  first significant work, a half-length portrait of a
-                  dark-skinned lady with a vacant expression and large drooping
-                  breasts. It was aptly named ‘Hangover’ by Beryl’s husband and
-                </p>
-                <p>
-                  It is often frustrating to attempt to plan meals that are
-                  designed for one. Despite this fact, we are seeing more and
-                  more recipe books and Internet websites that are dedicated to
-                  the act of cooking for one. Divorce and the death of spouses
-                  or grown children leaving for college are all reasons that
-                  someone accustomed to cooking for more than one would suddenly
-                  need to learn how to adjust all the cooking practices utilized
-                  before into a streamlined plan of cooking that is more
-                  efficient for one person creating less
-                </p>
+                <p>{productDetail.productDetail}</p>
               </div>
               <div
                 className="tab-pane fade"
@@ -432,11 +403,7 @@ class ProductDetailPage extends Component {
                           </div>
                         </div>
                         <p>
-                          Lorem ipsum dolor sit amet, consectetur adipisicing
-                          elit, sed do eiusmod tempor incididunt ut labore et
-                          dolore magna aliqua. Ut enim ad minim veniam, quis
-                          nostrud exercitation ullamco laboris nisi ut aliquip
-                          ex ea commodo
+                          Sản phẩm chất lượng tốt, mẫu mã đa dạng!
                         </p>
                       </div>
                       <div className="review_item Trả lời">
@@ -456,11 +423,7 @@ class ProductDetailPage extends Component {
                           </div>
                         </div>
                         <p>
-                          Lorem ipsum dolor sit amet, consectetur adipisicing
-                          elit, sed do eiusmod tempor incididunt ut labore et
-                          dolore magna aliqua. Ut enim ad minim veniam, quis
-                          nostrud exercitation ullamco laboris nisi ut aliquip
-                          ex ea commodo
+                          Sản phẩm rất đáng mua!
                         </p>
                       </div>
                       <div className="review_item">
@@ -480,11 +443,7 @@ class ProductDetailPage extends Component {
                           </div>
                         </div>
                         <p>
-                          Lorem ipsum dolor sit amet, consectetur adipisicing
-                          elit, sed do eiusmod tempor incididunt ut labore et
-                          dolore magna aliqua. Ut enim ad minim veniam, quis
-                          nostrud exercitation ullamco laboris nisi ut aliquip
-                          ex ea commodo
+                          Giày đẹp lắm!
                         </p>
                       </div>
                     </div>
@@ -646,11 +605,7 @@ class ProductDetailPage extends Component {
                           </div>
                         </div>
                         <p>
-                          Lorem ipsum dolor sit amet, consectetur adipisicing
-                          elit, sed do eiusmod tempor incididunt ut labore et
-                          dolore magna aliqua. Ut enim ad minim veniam, quis
-                          nostrud exercitation ullamco laboris nisi ut aliquip
-                          ex ea commodo
+                        Sản phẩm chất lượng tốt, mẫu mã đa dạng!
                         </p>
                       </div>
                       <div className="review_item">
@@ -671,11 +626,7 @@ class ProductDetailPage extends Component {
                           </div>
                         </div>
                         <p>
-                          Lorem ipsum dolor sit amet, consectetur adipisicing
-                          elit, sed do eiusmod tempor incididunt ut labore et
-                          dolore magna aliqua. Ut enim ad minim veniam, quis
-                          nostrud exercitation ullamco laboris nisi ut aliquip
-                          ex ea commodo
+                        Sản phẩm rất đáng mua!
                         </p>
                       </div>
                       <div className="review_item">
@@ -696,11 +647,7 @@ class ProductDetailPage extends Component {
                           </div>
                         </div>
                         <p>
-                          Lorem ipsum dolor sit amet, consectetur adipisicing
-                          elit, sed do eiusmod tempor incididunt ut labore et
-                          dolore magna aliqua. Ut enim ad minim veniam, quis
-                          nostrud exercitation ullamco laboris nisi ut aliquip
-                          ex ea commodo
+                        Sản phẩm rất đáng mua!
                         </p>
                       </div>
                     </div>
@@ -815,186 +762,6 @@ class ProductDetailPage extends Component {
           </div>
         </section>
         {/*================End Product Description Area =================*/}
-        {/* Start related-product Area */}
-        <section className="related-product-area section_gap_bottom">
-          <div className="container">
-            <div className="row justify-content-center">
-              <div className="col-lg-6 text-center">
-                <div className="section-title">
-                  <h1>Ưu đãi trong tuần</h1>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                    sed do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-lg-9">
-                <div className="row">
-                  <div className="col-lg-4 col-md-4 col-sm-6 mb-20">
-                    <div className="single-related-product d-flex">
-                      <a href="#">
-                        <img src="/assets/img/r1.jpg" alt="" />
-                      </a>
-                      <div className="desc">
-                        <a href="#" className="title">
-                          Black lace Heels
-                        </a>
-                        <div className="price">
-                          <h6>$189.00</h6>
-                          <h6 className="l-through">$210.00</h6>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-lg-4 col-md-4 col-sm-6 mb-20">
-                    <div className="single-related-product d-flex">
-                      <a href="#">
-                        <img src="/assets/img/r2.jpg" alt="" />
-                      </a>
-                      <div className="desc">
-                        <a href="#" className="title">
-                          Black lace Heels
-                        </a>
-                        <div className="price">
-                          <h6>$189.00</h6>
-                          <h6 className="l-through">$210.00</h6>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-lg-4 col-md-4 col-sm-6 mb-20">
-                    <div className="single-related-product d-flex">
-                      <a href="#">
-                        <img src="/assets/img/r3.jpg" alt="" />
-                      </a>
-                      <div className="desc">
-                        <a href="#" className="title">
-                          Black lace Heels
-                        </a>
-                        <div className="price">
-                          <h6>$189.00</h6>
-                          <h6 className="l-through">$210.00</h6>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-lg-4 col-md-4 col-sm-6 mb-20">
-                    <div className="single-related-product d-flex">
-                      <a href="#">
-                        <img src="/assets/img/r5.jpg" alt="" />
-                      </a>
-                      <div className="desc">
-                        <a href="#" className="title">
-                          Black lace Heels
-                        </a>
-                        <div className="price">
-                          <h6>$189.00</h6>
-                          <h6 className="l-through">$210.00</h6>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-lg-4 col-md-4 col-sm-6 mb-20">
-                    <div className="single-related-product d-flex">
-                      <a href="#">
-                        <img src="/assets/img/r6.jpg" alt="" />
-                      </a>
-                      <div className="desc">
-                        <a href="#" className="title">
-                          Black lace Heels
-                        </a>
-                        <div className="price">
-                          <h6>$189.00</h6>
-                          <h6 className="l-through">$210.00</h6>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-lg-4 col-md-4 col-sm-6 mb-20">
-                    <div className="single-related-product d-flex">
-                      <a href="#">
-                        <img src="/assets/img/r7.jpg" alt="" />
-                      </a>
-                      <div className="desc">
-                        <a href="#" className="title">
-                          Black lace Heels
-                        </a>
-                        <div className="price">
-                          <h6>$189.00</h6>
-                          <h6 className="l-through">$210.00</h6>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-lg-4 col-md-4 col-sm-6">
-                    <div className="single-related-product d-flex">
-                      <a href="#">
-                        <img src="/assets/img/r9.jpg" alt="" />
-                      </a>
-                      <div className="desc">
-                        <a href="#" className="title">
-                          Black lace Heels
-                        </a>
-                        <div className="price">
-                          <h6>$189.00</h6>
-                          <h6 className="l-through">$210.00</h6>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-lg-4 col-md-4 col-sm-6">
-                    <div className="single-related-product d-flex">
-                      <a href="#">
-                        <img src="/assets/img/r10.jpg" alt="" />
-                      </a>
-                      <div className="desc">
-                        <a href="#" className="title">
-                          Black lace Heels
-                        </a>
-                        <div className="price">
-                          <h6>$189.00</h6>
-                          <h6 className="l-through">$210.00</h6>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-lg-4 col-md-4 col-sm-6">
-                    <div className="single-related-product d-flex">
-                      <a href="#">
-                        <img src="/assets/img/r11.jpg" alt="" />
-                      </a>
-                      <div className="desc">
-                        <a href="#" className="title">
-                          Black lace Heels
-                        </a>
-                        <div className="price">
-                          <h6>$189.00</h6>
-                          <h6 className="l-through">$210.00</h6>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg-3">
-                <div className="ctg-right">
-                  <a href="#" target="_blank">
-                    <img
-                      className="img-fluid d-block mx-auto"
-                      src="/assets/img/category/c5.jpg"
-                      alt=""
-                    />
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-        {/* End related-product Area */}
-
         <Footer />
       </div>
     );

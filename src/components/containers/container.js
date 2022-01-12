@@ -23,12 +23,12 @@ export default class Container extends Component {
           {this.props.children}
         </Layout>
         <QuickUser />
-        <QuickCart />
-        <QuickPanel />
-        <Chat />
+        {/* <QuickCart /> */}
+        {/* <QuickPanel /> */}
+        {/* <Chat /> */}
         <Scrolltop />
         {/* <Toolbar /> */}
-        <DemoPanel />
+        {/* <DemoPanel /> */}
       </div>
     );
   }

@@ -203,33 +203,6 @@ const OrderToolbar = (props) => {
     FileSaver.saveAs(data, "DS_Đơn_hàng" + fileExtension);
   };
   return (<>
-    <Dropdown as={ButtonGroup} className="mr-2">
-      <Dropdown.Toggle variant="light" className="font-weight-bolder">
-        <span className="svg-icon svg-icon-md">
-          <SVG src="/assets/media/svg/icons/Devices/Printer.svg" />
-        </span>
-        In
-      </Dropdown.Toggle>
-      <Dropdown.Menu>
-        <Dropdown.ItemText className="font-weight-bolder text-uppercase font-size-sm text-primary pb-2">
-          Tùy chọn:
-        </Dropdown.ItemText>
-        <Dropdown.Item>
-          <div className="symbol symbol-20 mr-5">
-            <i className="la la-print" />
-            <i className="symbol-badge bg-success" style={{width: '10px', height: '10px', top: '-5px', right: '-5px'}}></i>
-          </div>
-          Toàn bộ
-        </Dropdown.Item>
-        <Dropdown.Item>
-          <div className="symbol symbol-20 mr-5">
-            <i className="la la-print" />
-            <i className="symbol-badge bg-danger" style={{width: '10px', height: '10px', top: '-5px', right: '-5px'}}></i>
-          </div>
-          Đơn mới
-        </Dropdown.Item>
-      </Dropdown.Menu>
-    </Dropdown>
     <div
       className="btn btn-light-primary font-weight-bolder mr-2"
       onClick={handleExportClick}
@@ -496,9 +469,7 @@ class OrderContent extends Component {
     this.setState({formProps:{...this.state.formProps, show: false}});
   }
   updateOrderStatus =  async (id, status) => {
-    let objStatus;
-    if (status != null) objStatus = {status: status}
-    await this.openResponseDialog(orderService.updateOrderStatus(id, objStatus));
+    await this.openResponseDialog(orderService.updateOrderStatus(id, status));
     this.setState({formProps:{...this.state.formProps, show: false}});
   }
   openSendOrderForm = (id) => {

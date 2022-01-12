@@ -415,14 +415,6 @@ export function orderColumns(obj) {
                 </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
-            {/* <div
-              
-              title="Thành công"
-              onClick={(e)=> {e.stopPropagation();obj.updateOrderStatus(row.id, "success")}}
-              >
-              <span>
-              </span>
-            </div> */}
             <div
               className="btn btn-sm btn-clean btn-icon mr-2"
               title="Hủy"
@@ -493,10 +485,9 @@ export function productColumns(obj) {
       formatter: (cell, row) => `${cell}-${row.color}${row.size}`
     },
     {
-      dataField: "productName",
+      dataField: "shortTitle",
       text: "Tên sản phẩm",
       headerStyle: { width: "250px" },
-      formatter: (cell, row) => `${cell}, size ${row.size}, ${row.color}`
     },
     {
       dataField: "stock",

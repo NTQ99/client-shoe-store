@@ -6,59 +6,20 @@ class Footer extends Component {
       <footer className="footer-area section_gap">
         <div className="container">
           <div className="row">
-            <div className="col-lg-3  col-md-6 col-sm-6">
+            <div className="col-lg-5  col-md-6 col-sm-6">
               <div className="single-footer-widget">
                 <h6>Giới thiệu</h6>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
-                  do eiusmod tempor incididunt ut labore dolore magna aliqua.
-                </p>
+                <span style={{color: "#727272"}}>
+                Hệ thống bán lẻ giày thể thao số 1 Hà Nội với những mẫu mã đa dạng cùng với phong cách phục vụ tận tình, chu đáo. Đảm bảo sự thoải mái và hài lòng về chất lượng sản phẩm, chất lượng dịch vụ và đặc biệt là giá cả hợp lí tại cửa hàng.</span>
+                <ul class="info hd-mb">
+                  <li><span class="lnr lnr-location"></span><span className="ml-2">Địa chỉ: <a href="https://www.google.com/maps/place/Tr%C6%B0%E1%BB%9Dng+Cao+%C4%91%E1%BA%B3ng+FPT+Polytechnic/@21.0381328,105.7445984,17z/data=!3m1!4b1!4m5!3m4!1s0x313454b991d80fd5:0x53cefc99d6b0bf6f!8m2!3d21.0381278!4d105.7467871" target="_blank">Tòa nhà FPT Polytechnic, P. Trịnh Văn Bô, Xuân Phương, Nam Từ Liêm, Hà Nội</a></span></li>
+                  <li><span class="lnr lnr-phone-handset"></span><span className="ml-2">Điện thoại: <a href="tel:(+84) 387 608 526" title="(+84) 387 608 526">(+84) 387 608 526</a></span></li>
+                  <li><span class="lar la-envelope"></span><span className="ml-2">Mail: <a href="mailto:shoestore@gmail.com" title="shoestore@gmail.com"> shoestore@gmail.com</a></span></li>
+                  <li><span class="lnr lnr-clock"></span><span className="ml-2">24/7</span></li>
+                </ul>
               </div>
             </div>
-            <div className="col-lg-4  col-md-6 col-sm-6">
-              <div className="single-footer-widget">
-                <h6>Tin tức</h6>
-                <p>Cập nhật tin tức mới nhất của chúng tôi</p>
-                <div className id="mc_embed_signup">
-                  <form
-                    target="_blank"
-                    noValidate="true"
-                    action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&id=92a4423d01"
-                    method="get"
-                    className="form-inline"
-                  >
-                    <div className="d-flex flex-row">
-                      <input
-                        className="form-control"
-                        name="EMAIL"
-                        placeholder="Enter Email"
-                        onFocus="this.placeholder = ''"
-                        onBlur="this.placeholder = 'Enter Email '"
-                        required
-                        type="email"
-                      />
-                      <button className="click-btn btn btn-default">
-                        <i
-                          className="fa fa-long-arrow-right"
-                          aria-hidden="true"
-                        />
-                      </button>
-                      <div style={{ position: "absolute", left: "-5000px" }}>
-                        <input
-                          name="b_36c4fd991d266f23781ded980_aefe40901a"
-                          tabIndex={-1}
-                          defaultValue
-                          type="text"
-                        />
-                      </div>
-                      {/* <div class="col-lg-4 col-md-4">
-                                              <button class="bb-btn btn"><span class="lnr lnr-arrow-right"></span></button>
-                                          </div>  */}
-                    </div>
-                    <div className="info" />
-                  </form>
-                </div>
-              </div>
+            <div className="col-lg-2  col-md-6 col-sm-6">
             </div>
             <div className="col-lg-3  col-md-6 col-sm-6">
               <div className="single-footer-widget mail-chimp">
@@ -94,7 +55,7 @@ class Footer extends Component {
             <div className="col-lg-2 col-md-6 col-sm-6">
               <div className="single-footer-widget">
                 <h6>Theo dõi chúng tôi</h6>
-                <p>Hãy theo dõi chúng tôi trên các mạng xã hội</p>
+                <p style={{color: "#727272"}}>Hãy theo dõi chúng tôi trên các mạng xã hội</p>
                 <div className="footer-social d-flex align-items-center">
                   <a href="/">
                     <i className="fa fa-facebook" />
@@ -113,7 +74,7 @@ class Footer extends Component {
             </div>
           </div>
           <div className="footer-bottom d-flex justify-content-center align-items-center flex-wrap">
-            <p className="footer-text m-0">
+            <p className="footer-text m-0"  style={{color: "#727272"}}>
               {/* Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. */}
               Copyright © All rights reserved | This template is made with{" "}
               <i className="fa fa-heart-o" aria-hidden="true" />

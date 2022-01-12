@@ -95,14 +95,15 @@ class OrderService {
     });
   }
 
-  updateOrderStatus(id, statusObj) {
+  updateOrderStatus(id, status) {
     return axios({
       method: "post",
       url: BASE_URL + "/order/update/status/" + id,
       headers: {
-        Authorization: authHeader(),
+        'Authorization': authHeader(),
+        'Content-Type': 'text/plain' 
       },
-      data: statusObj
+      data: status
     });
   }
 

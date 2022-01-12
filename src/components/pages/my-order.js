@@ -63,6 +63,7 @@ class MyOrderPage extends Component {
         {/*================Info Box Area =================*/}
         <section className="info_box_area section_gap">
           <div className="container">
+            <p style={{textAlign: "center"}}>Mọi thắc mắc xin liên hệ tới hotline (+84) 387 608 526</p>
             <CustomTable
               title="Đơn hàng của tôi"
               loading={isLoading}
