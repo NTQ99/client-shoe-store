@@ -2,6 +2,7 @@ import axios from "axios";
 import Cookies from 'universal-cookie';
 import { firebaseApp } from '../config/firebase';
 import { sendEmailVerification, getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, applyActionCode, verifyPasswordResetCode, confirmPasswordReset } from "firebase/auth";
+import userService from "./user.service";
  
 const cookies = new Cookies();
 const BASE_URL = process.env.REACT_APP_BASE_URL_API;
@@ -92,7 +93,7 @@ class AuthService {
 
   updatePassword(data) {
     return axios.post(BASE_URL + "/auth/updatepass", {
-      username: this.getCurrentUser().username,
+      username: userService.getCurrentUser().username,
       password: data.oldPassword,
       newPassword: data.newPassword
     });
@@ -126,19 +127,6 @@ class AuthService {
     return confirmPasswordReset(auth, actionCode, newPassword);
   }
 
-  getCurrentUser() {
-    return JSON.parse(localStorage.getItem('user'));
-  }
-
-  getRoles() {
-    if (this.getCurrentUser() != null) return this.getCurrentUser().roles[0].name;
-    else return null;
-  }
-
-  getCustomerCode() {
-    if (this.getCurrentUser() != null) return this.getCurrentUser().customerCode;
-    else return null;
-  }
 }
 
 export default new AuthService();

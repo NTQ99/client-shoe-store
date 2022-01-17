@@ -32,6 +32,15 @@ class CustomerForm extends Component {
           <div className="fv-help-block">{message}</div>
         </div>
       ),
+      validators: {
+        phone: {
+          message: 'Số điện thoại không đúng định dạng!',
+          rule: (val, params, validator) => {
+            return validator.helpers.testRegex(val,/(\+84|84|0)+([0-9]{9})$/i) && params.indexOf(val) === -1
+          },
+          required: true  // optional
+        }
+      }
     });
   }
 
@@ -352,7 +361,7 @@ class CustomerForm extends Component {
                   {this.validator.message(
                     "customerPhone",
                     this.state.form.customerPhone,
-                    "required"
+                    "phone"
                   )}
                 </Form.Group>
                 <Form.Group as={Col} className="mb-3" controlId="customerBirth">
@@ -378,7 +387,7 @@ class CustomerForm extends Component {
                 </Col>
                 <Form.Group as={Col} className="mb-3" controlId="customerEmail">
                   <Form.Label className="required">Địa chỉ Email</Form.Label>
-                  <Form.Control autoComplete="none" defaultValue={form.customerEmail} onChange={this.handleInputChange} placeholder="example@domain.com" />
+                  <Form.Control autoComplete="none" disabled={form.customerEmail} defaultValue={form.customerEmail} onChange={this.handleInputChange} placeholder="example@domain.com" />
                   {this.validator.message(
                     "customerEmail",
                     this.state.form.customerEmail,

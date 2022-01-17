@@ -90,6 +90,9 @@ class ProductDetailPage extends Component {
     if (this.state.productSelected.stock === 0) {
       this.openResponseDialog("error", "Số lượng sản phẩm đã hết!");
       return;
+    } else if (this.state.productSelected.stock < this.state.productSelected.quantity) {
+      this.openResponseDialog("error", `Số lượng sản phẩm tối đa bạn có thể đặt là ${this.state.productSelected.stock} !`);
+      return;
     }
     this.setState({addToCartStatus: "wait"});
     await cartService.addToCart(
@@ -539,7 +542,7 @@ class ProductDetailPage extends Component {
                           <ul className="list">
                             <li>
                               <a href="#">
-                                5 Star <i className="fa fa-star" />
+                                5 Sao <i className="fa fa-star" />
                                 <i className="fa fa-star" />
                                 <i className="fa fa-star" />
                                 <i className="fa fa-star" />
@@ -548,7 +551,7 @@ class ProductDetailPage extends Component {
                             </li>
                             <li>
                               <a href="#">
-                                4 Star <i className="fa fa-star" />
+                                4 Sao <i className="fa fa-star" />
                                 <i className="fa fa-star" />
                                 <i className="fa fa-star" />
                                 <i className="fa fa-star" />
@@ -557,7 +560,7 @@ class ProductDetailPage extends Component {
                             </li>
                             <li>
                               <a href="#">
-                                3 Star <i className="fa fa-star" />
+                                3 Sao <i className="fa fa-star" />
                                 <i className="fa fa-star" />
                                 <i className="fa fa-star" />
                                 <i className="fa fa-star" />
@@ -566,7 +569,7 @@ class ProductDetailPage extends Component {
                             </li>
                             <li>
                               <a href="#">
-                                2 Star <i className="fa fa-star" />
+                                2 Sao <i className="fa fa-star" />
                                 <i className="fa fa-star" />
                                 <i className="fa fa-star" />
                                 <i className="fa fa-star" />
@@ -575,7 +578,7 @@ class ProductDetailPage extends Component {
                             </li>
                             <li>
                               <a href="#">
-                                1 Star <i className="fa fa-star" />
+                                1 Sao <i className="fa fa-star" />
                                 <i className="fa fa-star" />
                                 <i className="fa fa-star" />
                                 <i className="fa fa-star" />

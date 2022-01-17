@@ -174,7 +174,7 @@ const OrderToolbar = (props) => {
             newJson[header] = index + 1;
             break;
           case "priceType":
-            newJson[header] = (el[header] === 1)? "Đơn lẻ": "Đơn sỉ";
+            newJson[header] = (el[header] === 1)? "Đơn sỉ" : "Đơn lẻ";
             break;
           case "status":
             newJson[header] = orderStatus[el[header]];
@@ -234,7 +234,7 @@ const expandRow = {
       <tbody>
     <tr>
       <td className="title-style">Phân loại</td>
-      <td>{(row.priceType === 1)? "Đơn lẻ": "Đơn sỉ"}</td>
+      <td>{(row.priceType === 1)? "Đơn sỉ" : "Đơn lẻ"}</td>
       <td colSpan="2">
         <span className="title-style" style={{display: 'inline-block', width: '120px'}}>Tiền COD</span>
         <span>{row.codAmount.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}</span>

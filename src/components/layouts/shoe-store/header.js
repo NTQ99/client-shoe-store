@@ -42,15 +42,15 @@ class Header extends Component {
   }
 
   logout = () => {
-    AuthService.logout(() => window.location.replace("/"));
+    AuthService.logout(() => window.location.href = "/");
   };
 
   searchWord = (e) => {
     e.preventDefault();
     if (this.state.word) {
-      window.location.replace(`/category?search=${this.state.word}`)
+      window.location.href = `/category?search=${this.state.word}`
     } else {
-      window.location.replace("/category");
+      window.location.href = "/category";
     }
   }
   render() {

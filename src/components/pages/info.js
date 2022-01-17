@@ -16,6 +16,7 @@ import customerService from "../../service/customer.service";
 import * as helper from "../../commons/helper";
 import CustomerForm from "../layouts/modal/CustomerForm";
 import GeneralDialog from "../layouts/modal/GeneralDialog";
+import userService from "../../service/user.service";
 
 class InfoPage extends Component {
   constructor(props) {
@@ -68,7 +69,7 @@ class InfoPage extends Component {
   }
 
   componentDidMount() {
-    let customerCode =  authService.getCustomerCode();
+    let customerCode =  userService.getCustomerCode();
     customerService.getCustomerInfo(customerCode).then(res => {
       if (!res.data) return;
       if (!res.data.error) return;
@@ -104,7 +105,7 @@ class InfoPage extends Component {
         ...formData
       },
       nonSelectable: nonSelectable,
-      username: authService.getCurrentUser().username
+      username: userService.getCurrentUser().username
     })
   }
 
@@ -133,7 +134,10 @@ class InfoPage extends Component {
   }
 
   updateCustomer = async (data) => {
-    await this.openResponseDialog(customerService.updateCustomer(data)).then(res => {if (res !== "error") this.loadData(res)});
+    await this.openResponseDialog(customerService.updateCustomer(data)).then(res => {
+      if (res !== "error") this.loadData(res);
+      userService.updateUserInfo(res);
+    });
     this.setState({formProps:{...this.state.formProps, show: false}});
   }
   

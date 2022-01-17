@@ -8,6 +8,7 @@ import { getPaginationOptions, orderHistoryColumns } from "../../config/configTa
 import orderService from "../../service/order.service";
 import authService from "../../service/auth.service";
 import customerService from "../../service/customer.service";
+import userService from "../../service/user.service";
 
 class MyOrderPage extends Component {
   constructor(props) {
@@ -25,7 +26,7 @@ class MyOrderPage extends Component {
   fetchData = async () => {
     this.setState({ isLoading: true });
     let customerId;
-    await customerService.getCustomerInfo(authService.getCustomerCode()).then(res => customerId = res.data.data.id);
+    await customerService.getCustomerInfo(userService.getCustomerCode()).then(res => customerId = res.data.data.id);
     await orderService.getOrderHistoryOfCustomer(customerId).then(async (res) => {
       this.setState({ entities: res.data.data });
     });
@@ -36,7 +37,7 @@ class MyOrderPage extends Component {
     const {entities, isLoading} = this.state;
     const columns = orderHistoryColumns;
     const options = getPaginationOptions(entities.length);
-    const rowEvents = { onClick: (e, row, rowIndex) => window.location.replace(`/order-detail?orderid=${row.orderCode}&phone=${row.customerPhone}`)}
+    const rowEvents = { onClick: (e, row, rowIndex) => window.location.href = `/order-detail?orderid=${row.orderCode}&phone=${row.customerPhone}`}
     return (
       <div>
         {/* Start Header Area */}

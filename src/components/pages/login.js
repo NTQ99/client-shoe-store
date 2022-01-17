@@ -10,6 +10,7 @@ import SimpleReactValidator from "simple-react-validator";
 
 import DatePicker from "react-datepicker";
 import authService from "../../service/auth.service";
+import userService from "../../service/user.service";
 
 class LoginPage extends Component {
   constructor(props) {
@@ -59,7 +60,7 @@ class LoginPage extends Component {
         phone: {
           message: 'Số điện thoại không đúng định dạng!',
           rule: (val, params, validator) => {
-            return validator.helpers.testRegex(val,/(\+84|84|0)+([0-9]{1,})$/i) && params.indexOf(val) === -1
+            return validator.helpers.testRegex(val,/(\+84|84|0)+([0-9]{9})$/i) && params.indexOf(val) === -1
           },
           required: true  // optional
         }
@@ -69,11 +70,11 @@ class LoginPage extends Component {
 
   componentDidMount() {
     if (authHeader()) {
-      if (AuthService.getRoles()) {
-        if (AuthService.getRoles().includes("ROLE_SELLER") || AuthService.getRoles().includes("ROLE_ADMIN")) {
-          window.location.replace("/order");
+      if (userService.getRoles()) {
+        if (userService.getRoles().includes("ROLE_SELLER") || userService.getRoles().includes("ROLE_ADMIN")) {
+          window.location.href = "/order";
         } else {
-          window.location.replace("/home");
+          window.location.href = "/home";
         }
       }
     }
@@ -99,10 +100,10 @@ class LoginPage extends Component {
         if (res.error.statusCode === 200) {
           this.openResponseDialog("success", res.error.message);
           setTimeout(() => {
-            if (AuthService.getRoles().includes("ROLE_SELLER") || AuthService.getRoles().includes("ROLE_ADMIN")) {
-              window.location.replace("/order");
+            if (userService.getRoles().includes("ROLE_SELLER") || userService.getRoles().includes("ROLE_ADMIN")) {
+              window.location.href = "/order";
             } else {
-              window.location.replace("/home");
+              window.location.href = "/home";
             }
           }, 1000)
         } else {
@@ -121,7 +122,7 @@ class LoginPage extends Component {
       await AuthService.register(registerObj).then(async res=>{
         if (res.error.statusCode === 206) {
           this.openResponseDialog("success", res.error.message);
-          setTimeout(() => window.location.replace('/login'), 1000);
+          setTimeout(() => window.location.href = '/login', 1000);
         } else {
           this.openResponseDialog("error", res.error.message);
         }

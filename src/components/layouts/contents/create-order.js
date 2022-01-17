@@ -52,6 +52,15 @@ class CreateOrderContent extends Component {
           <div className="fv-help-block">{message}</div>
         </div>
       ),
+      validators: {
+        phone: {
+          message: 'Số điện thoại không đúng định dạng!',
+          rule: (val, params, validator) => {
+            return validator.helpers.testRegex(val,/(\+84|84|0)+([0-9]{9})$/i) && params.indexOf(val) === -1
+          },
+          required: true  // optional
+        }
+      }
     });
   }
 
@@ -395,7 +404,7 @@ class CreateOrderContent extends Component {
                     {this.validator.message(
                       "customerPhone",
                       customerPhone,
-                      "required"
+                      "phone"
                     )}
                   </Form.Group>
                   <Form.Group

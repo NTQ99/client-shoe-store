@@ -97,7 +97,7 @@ class AuthPage extends Component {
     this.setState({
       dialogProps: {
         show: true,
-        handleOk: () => window.location.replace(redirect),
+        handleOk: () => window.location.href = redirect,
         variant: variant,
         message: message,
       },

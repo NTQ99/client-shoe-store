@@ -44,7 +44,7 @@ class QuickUser extends Component {
               </a>
               <div className="navi mt-2">
                 <div
-                  onClick={() => AuthService.logout(() => window.location.replace('/login'))}
+                  onClick={() => AuthService.logout(() => window.location.href = '/login')}
                   className="btn btn-sm btn-light-primary font-weight-bolder py-2 px-5"
                 >
                   Đăng xuất

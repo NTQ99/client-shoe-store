@@ -14,7 +14,6 @@ import ChartPage from "./components/pages/chart";
 import CheckoutPage from "./components/pages/checkout";
 import ProductDetailPage from "./components/pages/product-detail";
 import authHeader from "./service/auth-header";
-import AuthService from './service/auth.service';
 import ErrorPage from './components/pages/error';
 
 import './App.css';
@@ -26,17 +25,18 @@ import InfoPage from "./components/pages/info";
 import MyOrderPage from "./components/pages/my-order";
 import AuthPage from "./components/pages/firebase-auth";
 import ResetPassPage from "./components/pages/reset-password";
+import userService from "./service/user.service";
 
 const AdminRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={(props) => (
-    (authHeader() && (AuthService.getRoles().includes("ROLE_ADMIN") || AuthService.getRoles().includes("ROLE_SELLER")))? <Component {...props} />
+    (authHeader() && (userService.getRoles().includes("ROLE_ADMIN") || userService.getRoles().includes("ROLE_SELLER")))? <Component {...props} />
       : <Redirect to='/not-found' />
   )} />
 )
 
 const UserRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={(props) => (
-    (authHeader() && AuthService.getRoles().includes("ROLE_BUYER"))? <Component {...props} />
+    (authHeader() && userService.getRoles().includes("ROLE_BUYER"))? <Component {...props} />
       : <Redirect to='/not-found' />
   )} />
 )

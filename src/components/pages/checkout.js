@@ -24,6 +24,7 @@ import { now } from "moment";
 import orderService from "../../service/order.service";
 import GeneralDialog from "../layouts/modal/GeneralDialog";
 import SimpleReactValidator from "simple-react-validator";
+import userService from "../../service/user.service";
 
 class CheckoutPage extends Component {
   constructor(props) {
@@ -51,6 +52,15 @@ class CheckoutPage extends Component {
           <div className="fv-help-block">{message}</div>
         </div>
       ),
+      validators: {
+        phone: {
+          message: 'Số điện thoại không đúng định dạng!',
+          rule: (val, params, validator) => {
+            return validator.helpers.testRegex(val,/(\+84|84|0)+([0-9]{9})$/i) && params.indexOf(val) === -1
+          },
+          required: true  // optional
+        }
+      }
     });
     this.onAddressSelect = helper.onAddressSelect.bind(this);
   }
@@ -107,7 +117,7 @@ class CheckoutPage extends Component {
           message: "Giỏ hàng đang trống!"
         }
       });
-      setTimeout(() => window.location.replace("/home"), 1000);
+      setTimeout(() => window.location.href = "/home", 1000);
     }
     currentCart.forEach((item) => {
       productService.getProductById(item.productId).then((res) => {
@@ -143,10 +153,10 @@ class CheckoutPage extends Component {
         this.openResponseDialog("success", res.error.message);
         setTimeout(() => {
           if (
-            AuthService.getRoles().includes("ROLE_SELLER") ||
-            AuthService.getRoles().includes("ROLE_ADMIN")
+            userService.getRoles().includes("ROLE_SELLER") ||
+            userService.getRoles().includes("ROLE_ADMIN")
           ) {
-            window.location.replace("/order");
+            window.location.href = "/order";
           } else {
             window.location.reload();
           }
@@ -161,10 +171,11 @@ class CheckoutPage extends Component {
       await orderService.createOrder({
         customerName: (this.state.customerFirstName.trim() + " " + this.state.customerLastName.trim()).trim(),
         customerPhone: this.state.customerPhone,
+        customerEmail: this.state.customerEmail,
         products: this.state.products,
         deliveryTo: this.state.deliveryTo,
-        totalPrice: this.state.totalPrice,
-        codAmount: this.state.totalPrice
+        totalPrice: this.state.totalMoney,
+        codAmount: this.state.totalMoney
       }).then(res => {
         if (res.data.error.statusCode === 102) {
           this.openResponseDialog("success", res.data.error.message);
@@ -334,7 +345,7 @@ class CheckoutPage extends Component {
                           {this.validator.message(
                             "customerPhone",
                             this.state.customerPhone,
-                            "required"
+                            "phone"
                           )}
                         </Form.Group>
                         <Form.Group

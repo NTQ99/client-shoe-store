@@ -125,7 +125,7 @@ class CartPage extends Component {
                       }
                       return (
                         <tr>
-                          <td>
+                          <td style={{cursor: "pointer"}} onClick={()=> window.location.href = `/product-detail/${item.data.productCode}`}>
                             <div className="media">
                               <div className="d-flex">
                                 <img src={item.data.productPhotos[0]} width="100px" height="100px" alt="" />

@@ -64491,7 +64491,7 @@ if (isMSIE) {
     browserVersion = parseFloat(matches[1]);
   }
 
-  matches = /Trident\/.*rv:([0-9]{1,}[.0-9]{0,})/.exec(userAgent);
+  matches = /Trident\/.*rv:([0-9]{9}[.0-9]{0,})/.exec(userAgent);
 
   if (matches) {
     browserVersion = parseFloat(matches[1]);
