@@ -387,7 +387,7 @@ class CustomerForm extends Component {
                 </Col>
                 <Form.Group as={Col} className="mb-3" controlId="customerEmail">
                   <Form.Label className="required">Địa chỉ Email</Form.Label>
-                  <Form.Control autoComplete="none" disabled={form.customerEmail} defaultValue={form.customerEmail} onChange={this.handleInputChange} placeholder="example@domain.com" />
+                  <Form.Control autoComplete="none" disabled={formData? formData.customerEmail: false} defaultValue={form.customerEmail} onChange={this.handleInputChange} placeholder="example@domain.com" />
                   {this.validator.message(
                     "customerEmail",
                     this.state.form.customerEmail,
